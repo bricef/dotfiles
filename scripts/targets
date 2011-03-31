@@ -1,0 +1,4 @@
+#!/bin/bash
+
+grep -Eo "^[a-zA-Z][-a-zA-Z ]*:" < $@ | sort | uniq
+

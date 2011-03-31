@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cvs -q status "$@" | grep ^[?F] | grep -v "to-date"
+

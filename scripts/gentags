@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# gentags v0.2 -- generate tags using ctags for all subfolders
+#
+# Written by Hean Kuan Ong ( mysurface@gmail.com)
+# April 24, 2008
+#
+# Copyright (C) 2008 Hean Kuan Ong All rights reserved.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+# IGNORE contains the directories to ignore in find statement
+# for more info, man find.
+IGNORE=" ! -wholename *.svn* ! -wholename *.git* ! -wholename .*log* ! -wholename .*Log* ! -wholename CVS"
+
+PWD=`pwd`
+
+helpme()
+{
+    echo "gentags v0.1"
+    echo "USAGE: gentags [OPTION]"
+    echo ""
+    echo "OPTION:"
+    echo " --help   display me"
+    echo " --info   simple steps for vim user"
+    echo " --test   shows the list of target tags directories"
+    echo " --init   generate tags to all subfolders besides CVS, .svn and .git"
+    echo " --ask    ask for confirmation for tags generation"
+    echo " --clean  clean all the tags files"
+    echo " --show   locate all the tags files"
+    echo ""
+    exit 2
+}
+
+ask()
+{
+    read -p "ctags * $1  [y/n] " ANS
+    if [[ $ANS = "y" || $ANS = "Y" ]]
+    then
+        gentags $1
+    fi
+}
+
+info()
+{
+    echo ""
+    echo "run 'gentags --init' without quotes at your base project folder"
+    echo "paste the lines below to your ~/.vimrc"
+    echo ":nmap ,t :!(cd %:p:h;ctags *)&"
+    echo ":set tags=./tags,./../tags,./../../tags,./../../../tags,tags"
+    echo ""
+}
+
+if [[ $1 = "--help" || $1 = "-h" ]]
+then
+    helpme
+elif [[ $1 = "--info" ]]
+then
+    info
+elif [[ $1 = "--test" ]]
+then
+    find . -type d $IGNORE
+elif [[ $1 = "--init" ]]
+then
+    ctags --file-scope=no -R
+    find . -type d $IGNORE -exec `basename $0` {} \;
+elif [[ $1 = "--ask" ]]
+then
+    ctags --file-scope=no -R
+    find . -type d $IGNORE -exec `basename $0` --ask2 {} \;
+elif [[ $1 = "--ask2" ]]
+then
+    ask $2
+elif [[ $1 = "--clean" ]]
+then
+    find . -name "tags" -exec rm {} \;
+elif [[ $1 = "--show" ]]
+then
+    find . -name "tags"
+else
+    TARGET=""
+    if [[ $1 = "." ]]
+    then
+        TARGET=$PWD
+    else
+        TARGET=$1
+    fi
+    cd $TARGET
+    ctags *
+    find * -type d -prune -print | ctags -aR --file-scope=no -L-
+fi
