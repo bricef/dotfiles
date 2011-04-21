@@ -28,3 +28,14 @@ nnoremap <C-Down> :silent! let &guifont = substitute(&guifont, '\zs\d\+', '\=eva
 
 "Command to see the difference with the original file.
 command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+
+"folding settings
+set foldmethod=syntax   "fold based on indent
+set foldnestmax=1       "deepest fold is 1 levels
+set nofoldenable        "dont fold by default
+
+"Folding shortcuts
+inoremap <C-f> <C-O>za
+nnoremap <C-f> za
+onoremap <C-f> <C-C>za
+vnoremap <C-f> zf 
