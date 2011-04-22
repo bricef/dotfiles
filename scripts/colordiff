@@ -1,0 +1,4 @@
+#!/bin/sh
+
+ </dev/stdin >/dev/stdout  hilite.sh -f green -r "^-.*" | hilite.sh -f red -r "^+.*" | hilite.sh -f magenta -r "@@.*@@"
+
