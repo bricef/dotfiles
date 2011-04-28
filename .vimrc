@@ -28,8 +28,16 @@ set showmode
 
 "search highlighting
 set hlsearch
+"Ctrl-l removes highlighting
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 inoremap <silent> <C-l> :nohl<CR><C-l>
+
+set ic        " ignorecase
+set is        " incsearch
+set scs       " smartcase: override the 'ic' when searching
+              " if search pattern contains uppercase char
+
+
 
 "status line wrangling
 "set statusline=%F%m%r%h%w\ %y\ L:%04l/%04v\ (%p%%)\ buffer:%n
@@ -51,11 +59,6 @@ set tags=./tags,./../tags,./../../tags,./../../../tags,tags
 
 "make the home key behave well
 imap <Home> <Esc>^i
-
-set ic        " ignorecase
-set is        " incsearch
-set scs       " smartcase: override the 'ic' when searching
-              " if search pattern contains uppercase char
 
 
 "play well with wrapped line
