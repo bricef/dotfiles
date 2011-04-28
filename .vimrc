@@ -2,13 +2,46 @@ set nocp
 set number
 set mouse=a
 
+syntax on
+
 colorscheme darkblue
 
+"Tab and indent
 set autoindent
 set cindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+"various settings
+set showmode
+set showmatch
+set ignorecase
+set smartcase
+setlocal wrap linebreak nolist
+setlocal display+=lastline
+
+"Pasting stuff
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
+"search highlighting
+set hlsearch
+nnoremap <silent> <C-l> :nohl<CR><C-l>
+inoremap <silent> <C-l> :nohl<CR><C-l>
+
+"status line wrangling
+"set statusline=%F%m%r%h%w\ %y\ L:%04l/%04v\ (%p%%)\ buffer:%n
+"set laststatus=2
+"if version >= 700
+"    au InsertEnter * hi StatusLine ctermfg=white ctermbg=red cterm=bold
+"    au InsertLeave * hi StatusLine ctermfg=white ctermbg=blue cterm=bold
+"endif
+"hi StatusLine ctermfg=white ctermbg=blue cterm=bold
+
+"allow up down to play well with wrapped lines
+set whichwrap+=<,>,h,l 
 
 "play well with makefiles
 autocmd FileType make setlocal noexpandtab
@@ -24,6 +57,20 @@ set is        " incsearch
 set scs       " smartcase: override the 'ic' when searching
               " if search pattern contains uppercase char
 
+
+"play well with wrapped line
+nnoremap <Down> gj
+nnoremap <Up> gk
+nnoremap <End> g<End>
+nnoremap <Home> g<Home>
+vnoremap <Down> gj
+vnoremap <Up> gk
+vnoremap <End> g<End>
+vnoremap <Home> g<Home>
+inoremap <Down> <C-o>gj
+inoremap <Up> <C-o>gk
+inoremap <End> <C-o>g<End>
+inoremap <Home> <C-o>g<Home>
 
 "Font setup for gui
 let &guifont = "Monospace 11"
