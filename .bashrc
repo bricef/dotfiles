@@ -1,5 +1,10 @@
 # .bashrc
 
+export HISTCONTROL=erasedups
+export HISTSIZE=3000
+export HISTFILESIZE=3000
+export HISTIGNORE="ls:ll:l:la:lla:pwd:..:cd..:cd ..:"
+
 # User specific aliases and functions
 
 # Source global definitions
@@ -20,18 +25,12 @@ alias l="ls"
 alias +x="chmod +x"
 
 
-CVSROOT=:pserver:bfer@cvshost:/newcvs
-export CVSROOT
+export CVSROOT=:pserver:bfer@cvshost:/newcvs
 
 
-PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
+export PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
 #PS1="PS1="\[\e[1;32m\][\[\e[0;32m\]\u@\[\e[0;31m\]\h\[\e[0;32m\]:\w\[\e[1;32m\]]>\[\e[0m\]"
-export PS1
 
-
-PATH=$PATH:/home/bfer/scripts
-export PATH
-
-
+export PATH=$PATH:/home/bfer/scripts
 
 source ~/scripts/ems-env.sh
