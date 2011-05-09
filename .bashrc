@@ -1,6 +1,8 @@
 # .bashrc
 
 shopt -s autocd
+shopt -s checkwinsize
+shopt -s histappend
 
 export HISTCONTROL=erasedups
 export HISTSIZE=3000
