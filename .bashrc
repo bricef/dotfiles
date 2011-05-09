@@ -1,5 +1,7 @@
 # .bashrc
 
+shopt -s autocd
+
 export HISTCONTROL=erasedups
 export HISTSIZE=3000
 export HISTFILESIZE=3000
