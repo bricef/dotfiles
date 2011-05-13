@@ -5,7 +5,7 @@ PATH=$PATH:/home/$(whoami)/scripts
 CACHEFILE="/home/$(whoami)/.config/brice-menu.cache"
 
 reload (){
-  ls $(echo $PATH | tr ':' ' ') | grep -v "/:" | sort | uniq > $CACHEFILE
+  ls $(echo $PATH | tr ':' ' ') | grep -v "^/.*:$" | sort | uniq > $CACHEFILE
 }
 
 test ! -d /home/$(whoami)/.config/ && mkdir -p /home/$(whoami)/.config/
