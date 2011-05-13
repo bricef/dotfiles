@@ -8,7 +8,7 @@ reload (){
   ls $(echo $PATH | tr ':' ' ') | grep -v "/:" | sort | uniq > $CACHEFILE
 }
 
-test ! -d /home/$(whoami)/.config/ && mkdir /home/$(whoami)/.config/
+test ! -d /home/$(whoami)/.config/ && mkdir -p /home/$(whoami)/.config/
 test ! -f $CACHEFILE  && reload
 
 if [ "$1" == "-r" ]; then
