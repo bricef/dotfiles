@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+echo "This script will delete untracked files."
+
+read -p  "Are you sure you wish to continue?(y/n): " answer
+
+if [ "$answer" = "y" ]; then
+  cvs -q -n update 2>&1 | grep warning | sed 's/cvs update: warning: `//g' | sed "s/' was lost//g" | xargs --interactive --no-run-if-empty cvs update -C
+  cvs -q -n update 2>&1 | grep ^? | sed 's/? //g' | xargs --interactive --no-run-if-empty rm -rf
+
+else
+  echo "Aborting"
+fi

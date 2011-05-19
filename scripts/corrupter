@@ -1,0 +1,71 @@
+#!/usr/bin/env python
+
+# corrupter script. Corrupts data in random way.
+
+# TODO:
+#       - bitwise granularity 
+#       - bit transpose
+#       - invert bits
+#       - loose bits
+#       - add bits
+#       - bitstate bias
+# You probably want to look at the way they mutate DNA: transpose, addition,
+# substraction, mirroring, duplication, etc...
+
+
+
+import sys
+import random
+
+def corrupt(fdin, fdout, randomness=0.5):
+    while 1:
+      byte = fdin.read(1)
+      if not byte:
+         break
+      if randomness > 1.0:
+        # we're going for scrambled eggs
+        fdout.write("%c"%random.getrandbits(8))
+      elif randomness <= 0.0:
+        fdout.write(byte)
+      else:
+        if random.random() <= randomness:
+          fdout.write("%c"%random.getrandbits(8))
+        else:
+          fdout.write(byte)
+
+
+def usage():
+  sys.stderr.write("corrupter - Corrupts data from stdin and writes it to stdout.\n")
+  sys.stderr.write("\n")
+  sys.stderr.write("usage: corrupter -e <n> <infile >outfile\n")
+  sys.stderr.write("  -e <n>       Randomness. <n> is a floating point value between 0.0 and 1.0,\n")
+  sys.stderr.write("               n=0.0 will not change the datastream at all, while 1.0 will \n")
+  sys.stderr.write("               turn it into garbage. Values above 1.0 are accepted, and \n")
+  sys.stderr.write("               will result in pseudo-random output. The value is the\n")
+  sys.stderr.write("               probability that any one byte gets corrupted.\n")
+  sys.stderr.write("\n")
+  sys.stderr.write("Notes on implementation:\n")
+  sys.stderr.write("Currently, corrupter does not replicate the insertion/omission class of errors at\n")
+  sys.stderr.write("the bit or byte level. It simply substitutes each byte with a finite probability.\n")
+  sys.stderr.write("Further classes of errors not implemented are: transposition, addition, loss, \n")
+  sys.stderr.write("invertion, bias, mirroring, duplication, etc... \n")
+  sys.stderr.write("\n")
+  sys.stderr.write("There are definitely better ways of adding noise to a channel.\n")
+  sys.stderr.write("\n")
+
+if __name__ == "__main__":
+    if len(sys.argv) == 3:
+      if sys.argv[1] == "-e":
+        try:
+          randomness = float(sys.argv[2])
+        except ValueError, err:
+          sys.stderr.write("ERROR: Randomness value incorrect.\n")
+          usage()
+        corrupt(sys.stdin, sys.stdout, randomness)
+      else:
+        usage()
+        exit()
+    else:
+      usage()
+      exit()
+

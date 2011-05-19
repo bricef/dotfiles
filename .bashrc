@@ -9,6 +9,11 @@ export HISTSIZE=3000
 export HISTFILESIZE=3000
 export HISTIGNORE="ls:ll:l:la:lla:pwd:..:cd..:cd ..:"
 
+
+# Append commands to the history every time a prompt is shown,
+# instead of after closing the session.
+PROMPT_COMMAND='history -a'
+
 # User specific aliases and functions
 
 # Source global definitions
@@ -38,3 +43,5 @@ export PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
 export PATH=$PATH:/home/bfer/scripts
 
 source ~/scripts/ems-env.sh
+alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
+alias vssetup="sudo /usr/local/vectastar/bin/vssetup"
