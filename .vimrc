@@ -2,9 +2,14 @@ set nocp
 set number
 set mouse=a
 
+set t_Co=256
 syntax on
 
-colorscheme darkblue
+if has('gui_running')
+  colorscheme BusyBee  
+else
+  colorscheme BusyBee
+endif
 
 "Tab and indent
 set autoindent
@@ -83,10 +88,10 @@ nnoremap <C-Up> :silent! let &guifont = substitute(&guifont, '\zs\d\+','\=eval(s
 nnoremap <C-Down> :silent! let &guifont = substitute(&guifont, '\zs\d\+', '\=eval(submatch(0)-1)', '')<CR>
 
 "Command to see the difference with the original file.
-command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
 "folding settings
-set foldmethod=syntax   "fold based on indent
+set foldmethod=indent   "fold based on indent
 set foldnestmax=1       "deepest fold is 1 levels
 set nofoldenable        "dont fold by default
 
