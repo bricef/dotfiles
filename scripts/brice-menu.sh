@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source /home/$(whoami)/scripts/ems-env.sh
+test -e /home/$(whoami)/.bashrc && source /home/$(whoami)/.bashrc
 PATH=$PATH:/home/$(whoami)/scripts
 CACHEFILE="/home/$(whoami)/.config/brice-menu.cache"
 
@@ -20,7 +21,12 @@ if [ "$1" == "--reload-only" ]; then
   exit;
 fi
 
-CMD=`cat $CACHEFILE | dmenu -i -b -nb black -nf white -sb red -sf white -fn `
+CMD=`echo @reload | cat $CACHEFILE - | dmenu -i -b -nb black -nf white -sb red -sf white -fn `
+
+if [ "$CMD" == "@reload" ]; then
+  reload;
+  exit;
+fi
 
 $CMD
 

@@ -32,7 +32,8 @@ alias la="ls -a"
 alias lla="ls -la"
 alias l="ls"
 alias +x="chmod +x"
-
+# When you feel desperate
+alias lsa="ls -iablhQ"
 
 export CVSROOT=:pserver:bfer@cvshost:/newcvs
 
@@ -45,3 +46,7 @@ export PATH=$PATH:/home/bfer/scripts
 source ~/scripts/ems-env.sh
 alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
 alias vssetup="sudo /usr/local/vectastar/bin/vssetup"
+export LC_ALL=en_GB.UTF-8
+export LC_CTYPE=en_GB.UTF-8
+export LANG=en_GB.UTF-8
+export LANGUAGE=en_GB.UTF-8
