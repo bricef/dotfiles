@@ -21,7 +21,7 @@ if [ "$1" == "--reload-only" ]; then
   exit;
 fi
 
-CMD=`echo @reload | cat $CACHEFILE - | dmenu -i -b -nb black -nf white -sb red -sf white -fn `
+CMD=`echo @reload | cat $CACHEFILE - | dmenu -i -b -nb black -nf white -sb red -sf white`
 
 if [ "$CMD" == "@reload" ]; then
   reload;
