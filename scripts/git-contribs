@@ -1,0 +1,3 @@
+#!/bin/sh
+
+git blame $@ | awk '{print $2 "\t" $3}' | sed 's/(//' |sort -k2 -r| uniq
