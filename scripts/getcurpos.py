@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # uses the package python-xlib
 # from http://snipplr.com/view/19188/mouseposition-on-linux-via-xlib/
 
