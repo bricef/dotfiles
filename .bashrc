@@ -35,6 +35,10 @@ alias +x="chmod +x"
 # When you feel desperate
 alias lsa="ls -iablhQ"
 
+
+export LS_COLORS="di=35"
+
+
 export CVSROOT=:pserver:bfer@cvshost:/newcvs
 
 

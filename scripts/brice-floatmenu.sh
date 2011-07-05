@@ -15,7 +15,7 @@ LINES=12
 
 DZEN="/home/$(whoami)/Downloads/dzen/dzen2"
 
-XP=$(getcurpos | cut -c1-4 ) 
+XP=$(getcurpos | cut -c1-4 ) # could we use xdotool and wmctrl too?
 YP=$(getcurpos | cut -c5-10)
 
 

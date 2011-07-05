@@ -31,11 +31,18 @@ nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 
+
+"moving between buffers
+nnoremap <C-Left> :bprevious<CR>
+nnoremap <C-Right> :bnext<CR>
+
+
+
 "search highlighting
 set hlsearch
 "Ctrl-l removes highlighting
 nnoremap <silent> <C-l> :nohl<CR><C-l>
-inoremap <silent> <C-l> :nohl<CR><C-l>
+inoremap <silent> <C-l> <Esc>:nohl<CR>i
 
 set ic        " ignorecase
 set is        " incsearch
@@ -91,7 +98,7 @@ nnoremap <C-Down> :silent! let &guifont = substitute(&guifont, '\zs\d\+', '\=eva
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
 "folding settings
-set foldmethod=indent   "fold based on indent
+set foldmethod=syntax   "fold based on
 set foldnestmax=1       "deepest fold is 1 levels
 set nofoldenable        "dont fold by default
 
@@ -99,4 +106,9 @@ set nofoldenable        "dont fold by default
 inoremap <C-f> <C-O>za
 nnoremap <C-f> za
 onoremap <C-f> <C-C>za
-vnoremap <C-f> zf 
+vnoremap <C-f> zf
+
+
+"80 character linewidth
+"highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+"match OverLength '\%>80v.\+'
