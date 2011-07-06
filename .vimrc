@@ -109,6 +109,12 @@ onoremap <C-f> <C-C>za
 vnoremap <C-f> zf
 
 
+
+"C code refactoring commands
+command! Remiden s/\( *\).*\*/\1/
+command! Reminit s/=.*;/;/
+
+
 "80 character linewidth
 "highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
 "match OverLength '\%>80v.\+'
