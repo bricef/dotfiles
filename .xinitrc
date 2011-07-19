@@ -5,6 +5,8 @@ udiskie &
 
 xsetroot -solid "#3030cc"
 
+feh --bg-scale Dropbox/Photos/Markarth01_wLegal.jpg
+
 xbindkeys &
 . /home/brice/scripts/volch.sh -s 50 &
 . /home/brice/scripts/status.sh --dzen &
