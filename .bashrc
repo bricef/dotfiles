@@ -53,7 +53,7 @@ export CVSROOT=:pserver:bfer@cvshost:/newcvs
 
 # [ uname@host ]( /working/dir )>
 # _
-export PS1="\[\e[1;34m\][\[\e[1;33m\] \u@\[\e[1;31m\]\h\[\e[1;33m\] \[\e[1;34m\]]( \[\e[1;33m\]\w\[\e[1;34m\] )>\[\e[0m\] \n"
+export PS1="\[\e[1;34m\][\[\e[1;33m\] \u@\[\e[1;31m\]\h\[\e[1;33m\] \[\e[1;34m\]]( \[\e[1;33m\]\w\[\e[1;34m\] )>\n$\[\e[0m\] "
 
 
 export PATH=$PATH:/home/$(whoami)/scripts
