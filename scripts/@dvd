@@ -1,0 +1,3 @@
+#!/bin/bash
+mplayer -dvd-device /dev/sr0 -fs dvdnav://
+

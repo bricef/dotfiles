@@ -49,7 +49,9 @@ set is        " incsearch
 set scs       " smartcase: override the 'ic' when searching
               " if search pattern contains uppercase char
 
-
+" Settings for VimClojure
+let vimclojure#HighlightBuiltins=1      " Highlight Clojure's builtins
+let vimclojure#ParenRainbow=1           " Rainbow parentheses'!
 
 "status line wrangling
 "set statusline=%F%m%r%h%w\ %y\ L:%04l/%04v\ (%p%%)\ buffer:%n

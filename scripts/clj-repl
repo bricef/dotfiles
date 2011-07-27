@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -cp /usr/share/java/*:/usr/share/java/jline-0.9.94.jar:/usr/share/java/clojure.jar jline.ConsoleRunner clojure.main $@
+java -cp /home/$(whoami)/share/*:/usr/share/java/*:/usr/share/java/jline-0.9.94.jar:/usr/share/java/clojure.jar jline.ConsoleRunner clojure.main $@
