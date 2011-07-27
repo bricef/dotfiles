@@ -41,9 +41,20 @@ export LS_COLORS="di=35"
 
 export CVSROOT=:pserver:bfer@cvshost:/newcvs
 
+# uname@host:/working/dir$ _ 
+#export PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
 
-export PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
-#PS1="PS1="\[\e[1;32m\][\[\e[0;32m\]\u@\[\e[0;31m\]\h\[\e[0;32m\]:\w\[\e[1;32m\]]>\[\e[0m\]"
+# [uname@host:/working/dir]>_
+#export PS1="\[\e[1;32m\][\[\e[0;32m\]\u@\[\e[0;31m\]\h\[\e[0;32m\]:\w\[\e[1;32m\]]>\[\e[0m\]"
+
+# ==[uname@host /working/dir ]==> 
+# _
+#export PS1="\[\e[1;32m\]==[\[\e[0m\]\u@\h \w \[\e[1;32m\]]==>\[\e[0m\] \n"
+
+# [ uname@host ]( /working/dir )>
+# _
+export PS1="\[\e[1;34m\][\[\e[1;33m\] \u@\[\e[1;31m\]\h\[\e[1;33m\] \[\e[1;34m\]]( \[\e[1;33m\]\w\[\e[1;34m\] )>\[\e[0m\] \n"
+
 
 export PATH=$PATH:/home/$(whoami)/scripts
 
