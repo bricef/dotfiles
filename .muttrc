@@ -1,0 +1,57 @@
+
+set imap_pass = "PASSWD"
+set smtp_pass = "PASSWD"
+
+set from = "USERNAME@gmail.com"
+set realname = "REALNAME"
+
+
+set imap_user = "USERNAME@gmail.com"
+
+
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set postponed ="+[Gmail]/Drafts"
+set trash = "imaps://imap.gmail.com/[Gmail]/Trash"
+
+set header_cache =~/.mutt/cache/headers
+set message_cachedir =~/.mutt/cache/bodies
+set certificate_file =~/.mutt/certificates
+
+set smtp_url = "smtp://USERNAME@smtp.gmail.com:587/"
+
+set move = no  #Stop asking to "move read messages to mbox"!
+set imap_keepalive = 900
+
+
+bind editor <space> noop
+macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index ga "<change-folder>=[Gmail]/All Mail<enter>" "Go to all mail"
+macro index gs "<change-folder>=[Gmail]/Sent Mail<enter>" "Go to Sent Mail"
+macro index gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
+
+# Header stuff
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+hdr_order Date From To Cc
+
+ignore *
+unignore from: date subject to cc
+unignore x-mailing-list: posted-to:
+unignore x-mailer:
+
+# For better looks
+set markers=no # don't put '+' at the beginning of wrapped lines
+set pager_index_lines= 5 # how large is the index window?
+set sort = 'threads'
+set sort_aux = 'last-date-received'
+
+# Editor
+set editor='vim + -c "set textwidth=72" -c "set wrap" -c "set nocp" -c "?^$"'
+
+# Rolodeck :)
+set alias_file= ~/.mutt/aliases
+set sort_alias= alias
+set reverse_alias=yes
+source $alias_file
