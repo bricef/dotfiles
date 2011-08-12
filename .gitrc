@@ -1,0 +1,7 @@
+[user]
+  name = Brice Fernandes
+  email = brice.fernandes@gmail.com
+[color]
+  diff = yes
+  status = auto
+  branch = auto

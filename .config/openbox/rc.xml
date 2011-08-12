@@ -334,8 +334,30 @@
     <keybind key="A-m">
       <action name="ToggleMaximizeFull"/>
     </keybind>
+    
+    <keybind key="W-Right">
+      <action name="MoveResizeTo">
+        <monitor>current</monitor>
+        <x>639</x>
+        <y>0</y>
+        <width>640</width>
+        <height>785</height>
+      </action>
+    </keybind>
+    
+    <keybind key="W-Return">
+      <action name="Reconfigure" />
+    </keybind>
 
-
+    <keybind key="W-Left">
+      <action name="MoveResizeTo">
+        <monitor>current</monitor>
+        <x>0</x>
+        <y>0</y>
+        <width>640</width>
+        <height>785</height>
+      </action>
+    </keybind>
 
     <keybind key="W-d">
       <action name="ToggleShowDesktop"/>
@@ -739,6 +761,9 @@
   <!-- show the manage desktops section in the client-list-(combined-)menu -->
 </menu>
   <applications>
+  <application name="*">
+    <decor>no</decor>
+  </application>
     <!--
   # this is an example with comments through out. use these to make your
   # own rules, but without the comments of course.
