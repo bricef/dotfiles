@@ -33,7 +33,7 @@ status() {
       SONG="${SONG::35}..."
     fi
 
-    echo '|' ${SONG} \
+    echo '|' $(dropbox status) \
     '|' $(echo "vol:"; echo `~/scripts/volch.sh -q`) \
     '|' $(sensors | grep temp1 | awk '{print $2}'| grep -Eo "[0-9+.]"|tr -d "\n") 'C' \
     '| E:' $IP_eth0 \

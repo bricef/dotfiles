@@ -57,7 +57,7 @@ export CVSROOT=:pserver:bfer@cvshost:/newcvs
 export PS1="\[\e[1;34m\][\[\e[1;33m\] \u@\[\e[1;31m\]\h\[\e[1;33m\] \[\e[1;34m\]]( \[\e[1;33m\]\w\[\e[1;34m\] )>\[\e[0m\]\n\[\e[1;34m\]$\[\e[0m\] "
 
 
-export PATH=$PATH:/home/$(whoami)/scripts
+export PATH=$PATH:/home/$(whoami)/scripts:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
 
 source ~/scripts/ems-env.sh
 alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
