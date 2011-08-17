@@ -34,7 +34,8 @@ alias l="ls"
 alias +x="chmod +x"
 # When you feel desperate
 alias lsa="ls -iablhQ"
-
+alias lsc="ls *.c -1"
+alias lsh="ls -1 *.h"
 
 export LS_COLORS="di=35"
 
