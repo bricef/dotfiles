@@ -34,6 +34,8 @@ Includes cannot be escaped, but any non-whitespace character before a directive 
 
 pinc.py reads from the stdin and writes to stdout. It takes no arguments.
 
+pinc.py is one pass non-recursive. The included text is not parsed for pinc.py directive.
+
 """
 
 import sys
