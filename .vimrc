@@ -26,6 +26,12 @@ set smartcase
 setlocal wrap linebreak nolist
 setlocal display+=lastline
 
+" Turn backup off 
+set nobackup
+set nowb
+set noswapfile
+
+
 "Pasting stuff
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
@@ -52,15 +58,6 @@ set scs       " smartcase: override the 'ic' when searching
 " Settings for VimClojure
 let vimclojure#HighlightBuiltins=1      " Highlight Clojure's builtins
 let vimclojure#ParenRainbow=1           " Rainbow parentheses'!
-
-"status line wrangling
-"set statusline=%F%m%r%h%w\ %y\ L:%04l/%04v\ (%p%%)\ buffer:%n
-"set laststatus=2
-"if version >= 700
-"    au InsertEnter * hi StatusLine ctermfg=white ctermbg=red cterm=bold
-"    au InsertLeave * hi StatusLine ctermfg=white ctermbg=blue cterm=bold
-"endif
-"hi StatusLine ctermfg=white ctermbg=blue cterm=bold
 
 "allow up down to play well with wrapped lines
 set whichwrap+=<,>,h,l 
@@ -116,6 +113,34 @@ vnoremap <C-f> zf
 command! Remiden s/\( *\).*\*/\1/
 command! Reminit s/=.*;/;/
 
+
+"status line wrangling
+
+function! HasPaste()
+    if &paste
+        return ',paste'
+    else
+        return ''
+    endif
+endfunction
+
+
+set statusline=[>\ %{getcwd()}\ ]               " [> /working/path ]
+set statusline+=\ %t                            " filename
+set statusline+=\ [%n%M%R%H%W%{HasPaste()}]     " [2,+,paste]
+set statusline+=\ [%{strlen(&ft)?&ft:'none'},   " [vim,
+set statusline+=%{strlen(&fenc)?&fenc:&enc},    " utf8,
+set statusline+=%{&fileformat}]                 " unix]
+set statusline+=\ %{fugitive#statusline()}
+set statusline+=%=                              " <space>
+set statusline+=\ L:%04l/%04v                   " L:0135/0057
+set statusline+=\ (%p%%)                        " (82%)
+set laststatus=2
+if version >= 700
+    au InsertEnter * hi StatusLine ctermfg=white ctermbg=88 cterm=bold
+    au InsertLeave * hi StatusLine ctermfg=white ctermbg=0 cterm=bold
+endif
+hi StatusLine ctermfg=white ctermbg=0 cterm=bold
 
 "80 character linewidth
 "highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
