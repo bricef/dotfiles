@@ -42,6 +42,28 @@ export LS_COLORS="di=35"
 
 export CVSROOT=:pserver:bfer@cvshost:/newcvs
 
+B_BLACK="\[\e[40m\]"
+B_RED="\[\e[41m\]"
+B_GREEN="\[\e[42m\]"
+B_YELLOW="\[\e[43m\]"
+B_BLUE="\[\e[44m\]"
+B_MAGENTA="\[\e[45m\]"
+B_CYAN="\[\e[46m\]"
+B_WHITE="\[\e[47m\]"
+
+F_BLACK="\[\e[30m\]"
+F_RED="\[\e[31m\]"
+F_GREEN="\[\e[32m\]"
+F_YELLOW="\[\e[33m\]"
+F_BLUE="\[\e[34m\]"
+F_MAGENTA="\[\e[35m\]"
+F_CYAN="\[\e[36m\]"
+F_WHITE="\[\e[37m\]"
+
+BOLD="\[\e[1m\]"
+
+END="\[\e[0m\]"
+
 # uname@host:/working/dir$ _ 
 #export PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
 
@@ -54,8 +76,13 @@ export CVSROOT=:pserver:bfer@cvshost:/newcvs
 
 # [ uname@host ]( /working/dir )>
 # $ _
-export PS1="\[\e[1;34m\][\[\e[1;33m\] \u@\[\e[1;31m\]\h\[\e[1;33m\] \[\e[1;34m\]]( \[\e[1;33m\]\w\[\e[1;34m\] )>\[\e[0m\]\n\[\e[1;34m\]$\[\e[0m\] "
 
+PS1="$BOLD$F_BLACK[$END$F_GREEN \u$BOLD$F_BLACK@$BOLD$F_GREEN\h$BOLD$F_BLACK ]"
+PS1+="( $END$F_GREEN\w$BOLD$F_BLACK )"
+PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/{ \[\e[1;31m\]\1\[\e[1;30m\] }/"`'
+PS1+=">\n$END"
+PS1+="$BOLD$F_BLACK$ $END"
+export PS1
 
 export PATH=$PATH:/home/$(whoami)/scripts:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
 

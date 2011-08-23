@@ -61,4 +61,32 @@ if __name__ == "__main__":
       sys.stdout.writelines(map(lambda x: space+x, open(inc)))
     else:
       sys.stdout.write(line)
-      
+
+
+"""
+Possible future extensions to pinc.py
+
+($> path/to/resource.ext <)
+(%> path/to/resource.ext <)
+(^> path/to/resource.ext <)
+(&> path/to/resource.ext <)
+(-> path/to/resource.ext <)
+(+> path/to/resource.ext <)
+(=> path/to/resource.ext <)
+(@> path/to/resource.ext <)
+(#> path/to/resource.ext <)
+(:> path/to/resource.ext <)
+(|> path/to/resource.ext <)
+(a> path/to/resource.ext <)
+(e> path/to/resource.ext <)
+(i> path/to/resource.ext <)
+(o> path/to/resource.ext <)
+(u> path/to/resource.ext <)
+(.> path/to/resource.ext <)
+(\> path/to/resource.ext <)
+(/> path/to/resource.ext <)
+(?> path/to/resource.ext <)
+(~> path/to/resource.ext <)
+(string> path/to/resource.ext <)
+
+"""
