@@ -64,6 +64,10 @@ BOLD="\[\e[1m\]"
 
 END="\[\e[0m\]"
 
+
+# special characters: ⚡ ↑↓↕ ☠☢ 
+# see also http://www.utf8-chartable.de/unicode-utf8-table.pl
+
 # uname@host:/working/dir$ _ 
 #export PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
 
@@ -77,11 +81,22 @@ END="\[\e[0m\]"
 # [ uname@host ]( /working/dir )>
 # $ _
 
-PS1="$BOLD$F_BLACK[$END$F_GREEN \u$BOLD$F_BLACK@$BOLD$F_GREEN\h$BOLD$F_BLACK ]"
-PS1+="( $END$F_GREEN\w$BOLD$F_BLACK )"
-PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/{ \[\e[1;31m\]\1\[\e[1;30m\] }/"`'
-PS1+=">\n$END"
-PS1+="$BOLD$F_BLACK$ $END"
+case `hostname` in
+  "bob"|"engbot")
+    PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
+    ;;
+  "lappy")
+    PS1="$BOLD$F_BLACK[$END$F_GREEN\h$BOLD$F_BLACK "
+    PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
+    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/{ \[\e[1;31m\]\1 \[\e[1;30m\]}/"`'
+    PS1+=">\n$END"
+    PS1+="$BOLD$F_BLACK$ $END"
+    ;;
+  *)
+    PS1="\u@\h:\w$ "
+    ;;
+esac
+
 export PS1
 
 export PATH=$PATH:/home/$(whoami)/scripts:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
