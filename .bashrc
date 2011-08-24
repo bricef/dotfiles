@@ -37,6 +37,7 @@ alias lsa="ls -iablhQ"
 alias lsc="ls *.c -1"
 alias lsh="ls -1 *.h"
 
+
 export LS_COLORS="di=35"
 
 
@@ -82,10 +83,10 @@ END="\[\e[0m\]"
 # $ _
 
 case `hostname` in
-  "bob"|"engbot")
+  "bob")
     PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
     ;;
-  "lappy")
+  "lappy"|"engbot"|"BHAC")
     PS1="$BOLD$F_BLACK[$END$F_GREEN\h$BOLD$F_BLACK "
     PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
     PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/{ \[\e[1;31m\]\1 \[\e[1;30m\]}/"`'

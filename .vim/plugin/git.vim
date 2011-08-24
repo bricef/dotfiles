@@ -2,6 +2,10 @@
 " License: The MIT License
 " URL:     http://github.com/motemen/git-vim/
 
+if version < 700
+  finish
+endif
+
 if !exists('g:git_command_edit')
     let g:git_command_edit = 'new'
 endif

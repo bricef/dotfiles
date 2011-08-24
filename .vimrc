@@ -131,7 +131,9 @@ set statusline+=\ [%n%M%R%H%W%{HasPaste()}]     " [2,+,paste]
 set statusline+=\ [%{strlen(&ft)?&ft:'none'},   " [vim,
 set statusline+=%{strlen(&fenc)?&fenc:&enc},    " utf8,
 set statusline+=%{&fileformat}]                 " unix]
-set statusline+=\ %{fugitive#statusline()}
+if version >= 700
+  set statusline+=\ %{fugitive#statusline()}
+endif
 set statusline+=%=                              " <space>
 set statusline+=\ L:%04l/%04v                   " L:0135/0057
 set statusline+=\ (%p%%)                        " (82%)
