@@ -85,7 +85,7 @@ to your .bashrc or equivalent:
 
     function ds {
       dir=$(%s "$@")
-      test dir && (echo "cd $dir"; cd $dir)
+      test $dir && (echo "cd $dir"; cd $dir)
     }
 
 Feel free to contact brice.fernandes@gmail.com with suggestions for improvement!
