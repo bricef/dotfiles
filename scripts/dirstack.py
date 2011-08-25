@@ -17,7 +17,7 @@ def add(dir):
     modified = True
     return dir
   else:
-    raise RuntimError("The directory path specified '%s' does not appear to exist."%expanded)
+    raise RuntimeError("The directory path specified '%s' does not appear to exist."%expanded)
   
 def delete(index):
   wanted=""
@@ -61,7 +61,7 @@ def show():
       sys.stderr.write("%6s   %s"%(("[%d]:"%fileinput.lineno()), line))
   fileinput.close()
   if not lines:
-    print("  [-]:   Empty Stack")
+    sys.stderr.write("  [-]:   Empty Stack")
 
 def usage():
   print("%s [arg-ph] <directory>"%sys.argv[0])
@@ -79,12 +79,15 @@ if __name__ == "__main__":
 
       if sys.argv[1] == "a":
         add(sys.argv[2])
-      elif sys.argv[1] == "r":
+      elif sys.argv[1] == "rg":
         print(delete(int(sys.argv[2])).strip())
+      elif sys.argv[1] == "r":
+        delete(int(sys.argv[2])).strip()
       elif sys.argv[1] == "g":
         print(get(int(sys.argv[2])).strip())
       elif sys.argv[1] == "p":
-        add(sys.argv[2])
+        print(add(sys.argv[2]))
+        delete(int(sys.argv[2])).strip()
       elif sys.argv[1] == "-":
         dir = pop()
         if dir:
@@ -94,7 +97,7 @@ if __name__ == "__main__":
       elif sys.argv[1] in ["h", "-h", "--help"]:
         usage()
   except RuntimeError as (strerr):
-    print("[error]: %s"%strerr)
+    sys.stderr.write("[error]: %s"%strerr)
     
 
 
