@@ -65,7 +65,31 @@ def show():
     sys.stderr.write("  [-]:   Empty Stack\n")
 
 def usage():
-  sys.stderr.write("%s [arg-ph] <directory>\n"%sys.argv[0])
+  sys.stderr.write("""%s [option] <directory|num>
+Where option is one of:
+    a  <dir>        Add a directory to the top of the stack
+    r  <num>        Remove the directory at index <num> from the stack
+    g  <num>        Get the directory at index <num>
+    rg <num>        Remove Get the directory at index <num> and prints it to stdout
+    p  <dir>        Push the directory <dir> to the top of the stack and print it to stdout
+    t               Remove and get the top directory from the stack and print it to stdout (Top)
+    s               Show the stack (default operation with no arguments
+    h|-h|--help     Show this message
+
+If the first argument is a number <num>, it will try to get the directory at 
+the index <num> if it is a directory <dir> which does not have the same name as
+any of the options, it will push <dir> to the top of the stack and return it.
+
+For this utility to work as intended, you may want to add the following function
+to your .bashrc or equivalent:
+
+    function ds {
+      dir=$(%s "$@")
+      test dir && (echo "cd $dir"; cd $dir)
+    }
+
+Feel free to contact brice.fernandes@gmail.com with suggestions for improvement!
+"""%(os.path.basename(sys.argv[0]), os.path.basename(sys.argv[0])) )
 
 if __name__ == "__main__":
   try:
@@ -88,8 +112,7 @@ if __name__ == "__main__":
         print(get(int(sys.argv[2])).strip())
       elif sys.argv[1] == "p":
         print(add(sys.argv[2]))
-        delete(int(sys.argv[2])).strip()
-      elif sys.argv[1] == "-":
+      elif sys.argv[1] == "t":
         dir = pop()
         if dir:
           print(dir.strip())
@@ -97,6 +120,9 @@ if __name__ == "__main__":
         show()
       elif sys.argv[1] in ["h", "-h", "--help"]:
         usage()
+      elif os.path.isdir(sys.argv[1]):
+        print(add(sys.argv[1]))
+
   except RuntimeError as (strerr):
     sys.stderr.write("[error]: %s\n"%strerr)
     

@@ -102,14 +102,8 @@ export PS1
 
 function ds {
   dir=$(~/scripts/dirstack.py "$@")
-  if [[ $dir ]]; then
-    echo "cd $dir"
-    cd $dir
-  fi
+  test dir && (echo "cd $dir"; cd $dir)
 }
-
-
-
 
 
 export PATH=$PATH:/home/$(whoami)/scripts:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
