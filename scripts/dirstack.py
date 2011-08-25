@@ -53,18 +53,19 @@ def get(index):
 
 def show():
   lines=False
-  for line in fileinput.input(STACK_FILE):
-    lines = True
-    if os.path.isdir(cleanpath(line.strip())) and os.path.samefile(cleanpath(line.strip()), cleanpath(os.getcwd())):
-      sys.stderr.write("%6s * %s"%(("[%d]:"%fileinput.lineno()), line))
-    else:
-      sys.stderr.write("%6s   %s"%(("[%d]:"%fileinput.lineno()), line))
-  fileinput.close()
+  if os.path.isfile(STACK_FILE):
+    for line in fileinput.input(STACK_FILE):
+      lines = True
+      if os.path.isdir(cleanpath(line.strip())) and os.path.samefile(cleanpath(line.strip()), cleanpath(os.getcwd())):
+        sys.stderr.write("%6s * %s"%(("[%d]:"%fileinput.lineno()), line))
+      else:
+        sys.stderr.write("%6s   %s"%(("[%d]:"%fileinput.lineno()), line))
+    fileinput.close()
   if not lines:
-    sys.stderr.write("  [-]:   Empty Stack")
+    sys.stderr.write("  [-]:   Empty Stack\n")
 
 def usage():
-  print("%s [arg-ph] <directory>"%sys.argv[0])
+  sys.stderr.write("%s [arg-ph] <directory>\n"%sys.argv[0])
 
 if __name__ == "__main__":
   try:
@@ -97,7 +98,7 @@ if __name__ == "__main__":
       elif sys.argv[1] in ["h", "-h", "--help"]:
         usage()
   except RuntimeError as (strerr):
-    sys.stderr.write("[error]: %s"%strerr)
+    sys.stderr.write("[error]: %s\n"%strerr)
     
 
 
