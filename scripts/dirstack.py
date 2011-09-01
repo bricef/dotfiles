@@ -104,13 +104,13 @@ if __name__ == "__main__":
 
       if sys.argv[1] == "a":
         add(sys.argv[2])
-      elif sys.argv[1] == "rg":
+      elif sys.argv[1] in ["rg", "gr"]:
         print(delete(int(sys.argv[2])).strip())
       elif sys.argv[1] == "r":
         delete(int(sys.argv[2])).strip()
       elif sys.argv[1] == "g":
         print(get(int(sys.argv[2])).strip())
-      elif sys.argv[1] == "p":
+      elif sys.argv[1] in ["p", "ga", "ag"]:
         print(add(sys.argv[2]))
       elif sys.argv[1] == "t":
         dir = pop()

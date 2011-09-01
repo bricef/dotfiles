@@ -89,4 +89,18 @@ Possible future extensions to pinc.py
 (~> path/to/resource.ext <)
 (string> path/to/resource.ext <)
 
+Must note that the extensions could be implemented as 
+pluggable modules using the shell execution directive.
+
+ie, instead of:
+  (image> foo.png <)
+we'd have:
+  (!> pinc_img.py foo.png "caption" <)
+
+which wouldd work just as well.
+
+A useful extension would be to have inline includes:
+
+    Lorem ipsum dolor sit amet, consectetur ((> hello <))adipiscing elit. 
+    Quisque ante lacus, condimentum quis ultrices in, dapibus quis massa. 
 """
