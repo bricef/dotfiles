@@ -1,4 +1,14 @@
 #!/usr/bin/env python
+
+#
+# Suggestions for improvement:
+#  * Use a file in /tmp instead of disk to reduce access latency.
+#  * make the stack sortable in user defined way `ds mv 3,0`, `ds sw 3,0`
+#  * allow tagging of stack items: `ds g projectA`
+#
+
+
+
 import os,sys,shutil,fileinput
 
 STACK_FILE=os.path.expanduser("~/.config/bs-stack")
