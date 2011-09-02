@@ -40,6 +40,7 @@ pinc.py is one pass non-recursive. The included text is not parsed for pinc.py d
 
 import sys
 import re
+import os.path
 import shlex
 import subprocess as sp
 
@@ -52,13 +53,13 @@ if __name__ == "__main__":
     match_inc = re.match(inc_pat, line)
     if match_exe:
       space = match_exe.group(1)
-      exe = match_exe.group(2).strip()
+      exe = os.path.abspath(os.path.expanduser(match_exe.group(2).strip()))
       args = shlex.split(exe)
       sys.stdout.writelines(map(lambda x: space+x+"\n", sp.check_output(args).split("\n")))
     elif match_inc:
       space = match_inc.group(1)
       inc = match_inc.group(2).strip()
-      sys.stdout.writelines(map(lambda x: space+x, open(inc)))
+      sys.stdout.writelines(map(lambda x: space+x, open(os.path.abspath(os.path.expanduser(inc)))))
     else:
       sys.stdout.write(line)
 
