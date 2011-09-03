@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+cd /home/$(whoami)/Dropbox/websites/wiki-perso
+
+nohup gitit -p 8888 -f gitit.cfg > /dev/null &

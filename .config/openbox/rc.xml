@@ -345,6 +345,26 @@
       </action>
     </keybind>
     
+    <keybind key="W-Up">
+      <action name="MoveResizeTo">
+        <monitor>current</monitor>
+        <x>0</x>
+        <y>0</y>
+        <width>1280</width>
+        <height>392</height>
+      </action>
+    </keybind>
+  
+    <keybind key="W-Down">
+      <action name="MoveResizeTo">
+        <monitor>current</monitor>
+        <x>0</x>
+        <y>392</y>
+        <width>1280</width>
+        <height>392</height>
+      </action>
+    </keybind>
+
     <keybind key="W-Return">
       <action name="Reconfigure" />
     </keybind>
