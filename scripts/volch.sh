@@ -39,12 +39,15 @@ usage(){
 
 mute(){
     stor_vol=`cat $STORE`
-    if [ $stor_vol -gt 0 ]; then
-        let "vol = $stor_vol";
-        echo "0" >$STORE;
-    else
-        echo "$vol" > $STORE;
+    if [ $vol -gt 0 ]; then
+        echo "$vol" >$STORE ;
         let "vol = 0";
+    else
+      if [ $stor_vol -gt 0 ]; then
+        let "vol = $stor_vol";
+      else
+        let "vol = 50";
+      fi
     fi
 }
 
