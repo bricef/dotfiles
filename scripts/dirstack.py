@@ -64,15 +64,39 @@ def get(index):
 def show():
   lines=False
   if os.path.isfile(STACK_FILE):
+    try:
+      os.getcwd()
+    except OSError:
+      sys.stderr.write("**************************************************************\n")
+      sys.stderr.write("  The current working directory doesn't seem to exist. Wild!  \n")
+      sys.stderr.write("**************************************************************\n")
+      sys.exit(1)
+
     for line in fileinput.input(STACK_FILE):
-      lines = True
-      if os.path.isdir(cleanpath(line.strip())) and os.path.samefile(cleanpath(line.strip()), cleanpath(os.getcwd())):
-        sys.stderr.write("%6s * %s"%(("[%d]:"%fileinput.lineno()), line))
-      else:
-        sys.stderr.write("%6s   %s"%(("[%d]:"%fileinput.lineno()), line))
+      if line.strip():
+        lines = True
+        if os.path.isdir(cleanpath(line.strip())) and os.path.samefile(cleanpath(line.strip()), cleanpath(os.getcwd())):
+          sys.stderr.write("%6s * %s"%(("[%d]:"%fileinput.lineno()), line))
+        else:
+          sys.stderr.write("%6s   %s"%(("[%d]:"%fileinput.lineno()), line))
     fileinput.close()
   if not lines:
     sys.stderr.write("  [-]:   Empty Stack\n")
+
+def sort_stack():
+  if os.path.isfile(STACK_FILE):
+    fh = open(STACK_FILE, "r")
+    lines = fh.readlines()
+    fh.close()
+    fh = open(STACK_FILE, "w")
+    for line in sorted(lines):
+      if line.strip():
+        fh.write(line)
+    fh.close()
+
+
+    
+
 
 def usage():
   sys.stderr.write("""%s [option] <directory|num>
@@ -84,6 +108,7 @@ Where option is one of:
     p  <dir>        Push the directory <dir> to the top of the stack and print it to stdout
     t               Remove and get the top directory from the stack and print it to stdout (Top)
     s               Show the stack (default operation with no arguments
+    sort          Sort the stack
     h|-h|--help     Show this message
 
 If the first argument is a number <num>, it will try to get the directory at 
@@ -128,6 +153,8 @@ if __name__ == "__main__":
           print(dir.strip())
       elif sys.argv[1] == "s":
         show()
+      elif sys.argv[1] == "sort":
+        sort_stack()
       elif sys.argv[1] in ["h", "-h", "--help"]:
         usage()
       elif os.path.isdir(sys.argv[1]):
