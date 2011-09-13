@@ -87,9 +87,13 @@ case `hostname` in
     PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
     ;;
   "lappy"|"engbot"|"BHAC")
+    # [16:02][BHAC ~ ]{ master }>
+    # $ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$F_GREEN\h$BOLD$F_BLACK "
     PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
-    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/{ \[\e[1;31m\]\1 \[\e[1;30m\]}/"`'
+    PS1+="{ $BOLD$F_RED"
+    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
+    PS1+=" $BOLD$F_BLACK}"
     PS1+=">\n$END"
     PS1+="$BOLD$F_BLACK$ $END"
     ;;
