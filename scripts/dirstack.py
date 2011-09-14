@@ -94,9 +94,19 @@ def sort_stack():
         fh.write(line)
     fh.close()
 
-
-    
-
+def clean_stack():
+  if os.path.isfile(STACK_FILE):
+    fh = open(STACK_FILE, "r")
+    lines = fh.readlines()
+    fh.close()
+    fh = open(STACK_FILE, "w")
+    prev = ""
+    for line in sorted(lines):
+      if line.strip():
+        if not prev == line:
+          fh.write(line)
+          prev = line
+    fh.close()
 
 def usage():
   sys.stderr.write("""%s [option] <directory|num>
@@ -108,7 +118,8 @@ Where option is one of:
     p  <dir>        Push the directory <dir> to the top of the stack and print it to stdout
     t               Remove and get the top directory from the stack and print it to stdout (Top)
     s               Show the stack (default operation with no arguments
-    sort          Sort the stack
+    sort            Sort the stack
+    clean           Sort the stack and remove duplicate entries
     h|-h|--help     Show this message
 
 If the first argument is a number <num>, it will try to get the directory at 
@@ -153,6 +164,8 @@ if __name__ == "__main__":
           print(dir.strip())
       elif sys.argv[1] == "s":
         show()
+      elif sys.argv[1] == "clean":
+        clean_stack()
       elif sys.argv[1] == "sort":
         sort_stack()
       elif sys.argv[1] in ["h", "-h", "--help"]:
