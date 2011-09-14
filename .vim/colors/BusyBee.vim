@@ -57,5 +57,6 @@ hi pythonException guifg=#f00000 gui=none ctermfg=200
 hi pythonOperator  guifg=#7e8aa2 gui=none ctermfg=103
 hi pythonBuiltinFunction guifg=#009000 gui=none ctermfg=200
 hi pythonExClass   guifg=#009000 gui=none ctermfg=200
-hi PythonFunction	 cterm=bold ctermfg=39
+hi PythonFunction	 ctermfg=40
+hi PythonClass	 cterm=bold ctermfg=33
 
