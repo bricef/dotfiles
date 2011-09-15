@@ -4,3 +4,7 @@
 	email = brice.fernandes@gmail.com
 [color]
 	ui = auto
+[push]
+	default = tracking
+[alias]
+	tree = log --oneline --graph
