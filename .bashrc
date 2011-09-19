@@ -91,9 +91,11 @@ case `hostname` in
     # $ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$F_GREEN\h$BOLD$F_BLACK "
     PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
-    PS1+="{ $BOLD$F_RED"
+    PS1+='`test "$(git branch 2> /dev/null | grep ^*)" && echo "{ "`'
+    PS1+="$BOLD$F_RED"
     PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
-    PS1+=" $BOLD$F_BLACK}"
+    PS1+="$BOLD$F_BLACK"
+    PS1+='`test "$(git branch 2>/dev/null| grep ^*)" && echo " }"`'
     PS1+=">\n$END"
     PS1+="$BOLD$F_BLACK$ $END"
     ;;
