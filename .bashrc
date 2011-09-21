@@ -1,5 +1,7 @@
 # .bashrc
 
+EDITOR=vim
+
 shopt -s autocd
 shopt -s checkwinsize
 shopt -s histappend
@@ -89,7 +91,7 @@ case `hostname` in
   "sparrow"|"lappy"|"engbot"|"BHAC")
     # [16:02][BHAC ~ ]{ master }>
     # $ 
-    PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$F_GREEN\h$BOLD$F_BLACK "
+    PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
     PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
     PS1+='`test "$(git branch 2> /dev/null | grep ^*)" && echo "{ "`'
     PS1+="$BOLD$F_RED"
