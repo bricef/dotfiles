@@ -25,6 +25,7 @@ set ignorecase
 set smartcase
 setlocal wrap linebreak nolist
 setlocal display+=lastline
+set nowrap
 
 " Turn backup off 
 set nobackup
@@ -110,7 +111,7 @@ vnoremap <C-f> zf
 
 
 "C code refactoring commands
-command! Remiden s/\( *\).*\*/\1/
+command! Remiden s/\(\s*\).\{-}\*/\1/
 command! Reminit s/=.*;/;/
 
 
