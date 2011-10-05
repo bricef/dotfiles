@@ -9,3 +9,5 @@
 [alias]
 	tree = log --oneline --graph --decorate
 	qt = !git --no-pager log --oneline --graph --decorate -10
+[branch]
+	autosetuprebase = always
