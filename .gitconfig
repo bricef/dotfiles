@@ -7,5 +7,5 @@
 [push]
 	default = tracking
 [alias]
-	tree = log --oneline --graph
-	qt = !git --no-pager log --oneline --graph -10
+	tree = log --oneline --graph --decorate
+	qt = !git --no-pager log --oneline --graph --decorate -10

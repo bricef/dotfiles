@@ -1,0 +1,10 @@
+*.netrwhist
+.ccache
+.gconf
+.gnome2
+.gnupg
+.icedtea
+.ipython
+.ivec
+.kde
+.libreoffice
