@@ -101,6 +101,12 @@ case `hostname` in
     PS1+=">\n$END"
     PS1+="$BOLD$F_BLACK$ $END"
     ;;
+  "LOMOND")
+    EDITOR=nano
+    PS1="\u@$F_GREEN\h$END{$F_RED"
+    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
+    PS1+="$END}:\w$ "
+    ;;
   *)
     PS1="\u@\h:\w$ "
     ;;
