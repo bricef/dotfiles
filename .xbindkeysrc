@@ -29,9 +29,9 @@
 "xbindkeys_show" 
   control+shift + q
 
-"xmessage -center \"xbindkeys working\""
-    m:0x5 + c:28
-    Control+Shift + t
+#"xmessage -center \"xbindkeys working\""
+#    m:0x5 + c:28
+#    Control+Shift + t
 
 ### SHORTCUTS ###
 "gnome-terminal --working-directory=/home/bfer/"
@@ -40,6 +40,8 @@
 "~/scripts/brice-menu.sh"
   Alt + r
 
+"~/scripts/winselect.sh"
+  Alt + w
 
 #
 # MANUAL MANAGMENT (not needed on ubuntu)
