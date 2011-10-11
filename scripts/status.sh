@@ -39,7 +39,7 @@ status() {
     '| E:' $IP_eth0 \
     '| W:' $IP_wlan0 \
     '| bat:' $(/home/brice/scripts/bat.sh)  \
-    '| up:' $(uptime | awk '{print $3" "$4" "$5}') \
+    '| up:' $(uptime | tr -d ','|awk '{print $3" "$4" "$5}') \
     '|' $(date +"%a %d %b, %H:%M") '|' 
 }
 
