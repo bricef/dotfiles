@@ -43,6 +43,9 @@
 "~/scripts/winselect.sh"
   Alt + w
 
+"~/scripts/chwintitle.sh"
+  Alt + t
+
 #
 # MANUAL MANAGMENT (not needed on ubuntu)
 #
