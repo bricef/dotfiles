@@ -46,6 +46,9 @@
 "~/scripts/chwintitle.sh"
   Alt + t
 
+"~/scripts/logtime.sh"
+  Alt + l
+
 #
 # W + keypad puts window in appropriate corner/side.
 #

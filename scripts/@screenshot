@@ -1,0 +1,12 @@
+#!/bin/bash
+
+mkdir -p ~/Screenshots
+
+RESIZE=""
+
+if [ $1 ]; then
+  RESIZE=$1
+fi
+
+import -window root $RESIZE ~/screenshots/$(date "+%Y%m%d_%H%M%S").png
+
