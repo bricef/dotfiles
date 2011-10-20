@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DESKTOP=$(wmctrl -d | grep "\*" | awk '{print $1}')
 
 while true; do   
+  DESKTOP=$(wmctrl -d | grep "\*" | awk '{print $1}')
   wmctrl -l \
   | awk -v desk=$DESKTOP '{if($2 == desk) print substr($0, index($0,$4)) }' \
   | while read line; do
