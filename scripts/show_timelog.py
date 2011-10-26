@@ -9,6 +9,15 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
+class UTC(datetime.tzinfo):
+    """UTC"""
+    def utcoffset(self, dt):
+        return datetime.timedelta(0)
+    def tzname(self, dt):
+        return "UTC"
+    def dst(self, dt):
+        return datetime.timedelta(0)
+
 activities = set()
 raw = []
 
@@ -40,7 +49,8 @@ def raw2intervals(raw):
   return intervals
 
 def intervals2num(intervals):
-  return [ (i[0], i[1]) for i in intervals ]
+  return [ (mpl.dates.date2num(i[0]), mpl.dates.date2num(i[1]-i[0]) ) 
+            for i in intervals ]
 
 
 def daygraph(raw,activities):
@@ -60,10 +70,18 @@ def daygraph(raw,activities):
   ax.grid(True)
 
 
-  ax.xaxis.set_major_formatter(mpl.dates.DateFormatter("%Y-%m"))
+#  ax.xaxis.set_major_formatter(mpl.dates.DateFormatter("%Y-%m"))
 #  ax.xaxis.set_minor_formatter(None)
 
   plt.show()
+
+  
+
+date = datetime.datetime(2011,10,25,12,00,00,00,UTC())
+
+print date
+print mpl.dates.date2num(date)
+print mpl.dates.num2epoch(mpl.dates.date2num(date))
 
 
 daygraph(raw, activities)
