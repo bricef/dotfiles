@@ -10,6 +10,6 @@ while true; do
     done
     echo "|"
   sleep 1
- done | dzen2 -p -tw 1920 -x 0 -y 0 -ta c -fn '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*' -fg "#ffffff" -bg "#000000"
+ done | dzen2 -p -tw 1220 -x 350 -y 0 -ta c -fn '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*' -fg "#ffffff" -bg "#000000"
   
 
