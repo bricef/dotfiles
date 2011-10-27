@@ -49,28 +49,45 @@ def raw2intervals(raw):
   return intervals
 
 def intervals2num(intervals):
-  return [ (mpl.dates.date2num(i[0]), mpl.dates.date2num(i[1]-i[0]) ) 
-            for i in intervals ]
-
+  taskdir = {}
+  for i in intervals:
+    if i[2] in taskdir:
+      taskdir[i[2]].append((mpl.dates.date2num(i[0]), 
+                         mpl.dates.date2num(i[1])-mpl.dates.date2num(i[0]))) 
+    else:
+      taskdir[i[2]]=[] 
+      taskdir[i[2]].append((mpl.dates.date2num(i[0]), 
+                         mpl.dates.date2num(i[1])-mpl.dates.date2num(i[0]))) 
+  return taskdir
 
 def daygraph(raw,activities):
   fig = plt.figure()
   ax = fig.add_subplot(111)
   
-  print raw
+# print raw
 
   intervals = raw2intervals(raw)
-  print intervals
+#  print intervals
   
-  nums = intervals2num(intervals)
-  print nums
+  categories = intervals2num(intervals)
+  print categories
   
-  ax.broken_barh(nums, (1.0,1.0))
-  ax.set_ylim(0,3)
+  height=1.0
+  catlabels=[]
+  yticks=[]
+  for category in categories.keys():
+    ax.broken_barh(categories[category], (height,1.0))
+    catlabels.append(category)
+    yticks.append(height+0.5)
+    height += 1
+# catlabels.reverse()
+#ax.set_ylim(0,3)
   ax.grid(True)
+  ax.set_yticks(yticks)
+  ax.set_yticklabels(catlabels)
 
 
-#  ax.xaxis.set_major_formatter(mpl.dates.DateFormatter("%Y-%m"))
+  ax.xaxis.set_major_formatter(mpl.dates.DateFormatter("%H:%M"))
 #  ax.xaxis.set_minor_formatter(None)
 
   plt.show()
