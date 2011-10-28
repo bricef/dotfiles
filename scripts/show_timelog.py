@@ -92,14 +92,5 @@ def daygraph(raw,activities):
 
   plt.show()
 
-  
-
-date = datetime.datetime(2011,10,25,12,00,00,00,UTC())
-
-print date
-print mpl.dates.date2num(date)
-print mpl.dates.num2epoch(mpl.dates.date2num(date))
-
-
 daygraph(raw, activities)
 
