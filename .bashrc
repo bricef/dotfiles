@@ -88,7 +88,7 @@ case `hostname` in
   "bob")
     PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
     ;;
-  "sparrow"|"lappy"|"engbot"|"BHAC")
+  "element-sim"|"sparrow"|"lappy"|"engbot"|"BHAC")
     # [16:02][BHAC ~ ]{ master }>
     # $ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
