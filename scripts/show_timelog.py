@@ -31,11 +31,6 @@ for line in fileinput.input():
   activities.add(activity)
 
 
-def filterfor(activity):
-  def filter(item):
-    return item is activity
-
-
 def raw2intervals(raw):
   data = sorted(raw, key=lambda datum: datum[0]) 
   intervals = []
@@ -64,13 +59,14 @@ def daygraph(raw,activities):
   fig = plt.figure()
   ax = fig.add_subplot(111)
   
-# print raw
-
+#  print raw
+ 
+  
   intervals = raw2intervals(raw)
 #  print intervals
   
   categories = intervals2num(intervals)
-  print categories
+#  print categories
   
   height=1.0
   catlabels=[]
@@ -89,6 +85,10 @@ def daygraph(raw,activities):
 
   ax.xaxis.set_major_formatter(mpl.dates.DateFormatter("%H:%M"))
 #  ax.xaxis.set_minor_formatter(None)
+
+  total = raw[-1][0] - raw[0][0] #timedelta
+  fig.text(0.75,0.11, str(total), transform = ax.transAxes, size="x-large", color="r")
+  
 
   plt.show()
 
