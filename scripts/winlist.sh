@@ -11,12 +11,12 @@ while true; do
     WINID=$(echo $line | awk '{print $1}' )
     TITLE=$(echo $line | awk '{print substr($0, index($0,$4))}' | sed 's|\(.\{10\}\).*|\1|g'  )
     if [ "$ACTIVE" = "$WINID" ]; then
-      echo -n "-^bg(red) $TITLE ^bg(black)"
+      echo -n "|^bg(red) $TITLE ^bg(black)"
     else 
-      echo -n "- $TITLE "
+      echo -n "| $TITLE "
     fi
     done
-    echo "-"
+    echo "|"
   sleep 1
  done | dzen2 -p -tw 1220 -x 350 -y 0 -ta c -fn '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*' -fg "#ffffff" -bg "#000000"
  

@@ -38,7 +38,7 @@ alias +x="chmod +x"
 alias lsa="ls -iablhQ"
 alias lsc="ls *.c -1"
 alias lsh="ls -1 *.h"
-
+alias psg="ps aux | grep "
 
 export LS_COLORS="di=35"
 
@@ -120,9 +120,8 @@ function ds {
 }
 
 
-export PATH=$PATH:/home/$(whoami)/scripts:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
+export PATH=$PATH:/home/$(whoami)/scripts:/var/lib/gems/1.8/bin:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
 
-source ~/scripts/ems-env.sh
 alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
 alias vssetup="sudo /usr/local/vectastar/bin/vssetup"
 export LC_ALL=en_GB.UTF-8
