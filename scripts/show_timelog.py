@@ -4,6 +4,7 @@
 import fileinput
 import re
 import datetime
+import pprint
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -55,42 +56,68 @@ def intervals2num(intervals):
                          mpl.dates.date2num(i[1])-mpl.dates.date2num(i[0]))) 
   return taskdir
 
-def daygraph(raw,activities):
-  fig = plt.figure()
-  ax = fig.add_subplot(111)
-  
-#  print raw
- 
-  
+def showgraph(raw,activities):
   intervals = raw2intervals(raw)
-#  print intervals
-  
   categories = intervals2num(intervals)
-#  print categories
   
+  # ====================================================================
+  
+  fig = plt.figure(figsize=(8,4))
+  
+  # ====================================================================
+  
+  ax1 = fig.add_subplot(121)
   height=1.0
   catlabels=[]
   yticks=[]
   for category in categories.keys():
-    ax.broken_barh(categories[category], (height,1.0))
+    ax1.broken_barh(categories[category], (height,1.0))
     catlabels.append(category)
     yticks.append(height+0.5)
     height += 1
-# catlabels.reverse()
-#ax.set_ylim(0,3)
-  ax.grid(True)
-  ax.set_yticks(yticks)
-  ax.set_yticklabels(catlabels)
-
-
-  ax.xaxis.set_major_formatter(mpl.dates.DateFormatter("%H:%M"))
-#  ax.xaxis.set_minor_formatter(None)
-
+  ax1.grid(True)
+  ax1.set_yticks(yticks)
+  ax1.set_yticklabels(catlabels)
+  ax1.xaxis.set_major_formatter(mpl.dates.DateFormatter("%H:%M"))
   total = raw[-1][0] - raw[0][0] #timedelta
-  fig.text(0.75,0.11, str(total), transform = ax.transAxes, size="x-large", color="r")
-  
 
+  # ====================================================================
+
+  times = {}
+  for category in categories.keys():
+    if category != "@end":
+      times[category] = 24.0*sum([span[1] for span in categories[category] ])
+  
+  total_time = sum( [times[category] for category in times.keys()] )
+  
+  print("total: %f"%(total_time))
+  pprint.pprint(times)
+  
+  # ====================================================================
+  
+  ax = fig.add_subplot(122)
+  ax.pie(times.values(), labels=times.keys())
+
+  # ====================================================================
+
+  fig.text(0.75,0.11, str(total), transform = ax1.transAxes, size="x-large", color="r")
+  
   plt.show()
 
-daygraph(raw, activities)
+
+
+
+
+times = {
+ 'BUGFIXING': 44.2,
+ '@misc':25.0,
+ '@meeting': 21.7,
+ '@slack': 15.0,
+ '@tooling': 4.4,
+ 'WIN EMS': 35.7,
+ 'Mock SNMP': 65.71666665840894,
+ 'ADMIN': 8.5
+}
+
+showgraph(raw, activities)
 
