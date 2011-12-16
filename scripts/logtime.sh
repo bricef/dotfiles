@@ -31,6 +31,9 @@ else
     "@edit")
       gnome-terminal --working-directory=/home/$(whoami)/ -e "$EDITOR $(readlink -f $LOGFILE)"
       ;;
+    "@activ")
+      gnome-terminal --working-directory=/home/$(whoami)/ -e "$EDITOR $(readlink -f $ACTIVFILE)"
+      ;;
     "")
       #do nothing
       ;;
