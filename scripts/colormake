@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cat - \
+ | hilite.sh -r "^.*warning:.*" -f yellow -B \
+ | hilite.sh -r "^.*error:.*" -f red -B \
+ | hilite.sh -r "^make.*[Ee]rror.*" -f red -B \
+ | hilite.sh -r "^make.*" -f magenta

@@ -12,5 +12,8 @@ if [ $1 ]; then
   RESIZE="-resize $SIZE"
 fi
 
-import -window root $RESIZE $DIR/$(date "+%Y%m%d_%H%M%S")_$SIZE.png
+# scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~//'
+# Could be used to post process image?
+
+scrot $DIR/$(date "+%Y%m%d_%H%M%S")_$SIZE.png
 

@@ -1,6 +1,8 @@
 # .bashrc
 
-
+# propagate error status along pipes
+# useful for the "foo | bar | buzz && hello" construct
+set -o pipefail 
 
 EDITOR=vim
 
@@ -90,7 +92,7 @@ case `hostname` in
   "bob")
     PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
     ;;
-  "element-sim"|"sparrow"|"lappy"|"engbot"|"BHAC")
+  "element-sim"|"sparrow"|"lappy"|"engbot"|"BHAC"|"aboyne")
     # [16:02][BHAC ~ ]{ master }>
     # $ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
@@ -133,7 +135,6 @@ function ems-env {
   export EMS_ALARM_ROOT=$EMS_ROOT/alarms
   export EMS_DATA_ROOT=$EMS_ROOT/data
 }
-
 
 export PATH=$PATH:/home/$(whoami)/scripts:/var/lib/gems/1.8/bin:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
 
