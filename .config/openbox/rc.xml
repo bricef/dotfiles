@@ -144,7 +144,7 @@
      Many programs reserve space automatically, but you can use this in other
      cases. -->
   <margins>
-    <top>0</top>
+    <top>15</top>
     <bottom>15</bottom>
     <left>0</left>
     <right>0</right>
@@ -335,48 +335,8 @@
       <action name="ToggleMaximizeFull"/>
     </keybind>
     
-    <keybind key="W-Right">
-      <action name="MoveResizeTo">
-        <monitor>current</monitor>
-        <x>639</x>
-        <y>0</y>
-        <width>640</width>
-        <height>785</height>
-      </action>
-    </keybind>
-    
-    <keybind key="W-Up">
-      <action name="MoveResizeTo">
-        <monitor>current</monitor>
-        <x>0</x>
-        <y>0</y>
-        <width>1280</width>
-        <height>392</height>
-      </action>
-    </keybind>
-  
-    <keybind key="W-Down">
-      <action name="MoveResizeTo">
-        <monitor>current</monitor>
-        <x>0</x>
-        <y>392</y>
-        <width>1280</width>
-        <height>392</height>
-      </action>
-    </keybind>
-
     <keybind key="W-Return">
       <action name="Reconfigure" />
-    </keybind>
-
-    <keybind key="W-Left">
-      <action name="MoveResizeTo">
-        <monitor>current</monitor>
-        <x>0</x>
-        <y>0</y>
-        <width>640</width>
-        <height>785</height>
-      </action>
     </keybind>
 
     <keybind key="W-d">
@@ -419,7 +379,7 @@
         <command>kfmclient openProfile filemanagement</command>
       </action>
     </keybind>
-  </keyboard>
+   </keyboard>
   <mouse>
     <dragThreshold>8</dragThreshold>
     <!-- number of pixels the mouse must move before a drag begins -->

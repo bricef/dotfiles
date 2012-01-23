@@ -1,11 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/home/bfer/files/branches/vs3'
-let g:netrw_dirhist_2='/home/bfer/Ubuntu One/clojure-noir/my-website/test'
-let g:netrw_dirhist_3='/home/bfer/files/branches/vs3/nms-manager-apps/vscpe'
-let g:netrw_dirhist_4='/home/bfer/files/branches/vs3/nms-manager-apps/vsview'
-let g:netrw_dirhist_5='/eng/development/bfer/MSVC'
-let g:netrw_dirhist_6='/export/vs3/nms-manager-apps'
-let g:netrw_dirhist_7='/export/vs3/nms-manager-apps/WINDOWS'
-let g:netrw_dirhist_8='/export/vs3/nms-manager-apps/libgrok'
-let g:netrw_dirhist_9='/export/RC-1_work.git'
+let g:netrw_dirhist_cnt =0

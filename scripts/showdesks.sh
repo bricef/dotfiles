@@ -16,4 +16,4 @@ while true; do
 
     echo $desktops | sed "s/ ${current} /^bg(red) ${current} ^bg(black)/"
     sleep 1
-done | dzen2 -p -tw 210 -x 0 -ta l -fn '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*' -y 785 -fg "#ffffff" -bg "#000000"
+done | dzen2 -p -tw 300 -x 0 -ta l -fn '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*' -y 1065 -fg "#ffffff" -bg "#000000"
