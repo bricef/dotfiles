@@ -101,6 +101,15 @@ case `hostname` in
     PS1+=">\n$END"
     PS1+="$BOLD$F_BLACK$ $END"
     ;;
+  "prometheus")
+    # [16:02][BHAC ~ ]==>
+    # $ 
+    PS1="$F_BLUE[$BOLD\A$END$F_BLUE][$END$BOLD$F_MAGENTA\h$END$F_BLUE "
+    PS1+="\w ]"
+    PS1+="==>\n$END"
+    PS1+="$F_BLUE$ $END"
+    ;;
+
   *)
     PS1="\u@\h:\w$ "
     ;;

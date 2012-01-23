@@ -51,6 +51,17 @@ bgr=""
 fgr=""
 post=$END
 
+show(){
+echo -e "black:  $F_BLACK normal $BOLD bold $END $B_BLACK background $END"
+echo -e "red:    $F_RED normal $BOLD bold $END $B_RED background $END"
+echo -e "green:  $F_GREEN normal $BOLD bold $END $B_GREEN background $END"
+echo -e "yellow: $F_YELLOW normal $BOLD bold $END $B_YELLOW background $END"
+echo -e "blue:   $F_BLUE normal $BOLD bold $END $B_BLUE background $END"
+echo -e "magenta:$F_MAGENTA normal $BOLD bold $END $B_MAGENTA background $END"
+echo -e "cyan:   $F_CYAN normal $BOLD bold $END $B_CYAN background $END"
+echo -e "white:  $F_WHITE normal $BOLD bold $END $B_WHITE background $END"
+}
+
 color_fg(){
 	case $1 in
 		black)pre=$pre$F_BLACK;;
@@ -88,6 +99,7 @@ usage(){
 	echo "-f color    Set the foreground color"
 	echo "-b color    Set the background color"
 	echo "-B          Make text bold"
+  echo "-s          Show the colors"
   echo ""
 	echo "Colors can be any of 'red' 'green' 'yellow' 'blue' 'magenta' 'cyan'"
 	echo "'white' and 'black'. The default is a bold red foreground on default"
@@ -95,13 +107,14 @@ usage(){
   echo "    hilite.sh -B -f red "
 }
 
-while getopts "f:b:r:Bh" flag
+while getopts "f:b:r:Bhs" flag
 do
 	case "$flag" in 
 		f) color_fg $OPTARG;;
 		b) color_bg $OPTARG;;
     B) bold=$BOLD;;
 		r) regex=$OPTARG;;
+    s) show; exit 0;;
 		h) usage; exit 0;;
     *) usage; exit 0;;
 	esac
