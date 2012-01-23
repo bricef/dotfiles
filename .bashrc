@@ -37,6 +37,7 @@ alias ll="ls -l"
 alias la="ls -a"
 alias lla="ls -la"
 alias l="ls"
+alias :e="vim"
 alias +x="chmod +x"
 # When you feel desperate
 alias lsa="ls -iablhQ"
@@ -92,7 +93,7 @@ case `hostname` in
   "bob")
     PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
     ;;
-  "element-sim"|"sparrow"|"lappy"|"engbot"|"BHAC"|"aboyne")
+  "element-sim"|"sparrow"|"lappy"|"engbot"|"BHAC"|"aboyne"|"vsbldhost")
     # [16:02][BHAC ~ ]{ master }>
     # $ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
