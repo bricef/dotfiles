@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rdesktop -D -K -g 1920x1050 -d cbl -u bfer $1
+

@@ -1,5 +1,6 @@
 *.netrwhist
 .ccache
+.cache
 .gconf
 .gnome2
 .gnupg
@@ -8,3 +9,24 @@
 .ivec
 .kde
 .libreoffice
+.fontconfig
+.icedteaplugin
+.emacs
+.local
+.java
+.m2
+.mozilla
+.mutt
+.netbeans
+.thumbnails
+.thunderbird
+.macromedia
+.webex
+.ssh
+.umit
+.wireshark
+Downloads
+Ubuntu One
+mingw32
+.Skype
+.adobe

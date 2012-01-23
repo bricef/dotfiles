@@ -1,0 +1,12 @@
+#!/bin/bash
+
+FILE=`mktemp`
+
+if [ "$1" ]; then
+  pandoc --from=markdown --to=html -s -o $FILE $1
+  chromium-browser $FILE
+else
+  echo "usage: viewmd [FILE]"
+fi
+
+

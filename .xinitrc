@@ -11,6 +11,9 @@ xbindkeys &
 . /home/brice/scripts/volch.sh -s 50 &
 . /home/brice/scripts/status.sh --dzen &
 . /home/brice/scripts/showdesks.sh --dzen &
+. /home/bfer/scripts/winlist.sh &
+. /home/bfer/scripts/workingon.sh &
+. /home/bfer/scripts/top-left.sh &
 
 
 exec openbox-session

@@ -29,9 +29,9 @@
 "xbindkeys_show" 
   control+shift + q
 
-"xmessage -center \"xbindkeys working\""
-    m:0x5 + c:28
-    Control+Shift + t
+#"xmessage -center \"xbindkeys working\""
+#    m:0x5 + c:28
+#    Control+Shift + t
 
 ### SHORTCUTS ###
 "gnome-terminal --working-directory=/home/bfer/"
@@ -39,6 +39,47 @@
 
 "~/scripts/brice-menu.sh"
   Alt + r
+
+"~/scripts/winselect.sh"
+  Alt + w
+
+"~/scripts/chwintitle.sh"
+  Alt + t
+
+"~/scripts/logtime.sh"
+  Alt + l
+
+
+
+#
+# W + keypad puts window in appropriate corner/side.
+#
+"wmctrl -r :ACTIVE: -e 0,0,15,960,525"
+  Mod4 + KP_Home
+
+"wmctrl -r :ACTIVE: -e 0,0,15,1920,525"
+  Mod4 + KP_Up
+
+"wmctrl -r :ACTIVE: -e 0,960,15,960,525"
+  Mod4 + KP_Prior
+
+"wmctrl -r :ACTIVE: -e 0,0,15,960,1050"
+  Mod4 + KP_Left
+
+#"wmctrl -r :ACTIVE: -e 0,0,15,1920,1050"
+#  Mod4 + KP_Begin
+
+"wmctrl -r :ACTIVE: -e 0,960,15,960,1050"
+  Mod4 + KP_Right
+
+"wmctrl -r :ACTIVE: -e 0,0,540,960,525"
+  Mod4 + KP_End
+
+"wmctrl -r :ACTIVE: -e 0,0,540,1920,525"
+  Mod4 + KP_Down
+
+"wmctrl -r :ACTIVE: -e 0,960,540,960,525"
+  Mod4 + KP_Next
 
 
 #

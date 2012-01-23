@@ -1,5 +1,9 @@
 # .bashrc
 
+# propagate error status along pipes
+# useful for the "foo | bar | buzz && hello" construct
+set -o pipefail 
+
 EDITOR=vim
 
 shopt -s autocd
@@ -38,7 +42,7 @@ alias +x="chmod +x"
 alias lsa="ls -iablhQ"
 alias lsc="ls *.c -1"
 alias lsh="ls -1 *.h"
-
+alias psg="ps aux | grep "
 
 export LS_COLORS="di=35"
 
@@ -88,7 +92,7 @@ case `hostname` in
   "bob")
     PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
     ;;
-  "sparrow"|"lappy"|"engbot"|"BHAC")
+  "element-sim"|"sparrow"|"lappy"|"engbot"|"BHAC"|"aboyne")
     # [16:02][BHAC ~ ]{ master }>
     # $ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
@@ -109,7 +113,12 @@ case `hostname` in
     PS1+="==>\n$END"
     PS1+="$F_BLUE$ $END"
     ;;
-
+  "LOMOND")
+    EDITOR=nano
+    PS1="\u@$F_GREEN\h$END{$F_RED"
+    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
+    PS1+="$END}:\w$ "
+    ;;
   *)
     PS1="\u@\h:\w$ "
     ;;
@@ -122,10 +131,21 @@ function ds {
   test $dir && echo "cd $dir" && cd $dir
 }
 
+function ems-env {
+  PREFIX=$(pwd)
+  export LD_LIBRARY_PATH=$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/lib
+  export PATH=$PREFIX/nms-manager-apps/scripts:$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/bin:$PATH
+  export EMS_BINARY_ROOT=$PREFIX/nms-manager-apps/scripts
+  export EMS_SYSTEM_ROOT=$PREFIX/INSTALLROOT/
+  
+  export EMS_ROOT=/home/bfer/files/vnms_data
+  export EMS_CONFIG_ROOT=$EMS_ROOT/conf
+  export EMS_ALARM_ROOT=$EMS_ROOT/alarms
+  export EMS_DATA_ROOT=$EMS_ROOT/data
+}
 
-export PATH=$PATH:/home/$(whoami)/scripts:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
+export PATH=$PATH:/home/$(whoami)/scripts:/var/lib/gems/1.8/bin:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
 
-source ~/scripts/ems-env.sh
 alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
 alias vssetup="sudo /usr/local/vectastar/bin/vssetup"
 export LC_ALL=en_GB.UTF-8

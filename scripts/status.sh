@@ -38,8 +38,8 @@ status() {
     '|' $(sensors | grep temp1 | awk '{print $2}'| grep -Eo "[0-9+.]"|tr -d "\n") 'C' \
     '| E:' $IP_eth0 \
     '| W:' $IP_wlan0 \
-    '| up:' $(uptime | awk '{print $3}'| grep -o "[([:digit:]+:[:digit:]+)]" | tr -d [:space:]) \
     '| bat:' $(/home/brice/scripts/bat.sh)  \
+    '| up:' $(uptime | tr -d ','|awk '{print $3" "$4" "$5}') \
     '|' $(date +"%a %d %b, %H:%M") '|' 
 }
 

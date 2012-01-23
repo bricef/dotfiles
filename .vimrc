@@ -13,10 +13,14 @@ endif
 
 "Tab and indent
 set autoindent
-set cindent
+set smartindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+autocmd FileType python set nocindent
+autocmd FileType python set nosmartindent 
+
 
 "various settings
 set showmode
@@ -40,6 +44,7 @@ set showmode
 
 
 "moving between buffers
+set autowrite " writes buffer on next/previous
 nnoremap <C-Left> :bprevious<CR>
 nnoremap <C-Right> :bnext<CR>
 
