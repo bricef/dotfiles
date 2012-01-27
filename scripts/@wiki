@@ -5,5 +5,5 @@ cd /home/$(whoami)/Dropbox/websites/wiki-perso
 
 nohup gitit -p 8888 -f gitit.cfg > /dev/null &
 
-chromium --app=http://127.0.0.1:8888
+firefox --new-window http://127.0.0.1:8888
 
