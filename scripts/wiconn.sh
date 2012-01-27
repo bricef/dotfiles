@@ -7,7 +7,7 @@ ESSID=$1
 
 LOGFILE=~/.wpa.log
 
-MAC_H=00:18:de:39:0a:a0
+MAC_H=00:17:de:43:f5:a9
 
 tell (){
   echo -e "${col2}::${col1} $@\e[m"
@@ -20,7 +20,7 @@ tell Bringing down wlan
 sudo ifconfig wlan0 down
 
 tell Correcting MAC address
-sudo ifconfig wlan0 hw ether $MAC_H
+#sudo ifconfig wlan0 hw ether $MAC_H
 
 tell Bringing wlan0 up
 sudo ifconfig wlan0 up

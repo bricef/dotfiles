@@ -144,7 +144,7 @@
      Many programs reserve space automatically, but you can use this in other
      cases. -->
   <margins>
-    <top>15</top>
+    <top>0</top>
     <bottom>15</bottom>
     <left>0</left>
     <right>0</right>
@@ -329,9 +329,51 @@
     <keybind key="A-m">
       <action name="ToggleMaximizeFull"/>
     </keybind>
+    
+    <keybind key="W-Right">
+      <action name="MoveResizeTo">
+        <monitor>current</monitor>
+        <x>683</x>
+        <y>0</y>
+        <width>683</width>
+        <height>753</height>
+      </action>
+    </keybind>
+    
+    <keybind key="W-Up">
+      <action name="MoveResizeTo">
+        <monitor>current</monitor>
+        <x>0</x>
+        <y>0</y>
+        <width>1367</width>
+        <height>383</height>
+      </action>
+    </keybind>
+  
+    <keybind key="W-Down">
+      <action name="MoveResizeTo">
+        <monitor>current</monitor>
+        <x>0</x>
+        <y>376</y>
+        <width>1367</width>
+        <height>384</height>
+      </action>
+    </keybind>
+
     <keybind key="W-Return">
       <action name="Reconfigure"/>
     </keybind>
+
+    <keybind key="W-Left">
+      <action name="MoveResizeTo">
+        <monitor>current</monitor>
+        <x>0</x>
+        <y>0</y>
+        <width>683</width>
+        <height>753</height>
+      </action>
+    </keybind>
+
     <keybind key="W-d">
       <action name="ToggleShowDesktop"/>
     </keybind>

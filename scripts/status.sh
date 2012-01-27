@@ -39,7 +39,7 @@ elif [[ $1 == --dzen ]]; then
     while true; do 
         status
         sleep 1
-    done | dzen2 -tw 1920 -x 1920 -ta r -fn '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*' -y 1065 -fg "#ffffff" -bg "#000000" # "*terminus*medium*-14-*"
+    done | dzen2 -tw 1156 -x 210 -ta r -fn '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*' -y 752 -fg "#ffffff" -bg "#000000" # "*terminus*medium*-14-*"
 else
     echo "invoke with --string or --dzen"
 fi;

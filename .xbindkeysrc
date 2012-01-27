@@ -116,12 +116,10 @@
 #
 #
 #### Volume managment ###
-"/home/brice/scripts/volch.sh -r"
-    m:0x8 + c:111
+"sudo /home/brice/scripts/volch.sh -r"
     Alt + Up
-#
-"/home/brice/scripts/volch.sh -l"
-    m:0x8 + c:116
+
+"sudo /home/brice/scripts/volch.sh -l"
     Alt + Down
 #
 #### MPC control ###
