@@ -10,11 +10,12 @@ SELF_INVOKE=$0
 
 BACKLOG_FILE="backlog.txt"
 DONE_FILE="done.txt"
+TEMPLATE="/home/$(whoami)/scripts/template.pandoc"
 
 function convert_stream {
   cat - \
     | pinc.py \
-    | pandoc -f markdown -t html \
+    | pandoc -f markdown -t html\
     | cat $RESOURCES_DIR/top.html - \
     | cat - <(echo $FOOTER) $RESOURCES_DIR/tail.html \
     | tidy -asxml 2>/dev/null \
