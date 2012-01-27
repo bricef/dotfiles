@@ -101,7 +101,7 @@ def showgraph(raw,activities):
   # ====================================================================
 
   fig.text(0.75,0.11, str(total), transform = ax1.transAxes, size="x-large", color="r")
-  fig.text(0.75,0.05, "%d:%d hours"%(total_time, (total_time-int(total_time))*60 ), transform = ax1.transAxes, size="x-large", color="r")
+  fig.text(0.75,0.05, "%d:%02d hours"%(total_time, (total_time-int(total_time))*60 ), transform = ax1.transAxes, size="x-large", color="r")
   
   plt.show()
 
