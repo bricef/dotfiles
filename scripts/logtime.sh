@@ -34,6 +34,10 @@ else
     "@activ")
       gnome-terminal --working-directory=/home/$(whoami)/ -e "$EDITOR $(readlink -f $ACTIVFILE)"
       ;;
+    "@week")
+      cd $LOGDIR
+      cat `ls -1 | sort -n | tail -5` <(echo $prefix NOW ) | $SHOWSCRIPT
+      ;;
     "")
       #do nothing
       ;;
