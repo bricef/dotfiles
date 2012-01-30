@@ -2,11 +2,16 @@
 
 
 import fileinput
+import sys
 import re
 import datetime
 import pprint
 
 import matplotlib as mpl
+
+if len(sys.argv) > 1 and sys.argv[1] == "--save":
+  mpl.use("Agg")
+
 import matplotlib.pyplot as plt
 
 
@@ -106,19 +111,8 @@ def showgraph(raw,activities):
   plt.show()
 
 
-
-
-
-times = {
- 'BUGFIXING': 44.2,
- '@misc':25.0,
- '@meeting': 21.7,
- '@slack': 15.0,
- '@tooling': 4.4,
- 'WIN EMS': 35.7,
- 'Mock SNMP': 65.71666665840894,
- 'ADMIN': 8.5
-}
-
-showgraph(raw, activities)
+if __name__ == "__main__":
+  if len(sys.argv)>1 and sys.argv[1] == "--save": 
+    pass
+  showgraph(raw, activities)
 
