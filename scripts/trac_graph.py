@@ -7,6 +7,8 @@ import datetime
 import pickle
 import os.path
 
+from functools import partial
+
 reports = {
     "bug_count" : {
         "ymax"    : None,
@@ -105,25 +107,81 @@ def update(query):
   graph_data(log.log, query["queries"], file=query["graph"], baseline=query["ymin"], max=query["ymax"])
   log.save()
 
+def colorgen():
+  colors = ["#ff0000", "#00ff00", "#0000ff"]
+  co = 0
+  while True:
+    yield colors[co % len(colors)]
+    co= co+1
+
+
+def do_csv_input():
+  import fileinput
+  import csv
+  reader = csv.reader(fileinput.input(sys.argv[2]))
+  
+  headers = reader.next()
+  columns = zip(*reader)
+  dates = [datetime.datetime.strptime(x, "%Y-%m-%d") for x in columns[0]]
+  categories = [
+    ("Backlog",         "#dead00", map(int, columns[1])),
+    ("Analysis",        "#d00dad", map(sum, zip(map(int, columns[2]), map(int, columns[4])))),
+    ("Fix",             "#b00b1e", map(int, columns[3])),
+    ("Test Queue",      "#abcdef", map(int, columns[5])),
+    ("System Testing",  "#123456", map(int, columns[6])),
+    ("Archive",         "#501ee7", map(int, columns[7]))
+  ]
+
+
+
+   
+  fig = figure()
+  ax = fig.add_subplot(111)
+  colors=colorgen()
+  handles = []
+  labels = []
+  previous_queue = [0]*len(dates)
+  for category, color, queue in reversed(categories):
+    queue = map(sum, zip(previous_queue, map(int, queue)))
+    ax.fill_between(dates, queue, previous_queue, color=color)
+    handles.append(Rectangle((0,0),1,1,fc=color))
+    labels.append(category)
+    previous_queue = queue
+  fig.autofmt_xdate()
+  box=ax.get_position()
+  ax.set_position([box.x0, box.y0, box.width*0.8, box.height])
+  ax.legend(reversed(handles), reversed(labels), loc='center left', bbox_to_anchor=(1,0.5))
+  show()
+
+    
+
+
 if __name__ == "__main__":
   graphical = False
+  csv_input = False
   if (len(sys.argv) > 1):
     if sys.argv[1] == "--show":
       graphical = True
+    elif sys.argv[1] == "--csv":
+      csv_input = True
 
   import matplotlib
-  if not graphical:
+  if not graphical and not csv_input:
     matplotlib.use("Agg")
   import matplotlib.dates as mpld
   from pylab import figure, show
   from matplotlib.patches import Rectangle
-  
-  for name, report in reports.items():
-    if graphical:
+ 
+
+  if csv_input:
+    do_csv_input()
+  elif graphical:
+    for name, report in reports.items():
       display(report)
-    else:
+  else:
+    for name, report in reports.items():
       update(report)
-      
+    
 
 
     

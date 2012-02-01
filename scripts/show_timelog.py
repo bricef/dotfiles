@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# Email links:
+# http://code.activestate.com/recipes/473810-send-an-html-email-with-embedded-image-and-plain-t/
+# http://stackoverflow.com/questions/920910/python-sending-multipart-html-emails-which-contain-embedded-images
+# http://snippets.dzone.com/posts/show/2038
 
 import fileinput
 import sys
@@ -95,7 +99,7 @@ def showgraph(raw,activities):
   
   total_time = sum( [times[category] for category in times.keys()] )
   
-  print("total: %f"%(total_time))
+  #print("total: %f"%(total_time))
   pprint.pprint(times)
   
   # ====================================================================
