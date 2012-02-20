@@ -28,17 +28,7 @@ class UTC(datetime.tzinfo):
     def dst(self, dt):
         return datetime.timedelta(0)
 
-activities = set()
-raw = []
 
-# dont plot start/end as bars, instead vertical lines 
-
-for line in fileinput.input():
-  m = re.search(r'\[(.*)\]: (.*)', line)
-  start = datetime.datetime.strptime(m.group(1), '%Y-%m-%d %H:%M')
-  activity = m.group(2)
-  raw.append((start,activity))
-  activities.add(activity)
 
 
 def raw2intervals(raw):
@@ -118,5 +108,15 @@ def showgraph(raw,activities):
 if __name__ == "__main__":
   if len(sys.argv)>1 and sys.argv[1] == "--save": 
     pass
+
+  activities = set()
+  raw = []
+  for line in fileinput.input():
+    m = re.search(r'\[(.*)\]: (.*)', line)
+    start = datetime.datetime.strptime(m.group(1), '%Y-%m-%d %H:%M')
+    activity = m.group(2)
+    raw.append((start,activity))
+    activities.add(activity)
+
   showgraph(raw, activities)
 

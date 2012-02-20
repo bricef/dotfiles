@@ -16,10 +16,10 @@ reports = {
         "file"    : "/home/bfer/public_html/agile/bugcount.pickle",
         "graph"   : "/home/bfer/public_html/agile/bugcount.png",
         "queries" : [
-          ("trivial",   "#48ff00", "http://trac/bugs/query?status=new&status=assigned&status=reopened&priority=trivial&format=csv"),
-          ("minor",     "#c8ff00", "http://trac/bugs/query?status=new&status=assigned&status=reopened&priority=minor&format=csv"),
-          ("major",     "#ffbb00", "http://trac/bugs/query?status=new&status=assigned&status=reopened&priority=major&format=csv"),
-          ("critical",  "#ff0000", "http://trac/bugs/query?status=new&status=assigned&status=reopened&priority=critical&format=csv")
+          ("trivial",   "#48ff00", "http://trac/bugs/query?status=new&status=assigned&status=reopened&priority=trivial&type=defect+%28bug%29&format=csv"),
+          ("minor",     "#c8ff00", "http://trac/bugs/query?status=new&status=assigned&status=reopened&priority=minor&type=defect+%28bug%29&format=csv"),
+          ("major",     "#ffbb00", "http://trac/bugs/query?status=new&status=assigned&status=reopened&priority=major&type=defect+%28bug%29&format=csv"),
+          ("critical",  "#ff0000", "http://trac/bugs/query?status=new&status=assigned&status=reopened&priority=critical&type=defect+%28bug%29&format=csv")
         ]
     },
 
