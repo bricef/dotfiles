@@ -81,6 +81,35 @@
 "wmctrl -r :ACTIVE: -e 0,960,540,960,525"
   Mod4 + KP_Next
 
+#
+# Second monitor
+#
+"wmctrl -r :ACTIVE: -e 0,1923,15,960,525"
+  Shift+Mod2+Mod4 + KP_Home
+
+"wmctrl -r :ACTIVE: -e 0,1923,15,1920,525"
+  Shift+Mod2+Mod4 + KP_Up
+
+"wmctrl -r :ACTIVE: -e 0,2880,15,960,525"
+  Shift+Mod2+Mod4 + KP_Prior
+
+"wmctrl -r :ACTIVE: -e 0,1923,15,960,1050"
+  Shift+Mod2+Mod4 + KP_Left
+
+#"wmctrl -r :ACTIVE: -e 0,0,15,1920,1050"
+#  Shift+Mod2+Mod4 + KP_Begin
+
+"wmctrl -r :ACTIVE: -e 0,2880,15,960,1050"
+  Shift+Mod2+Mod4 + KP_Right
+
+"wmctrl -r :ACTIVE: -e 0,1923,540,960,525"
+  Shift+Mod2+Mod4 + KP_End
+
+"wmctrl -r :ACTIVE: -e 0,1923,540,1920,525"
+  Shift+Mod2+Mod4 + KP_Down
+
+"wmctrl -r :ACTIVE: -e 0,2880,540,960,525"
+  Shift+Mod2+Mod4 + KP_Next
 
 #
 # MANUAL MANAGMENT (not needed on ubuntu)
