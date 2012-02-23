@@ -66,8 +66,8 @@
 "wmctrl -r :ACTIVE: -e 0,0,15,960,1050"
   Mod4 + KP_Left
 
-#"wmctrl -r :ACTIVE: -e 0,0,15,1920,1050"
-#  Mod4 + KP_Begin
+"wmctrl -r :ACTIVE: -e 0,0,15,1920,1050"
+  Mod4 + KP_Begin
 
 "wmctrl -r :ACTIVE: -e 0,960,15,960,1050"
   Mod4 + KP_Right
@@ -96,8 +96,8 @@
 "wmctrl -r :ACTIVE: -e 0,1923,15,960,1050"
   Shift+Mod2+Mod4 + KP_Left
 
-#"wmctrl -r :ACTIVE: -e 0,0,15,1920,1050"
-#  Shift+Mod2+Mod4 + KP_Begin
+"wmctrl -r :ACTIVE: -e 0,1923,15,1920,1050"
+  Shift+Mod2+Mod4 + KP_Begin
 
 "wmctrl -r :ACTIVE: -e 0,2880,15,960,1050"
   Shift+Mod2+Mod4 + KP_Right
