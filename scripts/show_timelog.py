@@ -1,12 +1,21 @@
 #!/usr/bin/env python
 
+# Email links:
+# http://code.activestate.com/recipes/473810-send-an-html-email-with-embedded-image-and-plain-t/
+# http://stackoverflow.com/questions/920910/python-sending-multipart-html-emails-which-contain-embedded-images
+# http://snippets.dzone.com/posts/show/2038
 
 import fileinput
+import sys
 import re
 import datetime
 import pprint
 
 import matplotlib as mpl
+
+if len(sys.argv) > 1 and sys.argv[1] == "--save":
+  mpl.use("Agg")
+
 import matplotlib.pyplot as plt
 
 
@@ -19,17 +28,7 @@ class UTC(datetime.tzinfo):
     def dst(self, dt):
         return datetime.timedelta(0)
 
-activities = set()
-raw = []
 
-# dont plot start/end as bars, instead vertical lines 
-
-for line in fileinput.input():
-  m = re.search(r'\[(.*)\]: (.*)', line)
-  start = datetime.datetime.strptime(m.group(1), '%Y-%m-%d %H:%M')
-  activity = m.group(2)
-  raw.append((start,activity))
-  activities.add(activity)
 
 
 def raw2intervals(raw):
@@ -90,7 +89,7 @@ def showgraph(raw,activities):
   
   total_time = sum( [times[category] for category in times.keys()] )
   
-  print("total: %f"%(total_time))
+  #print("total: %f"%(total_time))
   pprint.pprint(times)
   
   # ====================================================================
@@ -101,23 +100,23 @@ def showgraph(raw,activities):
   # ====================================================================
 
   fig.text(0.75,0.11, str(total), transform = ax1.transAxes, size="x-large", color="r")
+  fig.text(0.75,0.05, "%d:%02d hours"%(total_time, (total_time-int(total_time))*60 ), transform = ax1.transAxes, size="x-large", color="r")
   
   plt.show()
 
 
+if __name__ == "__main__":
+  if len(sys.argv)>1 and sys.argv[1] == "--save": 
+    pass
 
+  activities = set()
+  raw = []
+  for line in fileinput.input():
+    m = re.search(r'\[(.*)\]: (.*)', line)
+    start = datetime.datetime.strptime(m.group(1), '%Y-%m-%d %H:%M')
+    activity = m.group(2)
+    raw.append((start,activity))
+    activities.add(activity)
 
-
-times = {
- 'BUGFIXING': 44.2,
- '@misc':25.0,
- '@meeting': 21.7,
- '@slack': 15.0,
- '@tooling': 4.4,
- 'WIN EMS': 35.7,
- 'Mock SNMP': 65.71666665840894,
- 'ADMIN': 8.5
-}
-
-showgraph(raw, activities)
+  showgraph(raw, activities)
 

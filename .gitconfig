@@ -1,7 +1,7 @@
 [user]
-	mail = brice.fernandes@gmail.com
+	mail = bfer@cbnl.com
 	name = Brice Fernandes
-	email = brice.fernandes@gmail.com
+	email = bfer@cbnl.com
 [color]
 	ui = auto
 [push]
@@ -11,3 +11,5 @@
 	qt = !git --no-pager log --oneline --graph --decorate -10
 [branch]
 	autosetuprebase = always
+[merge]
+	tool = meld

@@ -4,14 +4,18 @@
 RESOURCES_DIR=resources
 TARGET_DIR=html
 SRC_DIR=src
-FOOTER="<hr /> Last generated: "$(date "+%F %T")
+FOOTER="<div id=\"footer\"><hr /> <p>Last generated: "$(date "+%F %T")"</p></div>"
 
 SELF_INVOKE=$0
 
+BACKLOG_FILE="backlog.txt"
+DONE_FILE="done.txt"
+TEMPLATE="/home/$(whoami)/scripts/template.pandoc"
 
 function convert_stream {
   cat - \
-    | pandoc -f markdown -t html \
+    | pinc.py \
+    | pandoc -f markdown -t html\
     | cat $RESOURCES_DIR/top.html - \
     | cat - <(echo $FOOTER) $RESOURCES_DIR/tail.html \
     | tidy -asxml 2>/dev/null \
