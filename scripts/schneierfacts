@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+import BeautifulSoup
+import urllib2
+import string
+
+def facts():
+  n = 0
+  while True:
+    try:
+      n += 1
+      text = BeautifulSoup.BeautifulSoup(urllib2.urlopen("http://www.schneierfacts.com/fact/%d"%n).read()).findAll("p", attrs={"class":"fact"})[0].text
+      yield( (n, ''.join(text.splitlines())) )
+    except urllib2.URLError:
+      pass
+    if n>2000:
+      break
+
+for num, fact in facts():
+    print "%4d: %s"%(num,fact)
