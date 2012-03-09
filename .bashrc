@@ -32,7 +32,7 @@ alias grep="grep --color=auto"
 
 alias ..="cd .."
 alias cd..="cd .."
-alias ls="ls --color=auto"
+alias ls="ls --color=auto -X"
 alias ll="ls -l"
 alias la="ls -a"
 alias lla="ls -la"
