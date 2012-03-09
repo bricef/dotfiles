@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cat - \
+ | grep --line-buffered --color=never -E "^.*warning:.*|^.*error:.*|^make.*[Ee]rror.*|^make.*" \
+ | hilite.sh -r "^.*warning:.*" -f yellow -B \
+ | hilite.sh -r "^.*error:.*" -f red -B \
+ | hilite.sh -r "^make.*[Ee]rror.*" -f red -B \
+ | hilite.sh -r "^make.*" -f magenta
