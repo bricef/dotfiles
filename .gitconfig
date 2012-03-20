@@ -7,8 +7,16 @@
 [push]
 	default = tracking
 [alias]
+  s = status
+  cm = commit -m 
 	tree = log --oneline --graph --decorate
 	qt = !git --no-pager log --oneline --graph --decorate -10
+  tst = log --oneline --stat --decorate --graph
+  authors = shortlog -sn
+  tdiff = diff --color-words
+  this = !git init && git add . && git commit -m \"initial commit\"
+  alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
+
 [branch]
 	autosetuprebase = always
 [merge]
