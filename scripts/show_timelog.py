@@ -10,12 +10,15 @@ import sys
 import re
 import datetime
 import pprint
+import json
 
 import matplotlib as mpl
 
 if len(sys.argv) > 1 and sys.argv[1] == "--save":
   mpl.use("Agg")
 
+
+  
 import matplotlib.pyplot as plt
 
 
@@ -55,7 +58,7 @@ def intervals2num(intervals):
                          mpl.dates.date2num(i[1])-mpl.dates.date2num(i[0]))) 
   return taskdir
 
-def showgraph(raw,activities):
+def show_timeline_graph(raw,activities):
   intervals = raw2intervals(raw)
   categories = intervals2num(intervals)
   
@@ -89,6 +92,15 @@ def showgraph(raw,activities):
   
   total_time = sum( [times[category] for category in times.keys()] )
   
+  #aggregate anything that's less than 1%
+  misc_total=0.0
+  for k,v in times.items():
+    if (v/total_time) < 0.01:
+      del times[k]
+      misc_total += v
+  times["Misc"]=misc_total
+
+
   #print("total: %f"%(total_time))
   pprint.pprint(times)
   
@@ -104,19 +116,105 @@ def showgraph(raw,activities):
   
   plt.show()
 
+class Mapper:
+  def __init__(self, activities):
+    self.map = {}
+    for canonical, aliass in aliases.items():
+      for alias in aliass:
+        self.map[re.compile(alias, re.IGNORECASE)]=canonical
+    self.checks = self.map.keys()
+  def __getitem__(self, key):
+    for pattern in self.checks:
+      if pattern.match(key.strip()):
+        return self.map[pattern]
+    return key
+  def __contains__(self, key):
+    for pattern in self.checks:
+      if pattern.match(key.strip()):
+        return True
+    return False
+
+class InvalidInputException(Exception):
+  pass
+
+def extract_start_stop(intervals):
+  days = []
+  starts = []
+  durations = []
+  
+  last_start = None
+  for start, stop, cat in intervals:
+    if cat == "@start":
+      last_start = start
+    if cat == "@end":
+      days.append(
+        mpl.dates.date2num(last_start.date())
+      )
+      starts.append(
+        (mpl.dates.date2num(last_start) % 1) + int(mpl.dates.date2num(datetime.datetime.now()))
+      )
+      durations.append(
+        mpl.dates.date2num(start)
+        - mpl.dates.date2num(last_start)
+      )
+      last_start=None
+    else:
+      pass
+
+  return days, starts, durations
+
+def show_span_graph(days, starts, durations):
+  
+  # ====================================================================
+  
+  fig = plt.figure(figsize=(8,4))
+  
+  
+  ax = fig.add_subplot(111)
+  ax.bar(days, durations, bottom=starts, align="center")
+
+  # ====================================================================
+  # height=1.0
+  # catlabels=[]
+  # yticks=[]
+  # for category in categories.keys():
+  #   ax1.broken_barh(categories[category], (height,1.0))
+  #   catlabels.append(category)
+  #   yticks.append(height+0.5)
+  #   height += 1
+  # ax1.grid(True)
+  # ax1.set_yticks(yticks)
+  # ax1.set_yticklabels(catlabels)
+  # ax1.xaxis.set_major_formatter(mpl.dates.DateFormatter("%H:%M"))
+  # total = raw[-1][0] - raw[0][0] #timedelta
+  # ====================================================================
+ 
+  ax.xaxis_date()
+  ax.yaxis_date()
+  ax.figure.autofmt_xdate()
+  
+  plt.show()
+
 
 if __name__ == "__main__":
   if len(sys.argv)>1 and sys.argv[1] == "--save": 
     pass
 
+  aliases = {}
+  if len(sys.argv) > 1 and sys.argv[1] == "--aliasfile":
+    aliases = json.load(open(sys.argv[2]))
+  
+  amap = Mapper(aliases)
+
   activities = set()
   raw = []
-  for line in fileinput.input():
+  for line in fileinput.input("-"):
     m = re.search(r'\[(.*)\]: (.*)', line)
     start = datetime.datetime.strptime(m.group(1), '%Y-%m-%d %H:%M')
     activity = m.group(2)
-    raw.append((start,activity))
-    activities.add(activity)
-
-  showgraph(raw, activities)
+    raw.append((start,amap[activity]))
+    activities.add(amap[activity])
+  
+  #show_span_graph(*extract_start_stop(raw2intervals(raw)))
+  show_timeline_graph(raw, activities)
 

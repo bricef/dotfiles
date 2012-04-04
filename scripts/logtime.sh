@@ -7,6 +7,7 @@ test ! -d $LOGDIR && mkdir -p $LOGDIR
 LOGFILE=$LOGDIR/$(date "+%Y%m%d.log")
 ACTIVFILE=/home/$(whoami)/.activities
 SHOWSCRIPT=/home/$(whoami)/scripts/show_timelog.py
+ALIASFILE=/home/$(whoami)/.activities_aliases
 
 prefix=$(date "+[%Y-%m-%d %H:%M]: ")
 
@@ -36,7 +37,7 @@ else
       ;;
     "@week")
       cd $LOGDIR
-      cat `ls -1 | sort -n | tail -5` <(echo $prefix NOW ) | $SHOWSCRIPT
+      cat `ls -1 | sort -n | tail -5` <(echo $prefix NOW ) | $SHOWSCRIPT --aliasfile $ALIASFILE
       ;;
     "")
       #do nothing
