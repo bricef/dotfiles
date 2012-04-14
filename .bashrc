@@ -27,7 +27,7 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-
+alias sudo="sudo "
 alias grep="grep --color=auto"
 
 alias ..="cd .."
