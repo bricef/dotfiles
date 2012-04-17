@@ -1,0 +1,38 @@
+
+{ "Bugfixing" : [
+    "#[0-9]{1,4}.*",
+    "#BUG",
+    ".*debug.*"
+  ],
+  "Break" : [
+    "@break",
+    "@bbreak",
+    "@food"
+  ],
+  "Admin" : [
+    "@admin",
+    "@mail",
+    "admin"
+  ],
+  "Tooling" : [
+    "tooling",
+    "@tooling"
+  ],
+  "Testing" : [
+    ".*test.*"
+  ],
+  "Windows" : [
+    ".*windows.*",
+    ".*winems.*"
+  ],
+  "Meeting": [
+    "@meeting.*"
+  ],
+  "Dead": [
+    "@perso",
+    "@slack"
+  ]
+
+}
+
+
