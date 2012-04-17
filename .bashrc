@@ -38,7 +38,6 @@ alias ll="ls -l"
 alias la="ls -a"
 alias lla="ls -la"
 alias l="ls"
-alias :e="vim"
 alias +x="chmod +x"
 # When you feel desperate
 alias lsa="ls -iablhQ"
@@ -46,6 +45,9 @@ alias lsc="ls *.c -1"
 alias lsh="ls -1 *.h"
 alias psg="ps aux | grep "
 
+# because my fingers have been trained
+alias :e="vim"
+alias :q="exit"
 export LS_COLORS="di=35"
 
 
