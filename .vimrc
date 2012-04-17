@@ -74,6 +74,15 @@ autocmd FileType make setlocal noexpandtab
 "play well with ctags
 set tags=./tags,./../tags,./../../tags,./../../../tags,tags
 
+"Be smart about where to look for other C files
+set path+=/usr/include/**
+set path+=../../include
+set path+=../../include/**
+set path+=../include
+set path+=../include/**
+set path+=./include
+set path+=./include/**
+
 "make the home key behave well
 imap <Home> <Esc>^i
 

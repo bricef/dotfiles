@@ -31,6 +31,7 @@ alias sudo="sudo "
 alias grep="grep --color=auto"
 
 alias ..="cd .."
+alias tmux="tmux -2"
 alias cd..="cd .."
 alias ls="ls --color=auto -X"
 alias ll="ls -l"
