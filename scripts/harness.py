@@ -68,6 +68,7 @@ if __name__ == "__main__":
   )
 
   args = parser.parse_args()
+
   failed = 0
 
   if args.script:
@@ -79,10 +80,13 @@ if __name__ == "__main__":
             if not is_correct(sline[:-2],sline[-2],sline[-1]):
               failed += 1 
         except IOError as err:
+          failed += 1
           sys.stderr.write("[ERROR]: %s (in '%s' line %d)\n"%(str(err),fileinput.filename(),fileinput.lineno()) )
           if not args.skip:
             sys.exit(1)
-      
+     
+    sys.exit(failed)
+
   elif args.program and args.input and args.reference:
     try:
       if not is_correct(args.program, args.input, args.reference):
