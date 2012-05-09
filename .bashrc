@@ -39,6 +39,7 @@ alias la="ls -a"
 alias lla="ls -la"
 alias l="ls"
 alias +x="chmod +x"
+alias bp="bpython"
 # When you feel desperate
 alias lsa="ls -iablhQ"
 alias lsc="ls *.c -1"
@@ -147,6 +148,11 @@ function ems-env {
   export EMS_ALARM_ROOT=$EMS_ROOT/alarms
   export EMS_DATA_ROOT=$EMS_ROOT/data
 }
+
+function pgen {
+  </dev/urandom tr -dc A-Za-z0-9 | head -c $1 | cat - <(echo "")
+}
+
 
 export PATH=$PATH:/home/$(whoami)/scripts:/var/lib/gems/1.8/bin:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
 
