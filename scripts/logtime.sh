@@ -21,7 +21,7 @@ if [ $1 ]; then
 
 else 
   
-  ACTIVITY=$(cat <(echo -e "@show\n@edit") $ACTIVFILE | dmenu -b )
+  ACTIVITY=$(cat <(echo -e "@show\n@edit\n@aliases\n@history") $ACTIVFILE | dmenu -b )
 
   case "$ACTIVITY" in 
     "@show")
@@ -35,9 +35,16 @@ else
     "@activ")
       gnome-terminal --working-directory=/home/$(whoami)/ -e "$EDITOR $(readlink -f $ACTIVFILE)"
       ;;
+    "@aliases")
+      gnome-terminal --working-directory=/home/$(whoami)/ -e "$EDITOR $(readlink -f $ALIASFILE)"
+      ;;
     "@week")
       cd $LOGDIR
-      cat `ls -1 | sort -n | tail -5` <(echo $prefix NOW ) | $SHOWSCRIPT --aliasfile $ALIASFILE
+      cat `ls -1 | sort -n | tail -5` <(echo $prefix @end ) | $SHOWSCRIPT --aliasfile $ALIASFILE
+      ;;
+    "@history")
+      cd $LOGDIR
+      cat `ls -1 2*.log | sort -n` <(echo $prefix @end ) | $SHOWSCRIPT --aliasfile $ALIASFILE
       ;;
     "")
       #do nothing

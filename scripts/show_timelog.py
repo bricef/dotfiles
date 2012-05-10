@@ -102,7 +102,7 @@ def show_timeline_graph(raw,activities):
 
 
   #print("total: %f"%(total_time))
-  pprint.pprint(times)
+  #pprint.pprint(times)
   
   # ====================================================================
   
@@ -115,6 +115,7 @@ def show_timeline_graph(raw,activities):
   fig.text(0.75,0.05, "%d:%02d hours"%(total_time, (total_time-int(total_time))*60 ), transform = ax1.transAxes, size="x-large", color="r")
   
   plt.show()
+  return times
 
 class Mapper:
   def __init__(self, activities):
@@ -195,6 +196,33 @@ def show_span_graph(days, starts, durations):
   
   plt.show()
 
+class Stats:
+  def __init__(self):
+    self.starts = []
+    self.durations = []
+    self.ends = []
+  def add(self, date, cat):
+    tod = mpl.dates.date2num(date) % 1
+    if cat.strip() == "@start":
+      self.starts.append(tod)
+    elif cat.strip() == "@end":
+      self.ends.append(tod)
+      self.durations.append(tod - self.starts[-1])
+  def getstats(self):
+    return {
+      "start": {
+        "N": len(self.starts),
+        "avg": "%s" % mpl.dates.num2date(1+(sum(self.starts)/len(self.starts))).time().strftime("%H:%M")
+      } if self.starts else None,
+      "end": {
+        "N": len(self.ends),
+        "avg": "%s" % mpl.dates.num2date(1+(sum(self.ends)/len(self.ends))).time().strftime("%H:%M")
+      } if self.ends else None,
+      "duration": {
+        "N": len(self.durations),
+        "avg": "%s" % mpl.dates.num2date(1+(sum(self.durations)/len(self.durations))).time().strftime("%H:%M")
+      } if self.durations else None
+    }
 
 if __name__ == "__main__":
   if len(sys.argv)>1 and sys.argv[1] == "--save": 
@@ -205,6 +233,7 @@ if __name__ == "__main__":
     aliases = json.load(open(sys.argv[2]))
   
   amap = Mapper(aliases)
+  stats = Stats()
 
   activities = set()
   raw = []
@@ -212,9 +241,12 @@ if __name__ == "__main__":
     m = re.search(r'\[(.*)\]: (.*)', line)
     start = datetime.datetime.strptime(m.group(1), '%Y-%m-%d %H:%M')
     activity = m.group(2)
+    stats.add(start, activity)
     raw.append((start,amap[activity]))
     activities.add(amap[activity])
-  
+ 
+  pprint.pprint(stats.getstats())
+
   #show_span_graph(*extract_start_stop(raw2intervals(raw)))
   show_timeline_graph(raw, activities)
 

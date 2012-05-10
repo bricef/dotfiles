@@ -4,29 +4,29 @@
     "#BUG",
     ".*debug.*"
   ],
-  "Break" : [
+  "Cost of Business" : [
     "@break",
+    "@start",
     "@bbreak",
-    "@food"
-  ],
-  "Admin" : [
+    "@food",
     "@admin",
     "@mail",
-    "admin"
-  ],
-  "Tooling" : [
+    "admin",
     "tooling",
-    "@tooling"
+    "@tooling",
+    ".*wiki.*"
   ],
   "Testing" : [
-    ".*test.*"
+    ".*test.*",
+    "@test.*"
   ],
   "Windows" : [
     ".*windows.*",
     ".*winems.*"
   ],
   "Meeting": [
-    "@meeting.*"
+    "@meeting.*",
+    "@standup.*"
   ],
   "Dead": [
     "@perso",
