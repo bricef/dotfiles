@@ -35,6 +35,7 @@ class UTC(datetime.tzinfo):
 
 
 def raw2intervals(raw):
+  """ returns a list of (start, stop, cat) """
   data = sorted(raw, key=lambda datum: datum[0]) 
   intervals = []
   last=None
@@ -196,7 +197,23 @@ def show_span_graph(days, starts, durations):
   
   plt.show()
 
+
 class Stats:
+  def __init__(self, category):
+    self.starts = []
+    self.durations = []
+    self.days = []
+    self.category = category
+  def add(self, interval):
+    start, stop, cat = interval
+    if cat.strip() == self.category:
+      self.starts.append(start)
+      self.durations.append((stop-start).total_seconds())
+      self.days.append(start.date())
+      
+  
+
+class DayStats:
   def __init__(self):
     self.starts = []
     self.durations = []
@@ -224,6 +241,19 @@ class Stats:
       } if self.durations else None
     }
 
+def show_trend_graph(stats):
+  fig = plt.figure(figsize=(8,4))
+  ax = fig.add_subplot(111)
+  ax.plot(stats.days, stats.durations, 'o')
+  ax.xaxis_date()
+  def formatter(x, pos=None):
+    return "%d:%02d"%( x/60.0, x%60.0)
+  ax.yaxis.set_major_formatter(mpl.ticker.FuncFormatter(formatter))
+  ax.set_ylim(0,1800)
+  ax.yaxis.set_ticks([0,300,600,900,1200,1500,1800])
+  ax.figure.autofmt_xdate()
+  plt.show()
+
 if __name__ == "__main__":
   if len(sys.argv)>1 and sys.argv[1] == "--save": 
     pass
@@ -233,7 +263,7 @@ if __name__ == "__main__":
     aliases = json.load(open(sys.argv[2]))
   
   amap = Mapper(aliases)
-  stats = Stats()
+  day_stats = DayStats()
 
   activities = set()
   raw = []
@@ -241,12 +271,18 @@ if __name__ == "__main__":
     m = re.search(r'\[(.*)\]: (.*)', line)
     start = datetime.datetime.strptime(m.group(1), '%Y-%m-%d %H:%M')
     activity = m.group(2)
-    stats.add(start, activity)
+    day_stats.add(start, activity)
     raw.append((start,amap[activity]))
     activities.add(amap[activity])
  
-  pprint.pprint(stats.getstats())
+  pprint.pprint(day_stats.getstats())
+
+  standup_stats = Stats("@standup")
+  map(standup_stats.add ,raw2intervals(raw))
+  pprint.pprint(zip(standup_stats.days,standup_stats.durations))
+   
 
   #show_span_graph(*extract_start_stop(raw2intervals(raw)))
   show_timeline_graph(raw, activities)
+  #show_trend_graph(standup_stats)
 
