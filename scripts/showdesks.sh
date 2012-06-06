@@ -3,7 +3,8 @@
 
 
 while true; do
-    desktops="^p() "`echo $(wmctrl -l | awk '{print $2}'; wmctrl -d | grep "\*" | grep -Eo "^[0-9]+") \
+    current=`xprop -root | grep "_NET_CURRENT_DESKTOP(CARDINAL)" | awk '{print $3}'`
+    desktops="^p() "`echo $(wmctrl -l | awk '{print $2}'; echo $current) \
                 | tr " " "\n" \
                 | sort | uniq \
                 | xargs -n 1 \
@@ -11,7 +12,6 @@ while true; do
                 | tr "\n" " " \
                 | sed "s/ / ^p() /g"`"^p()"
                 
-    current=`wmctrl -d | grep "\*" | grep -Eo "^[0-9]+"`
     current=$((current + 1))
 
     echo $desktops | sed "s/ ${current} /^bg(red) ${current} ^bg(black)/"
