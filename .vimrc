@@ -1,9 +1,16 @@
 set nocp
 set number
 set mouse=a
+set undofile
 
 set t_Co=256
 syntax on
+
+"Show 80th column
+set cc=80
+
+"Enable pathogen bundle manager
+call pathogen#infect()
 
 if has('gui_running')
   colorscheme BusyBee  
@@ -17,6 +24,13 @@ set smartindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set showcmd
+
+"Relative numbers vim 7.3+
+set relativenumber
+
+"global search&replace by default
+set gdefault
 
 autocmd FileType python set nocindent
 autocmd FileType python set nosmartindent 
@@ -48,6 +62,10 @@ set autowrite " writes buffer on next/previous
 nnoremap <C-Left> :bprevious<CR>
 nnoremap <C-Right> :bnext<CR>
 
+"Plugin shortcuts
+nnoremap <F5> :GundoToggle<CR>
+nnoremap <F8> :BufExplorer<CR>
+inoremap <F8> :BufExplorer<CR>
 
 
 "search highlighting
@@ -111,6 +129,10 @@ nnoremap <C-Down> :silent! let &guifont = substitute(&guifont, '\zs\d\+', '\=eva
 "Command to see the difference with the original file.
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
+nnoremap <leader>1 yypVr=
+nnoremap <leader>2 yypVr-
+
+
 "folding settings
 set foldmethod=syntax   "fold based on
 set foldnestmax=1       "deepest fold is 1 levels
@@ -159,6 +181,3 @@ if version >= 700
 endif
 hi StatusLine ctermfg=white ctermbg=0 cterm=bold
 
-"80 character linewidth
-"highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
-"match OverLength '\%>80v.\+'
