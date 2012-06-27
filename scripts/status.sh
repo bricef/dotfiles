@@ -4,6 +4,7 @@
 # Simple script to write status information on cli or using dzen (a la wmii)
 # depends on:
 #       volch.sh
+#       pm-sensors
 #       dzen2 (when using --dzen switch)
 ##
 
@@ -24,10 +25,20 @@ netstatus(){
 
 status() {
     IP_eth1=`netstatus eth1 2>/dev/null`
-    IP_eth0=`netstatus eth0 2>/dev/null`
+    IP_wlan0=`netstatus wlan0 2>/dev/null`
 
-    echo '| eth0:' $IP_eth0 \
-    '| eth1:' $IP_eth1 \
+    SONG=$(mpc 2>/dev/null | head -1)
+    
+    if [[ ! -z "${SONG:35}" ]]; then
+      SONG="${SONG::35}..."
+    fi
+
+    echo '|' $(dropbox status) \
+    '|' $(echo "vol:"; echo `sudo ~/scripts/volch.sh -q`) \
+    '|' $(sensors | grep temp1 | awk '{print $2}'| tr -d "\n" | tr "+" " ") \
+    '|' $(acpi | awk '{print $3 $4}' | tr ',' ' ') \
+    '| eth0:' $IP_eth0 \
+    '| wlan0:' $IP_wlan0 '('$(mac.py)')'\
     '| up:' $(uptime | tr -d ','|awk '{print $3" "$4" "$5}') \
     '|' $(date +"%a %d %b, %H:%M") '|' 
 }
