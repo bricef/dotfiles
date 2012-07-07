@@ -154,7 +154,8 @@ function pgen {
 }
 
 
-export PATH=$PATH:/home/$(whoami)/scripts:/var/lib/gems/1.8/bin:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
+export PATH=$PATH:/home/$(whoami)/scripts:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
+export PATH=$PATH:/home/brice/.gem/ruby/1.9.1/bin:/var/lib/gems/1.8/bin
 
 alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
 alias vssetup="sudo /usr/local/vectastar/bin/vssetup"
