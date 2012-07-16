@@ -12,8 +12,6 @@
     "@admin",
     "@mail",
     "admin",
-    "tooling",
-    "@tooling",
     ".*wiki.*"
   ],
   "Testing" : [

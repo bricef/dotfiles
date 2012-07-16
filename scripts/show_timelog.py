@@ -17,9 +17,10 @@ import matplotlib as mpl
 if len(sys.argv) > 1 and sys.argv[1] == "--save":
   mpl.use("Agg")
 
-
-  
 import matplotlib.pyplot as plt
+
+
+VERBOSE=False
 
 
 class UTC(datetime.tzinfo):
@@ -249,22 +250,42 @@ def show_trend_graph(stats):
   def formatter(x, pos=None):
     return "%d:%02d"%( x/60.0, x%60.0)
   ax.yaxis.set_major_formatter(mpl.ticker.FuncFormatter(formatter))
+  ax.set_title(stats.category)
   ax.set_ylim(0,1800)
   ax.yaxis.set_ticks([0,300,600,900,1200,1500,1800])
   ax.figure.autofmt_xdate()
   plt.show()
 
 if __name__ == "__main__":
-  if len(sys.argv)>1 and sys.argv[1] == "--save": 
-    pass
+  import argparse
+
+  parser = argparse.ArgumentParser(description="Timelog grapher")
+  parser.add_argument("--save", action="store_true")
+  parser.add_argument("--debug", action="store_true")
+  parser.add_argument("--aliasfile")
+  group = parser.add_mutually_exclusive_group(required=True)
+  group.add_argument("--span", action="store_true")
+  group.add_argument("--trend", action="store_true")
+  group.add_argument("--timeline", action="store_true")
+  group.add_argument("--stats", action="store_true")
+
+  config = parser.parse_args(sys.argv[1:])
+
+  if config.debug:
+    VERBOSE=True
+
 
   aliases = {}
-  if len(sys.argv) > 1 and sys.argv[1] == "--aliasfile":
-    aliases = json.load(open(sys.argv[2]))
+  if config.aliasfile:
+    with open(config.aliasfile) as f:
+      aliases = json.load(f)
   
   amap = Mapper(aliases)
   day_stats = DayStats()
 
+  #
+  # Parse log and resolve against aliases before creating raw.
+  #
   activities = set()
   raw = []
   for line in fileinput.input("-"):
@@ -275,14 +296,19 @@ if __name__ == "__main__":
     raw.append((start,amap[activity]))
     activities.add(amap[activity])
  
-  pprint.pprint(day_stats.getstats())
-
-  standup_stats = Stats("@standup")
-  map(standup_stats.add ,raw2intervals(raw))
-  pprint.pprint(zip(standup_stats.days,standup_stats.durations))
    
+  if config.span:
+    show_span_graph(*extract_start_stop(raw2intervals(raw)))
+  
+  if config.timeline:
+    show_timeline_graph(raw, activities)
+  
+  if config.trend:
+    standup_stats = Stats("@standup")
+    map(standup_stats.add ,raw2intervals(raw))
+    if VERBOSE:
+      pprint.pprint(zip(standup_stats.days,standup_stats.durations))
+    show_trend_graph(standup_stats)
 
-  #show_span_graph(*extract_start_stop(raw2intervals(raw)))
-  show_timeline_graph(raw, activities)
-  #show_trend_graph(standup_stats)
-
+  if config.stats:
+    pprint.pprint(day_stats.getstats())

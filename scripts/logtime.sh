@@ -26,7 +26,7 @@ else
   case "$ACTIVITY" in 
     "@show")
       length=$(wc -l $LOGFILE| awk '{print $1}')
-      cat $LOGFILE <(echo $prefix NOW ) | $SHOWSCRIPT 
+      cat $LOGFILE <(echo $prefix "NOW") | $SHOWSCRIPT --timeline 
 #        | dzen2 -e 'onstart=uncollapse,grabkeys,grabmouse;key_Return=exit;key_Escape=exit' -l $length -p -fn '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*' -tw 500 -x 710 -y 100 -w 500 -bg grey -fg black -h 20
       ;;
     "@edit")
@@ -40,11 +40,13 @@ else
       ;;
     "@week")
       cd $LOGDIR
-      cat `ls -1 | sort -n | tail -5` <(echo $prefix @end ) | $SHOWSCRIPT --aliasfile $ALIASFILE
+      cat `ls -1 | sort -n | tail -5` <(echo $prefix @end ) \
+        | $SHOWSCRIPT --timeline --aliasfile $ALIASFILE
       ;;
     "@history")
       cd $LOGDIR
-      cat `ls -1 2*.log | sort -n` <(echo $prefix @end ) | $SHOWSCRIPT --aliasfile $ALIASFILE
+      cat `ls -1 2*.log | sort -n` <(echo $prefix @end ) \
+        | $SHOWSCRIPT --timeline --aliasfile $ALIASFILE
       ;;
     "")
       #do nothing
