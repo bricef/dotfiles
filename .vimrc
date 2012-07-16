@@ -27,7 +27,8 @@ set expandtab
 set showcmd
 
 "Relative numbers vim 7.3+
-set relativenumber
+set rnu
+autocmd BufEnter * set relativenumber "Becasue the above doesn't seem to work
 
 "global search&replace by default
 set gdefault
@@ -40,7 +41,10 @@ autocmd FileType python set nosmartindent
 set showmode
 set showmatch
 set ignorecase
+set is        " incsearch
 set smartcase
+"search highlighting
+set hlsearch
 setlocal wrap linebreak nolist
 setlocal display+=lastline
 set nowrap
@@ -68,16 +72,11 @@ nnoremap <F8> :BufExplorer<CR>
 inoremap <F8> :BufExplorer<CR>
 
 
-"search highlighting
-set hlsearch
 "Ctrl-l removes highlighting
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 inoremap <silent> <C-l> <Esc>:nohl<CR>i
 
-set ic        " ignorecase
-set is        " incsearch
-set scs       " smartcase: override the 'ic' when searching
-              " if search pattern contains uppercase char
+
 
 " Settings for VimClojure
 let vimclojure#HighlightBuiltins=1      " Highlight Clojure's builtins
