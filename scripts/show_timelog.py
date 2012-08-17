@@ -75,10 +75,11 @@ def show_timeline_graph(raw,activities):
   catlabels=[]
   yticks=[]
   for category in categories.keys():
-    ax1.broken_barh(categories[category], (height,1.0))
-    catlabels.append(category)
-    yticks.append(height+0.5)
-    height += 1
+    if category != "@end":
+      ax1.broken_barh(categories[category], (height,1.0))
+      catlabels.append(category)
+      yticks.append(height+0.5)
+      height += 1
   ax1.grid(True)
   ax1.set_yticks(yticks)
   ax1.set_yticklabels(catlabels)
@@ -104,7 +105,7 @@ def show_timeline_graph(raw,activities):
 
 
   #print("total: %f"%(total_time))
-  #pprint.pprint(times)
+  pprint.pprint(times)
   
   # ====================================================================
   
@@ -284,31 +285,38 @@ if __name__ == "__main__":
   day_stats = DayStats()
 
   #
-  # Parse log and resolve against aliases before creating raw.
+  # Parse log
   #
-  activities = set()
+  raw_activities = set()
   raw = []
   for line in fileinput.input("-"):
     m = re.search(r'\[(.*)\]: (.*)', line)
     start = datetime.datetime.strptime(m.group(1), '%Y-%m-%d %H:%M')
     activity = m.group(2)
     day_stats.add(start, activity)
-    raw.append((start,amap[activity]))
-    activities.add(amap[activity])
- 
-   
-  if config.span:
-    show_span_graph(*extract_start_stop(raw2intervals(raw)))
+    raw.append((start,activity))
+    raw_activities.add(activity)
   
-  if config.timeline:
-    show_timeline_graph(raw, activities)
-  
+  # We do this before resolving aliases or 
+  # @standup might fall down the alias hole...
   if config.trend:
     standup_stats = Stats("@standup")
     map(standup_stats.add ,raw2intervals(raw))
     if VERBOSE:
       pprint.pprint(zip(standup_stats.days,standup_stats.durations))
     show_trend_graph(standup_stats)
-
+  
+  #
+  # Resolve against aliases.
+  resolved = [ (start,amap[activity]) for start,activity in raw]
+  resolved_activities = set([activ for start,activ in resolved])
+ 
+   
+  if config.span:
+    show_span_graph(*extract_start_stop(raw2intervals(resolved)))
+  
+  if config.timeline:
+    show_timeline_graph(resolved, resolved_activities)
+  
   if config.stats:
     pprint.pprint(day_stats.getstats())
