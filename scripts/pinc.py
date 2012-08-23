@@ -103,5 +103,36 @@ which wouldd work just as well.
 A useful extension would be to have inline includes:
 
     Lorem ipsum dolor sit amet, consectetur ((> hello <))adipiscing elit. 
-    Quisque ante lacus, condimentum quis ultrices in, dapibus quis massa. 
+    Quisque ante lacus, condimentum quis ultrices in, dapibus quis massa.
+
+Another useful extensioon would be multiline includes:
+  
+    ...
+    (!command>>
+    Hello, this string will be passed to the command.
+    <<)
+    ...
+
+Perhaps a dynamic macro definition?
+
+    ...
+    (:myname> Hello $@ <)
+    (myname> Brice <)
+    ...
+
+Renders to
+
+    ...
+    Hello Brice
+    ...
+
+(note the whitespace stripping.)
+
+could this be an extension on top of mustache?
+
+    ...
+    {{:my-macro Hello $@ }}
+    {{@my-macro Brice }}
+    ...
+     
 """
