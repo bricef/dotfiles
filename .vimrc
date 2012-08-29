@@ -30,6 +30,8 @@ set showcmd
 set rnu
 autocmd BufEnter * set relativenumber "Becasue the above doesn't seem to work
 
+au BufNewFile,BufRead *.md  setf markdown
+
 "global search&replace by default
 set gdefault
 
