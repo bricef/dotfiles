@@ -93,11 +93,13 @@ END="\[\e[0m\]"
 # [ uname@host ]( /working/dir )>
 # $ _
 
-case `hostname` in
-  "bob")
+
+function pstyle {
+case $1 in
+  "simple")
     PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
     ;;
-  "element-sim"|"sparrow"|"lappy"|"engbot"|"BHAC"|"aboyne"|"vsbldhost"|"simbot")
+  "fancy")
     # [16:02][BHAC ~ ]{ master }>
     # $ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
@@ -110,7 +112,7 @@ case `hostname` in
     PS1+=">\n$END"
     PS1+="$BOLD$F_BLACK$ $END"
     ;;
-  "prometheus")
+  "blue")
     # [16:02][BHAC ~ ]==>
     # $ 
     PS1="$F_BLUE[$BOLD\A$END$F_BLUE][$END$BOLD$F_MAGENTA\h$END$F_BLUE "
@@ -118,7 +120,7 @@ case `hostname` in
     PS1+="==>\n$END"
     PS1+="$F_BLUE$ $END"
     ;;
-  "LOMOND")
+  "git-only")
     EDITOR=nano
     PS1="\u@$F_GREEN\h$END{$F_RED"
     PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
@@ -129,6 +131,18 @@ case `hostname` in
     ;;
 esac
 export PS1
+}
+
+
+case `hostname` in 
+  "prometheus")
+    pstyle blue
+    ;;
+  *)
+    pstyle fancy
+    ;;
+esac
+
 
 
 function ds {
@@ -138,8 +152,8 @@ function ds {
 
 function ems-env {
   PREFIX=$(pwd)
-  export LD_LIBRARY_PATH=$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/lib
-  export PATH=$PREFIX/nms-manager-apps/scripts:$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/bin:$PATH
+  export LD_LIBRARY_PATH=$PREFIX/Linux_Desktop/INSTALLROOT/usr/local/vectastar/lib
+  export PATH=$PREFIX/nms-manager-apps/scripts:$PREFIX/Linux_Desktop/INSTALLROOT/usr/local/vectastar/bin:$PATH
   export EMS_BINARY_ROOT=$PREFIX/nms-manager-apps/scripts
   export EMS_SYSTEM_ROOT=$PREFIX/INSTALLROOT/
   
@@ -154,8 +168,15 @@ function pgen {
 }
 
 
-export PATH=$PATH:/home/$(whoami)/scripts:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
-export PATH=$PATH:/home/brice/.gem/ruby/1.9.1/bin:/var/lib/gems/1.8/bin
+PATH=$PATH:/usr/local/texlive/2012/bin/x86_64-linux
+PATH=$PATH:/home/$(whoami)/scripts:
+PATH=$PATH:/home/$(whoami)/.cabal/bin
+PATH=$PATH:/home/$(whoami)/.gem/ruby/1.9.1/bin
+PATH=$PATH:/opt/VirtualBox/
+PATH=$PATH:/opt/arduino-0022/
+PATH=$PATH:/opt/processing-1.5.1/
+PATH=$PATH:/var/lib/gems/1.8/bin
+export PATH
 
 alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
 alias vssetup="sudo /usr/local/vectastar/bin/vssetup"
