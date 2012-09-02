@@ -1,0 +1,4 @@
+#!/bin/bash
+
+wine ./.wine/drive_c/users/brice/Application\ Data/Spotify/spotify.exe
+
