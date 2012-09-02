@@ -184,3 +184,5 @@ export LC_ALL=en_GB.UTF-8
 export LC_CTYPE=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB.UTF-8
+
+alias jumpoff="ssh -i ~/sparrow_id_rsa.priv bfer@jumpoff.cambridgebroadband.com"
