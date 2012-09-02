@@ -2,16 +2,20 @@
 setxkbmap -option terminate:ctrl_alt_bksp &
 setxkbmap gb &
 
-xsetroot -solid "#3030cc"
+xsetroot -solid "#3030cc" &
+
+. /home/brice/.screenlayout/raven-side-by-side.sh &
 
 xbindkeys &
-. /home/bfer/scripts/status.sh --dzen &
-. /home/bfer/scripts/showdesks.sh --dzen &
-. /home/bfer/scripts/winlist.sh &
-. /home/bfer/scripts/workingon.sh &
-. /home/bfer/scripts/top-left.sh &
 
+. /home/brice/scripts/status.sh --dzen &
+. /home/brice/scripts/showdesks.sh --dzen &
+#. /home/brice/scripts/winlist.sh &
+#. /home/brice/scripts/workingon.sh &
+#. /home/brice/scripts/top-left.sh &
 
-exec openbox-session
+feh --bg-scale --no-xinerama /home/brice/Dropbox/Photos/wallpapers/Untitled_Wallpaper.jpg
+
+exec openbox
 
 
