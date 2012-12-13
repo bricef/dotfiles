@@ -92,14 +92,14 @@
       <slant>normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
-    <font place="ActiveOnScreenDisplay">
-      <name/>
-    </font>
-    <font place="InactiveOnScreenDisplay">
-      <name>Sans</name>
-      <size>8</size>
-      <weight/>
-      <slant/>
+    <font place="OnScreenDisplay">
+      <name>sans</name>
+      <size>9</size>
+      <!-- font size in points -->
+      <weight>bold</weight>
+      <!-- 'bold' or 'normal' -->
+      <slant>normal</slant>
+      <!-- 'italic' or 'normal' -->
     </font>
   </theme>
   <desktops>
@@ -218,6 +218,7 @@
         <wrap>no</wrap>
       </action>
     </keybind>
+    
     <keybind key="A-S-1">
       <action name="SendToDesktop">
         <desktop>1</desktop>
@@ -281,6 +282,8 @@
         <follow>no</follow>
       </action>
     </keybind>
+
+    
     <keybind key="A-1">
       <action name="Desktop">
         <desktop>1</desktop>
@@ -301,22 +304,24 @@
         <desktop>4</desktop>
       </action>
     </keybind>
+
+
     <keybind key="A-5">
       <action name="Desktop">
         <desktop>5</desktop>
       </action>
     </keybind>
-    <keybind key="A-6">
+        <keybind key="A-6">
       <action name="Desktop">
         <desktop>6</desktop>
       </action>
     </keybind>
-    <keybind key="A-7">
+        <keybind key="A-7">
       <action name="Desktop">
         <desktop>7</desktop>
       </action>
     </keybind>
-    <keybind key="A-8">
+        <keybind key="A-8">
       <action name="Desktop">
         <desktop>8</desktop>
       </action>
@@ -329,9 +334,11 @@
     <keybind key="A-m">
       <action name="ToggleMaximizeFull"/>
     </keybind>
+    
     <keybind key="W-Return">
-      <action name="Reconfigure"/>
+      <action name="Reconfigure" />
     </keybind>
+
     <keybind key="W-d">
       <action name="ToggleShowDesktop"/>
     </keybind>
@@ -372,7 +379,7 @@
         <command>kfmclient openProfile filemanagement</command>
       </action>
     </keybind>
-  </keyboard>
+   </keyboard>
   <mouse>
     <dragThreshold>8</dragThreshold>
     <!-- number of pixels the mouse must move before a drag begins -->
@@ -734,9 +741,9 @@
   <!-- show the manage desktops section in the client-list-(combined-)menu -->
 </menu>
   <applications>
-    <application name="*">
-      <decor>no</decor>
-    </application>
+  <application name="*">
+    <decor>no</decor>
+  </application>
     <!--
   # this is an example with comments through out. use these to make your
   # own rules, but without the comments of course.
