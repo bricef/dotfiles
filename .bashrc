@@ -77,7 +77,7 @@ BOLD="\[\e[1m\]"
 END="\[\e[0m\]"
 
 
-# special characters: ⚡ ↑↓↕ ☠☢ 
+# special characters: ⚡ ↑↓↕ ☠☢➤ 
 # see also http://www.utf8-chartable.de/unicode-utf8-table.pl
 
 # uname@host:/working/dir$ _ 
@@ -100,8 +100,8 @@ case $1 in
     PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
     ;;
   "fancy")
-    # [16:02][BHAC ~ ]{ master }>
-    # $ 
+    # [16:02][BHAC ~ ]{ master }
+    # ➤ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
     PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
     PS1+='`test "$(git branch 2> /dev/null | grep ^*)" && echo "{ "`'
@@ -109,8 +109,8 @@ case $1 in
     PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
     PS1+="$BOLD$F_BLACK"
     PS1+='`test "$(git branch 2>/dev/null| grep ^*)" && echo " }"`'
-    PS1+=">\n$END"
-    PS1+="$BOLD$F_BLACK$ $END"
+    PS1+="\n$END"
+    PS1+="$BOLD$F_BLACK➤ $END"
     ;;
   "blue")
     # [16:02][BHAC ~ ]==>
@@ -138,6 +138,9 @@ case `hostname` in
   "prometheus")
     pstyle blue
     ;;
+  "vsbldhost")
+    pstyle simple
+    ;;
   *)
     pstyle fancy
     ;;
@@ -152,8 +155,10 @@ function ds {
 
 function ems-env {
   PREFIX=$(pwd)
-  export LD_LIBRARY_PATH=$PREFIX/Linux_Desktop/INSTALLROOT/usr/local/vectastar/lib
+  export LD_LIBRARY_PATH=$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/lib
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/Linux_Desktop/INSTALLROOT/usr/local/vectastar/lib
   export PATH=$PREFIX/nms-manager-apps/scripts:$PREFIX/Linux_Desktop/INSTALLROOT/usr/local/vectastar/bin:$PATH
+  export PATH=$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/bin:$PATH
   export EMS_BINARY_ROOT=$PREFIX/nms-manager-apps/scripts
   export EMS_SYSTEM_ROOT=$PREFIX/INSTALLROOT/
   
@@ -168,7 +173,7 @@ function pgen {
 }
 
 
-PATH=$PATH:/usr/local/texlive/2012/bin/x86_64-linux
+PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
 PATH=$PATH:/home/$(whoami)/scripts:
 PATH=$PATH:/home/$(whoami)/.cabal/bin
 PATH=$PATH:/home/$(whoami)/.gem/ruby/1.9.1/bin
@@ -184,5 +189,10 @@ export LC_ALL=en_GB.UTF-8
 export LC_CTYPE=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB.UTF-8
+
+
+function bprint {
+  <$1 fold -w 72 | pr -F -o3 -h $1 | tee >( lpr )
+}
 
 alias jumpoff="ssh -i ~/sparrow_id_rsa.priv bfer@jumpoff.cambridgebroadband.com"
