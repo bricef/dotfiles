@@ -1,7 +1,10 @@
 #!/bin/bash
 
 cat - \
- | hilite.sh -r "^.*warning:.*" -f yellow -B \
- | hilite.sh -r "^.*error:.*" -f red -B \
- | hilite.sh -r "^make.*[Ee]rror.*" -f red -B \
- | hilite.sh -r "^make.*" -f magenta
+ | sed -e "s/ cc /\n cc /g" \
+ | sed -e "s/\( -[a-zA-Z]\)/\n    \1/g" \
+ | hilite.sh -r "^make\[.*\]:.*" -f black -B \
+ | hilite.sh -r "^.*[Ww]arning[: ].*" -f yellow -B \
+ | hilite.sh -r "^.*[Ee]rror[: ].*" -f red -B \
+ | less -r
+
