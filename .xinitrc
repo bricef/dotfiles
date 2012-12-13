@@ -2,7 +2,11 @@
 setxkbmap -option terminate:ctrl_alt_bksp &
 setxkbmap gb &
 
-xsetroot -solid "#3030cc"
+. /home/bfer/.screenlayout/new_double.sh 
+
+xsetroot -solid "#aaaaaa"
+
+feh --bg-scale Downloads/milky_way_arch-wallpaper-3360x1050.jpg &
 
 xbindkeys &
 . /home/bfer/scripts/status.sh --dzen &

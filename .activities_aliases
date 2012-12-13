@@ -9,10 +9,13 @@
     "@start",
     "@bbreak",
     "@food",
-    "@admin",
+    "@mail"
+  ],
+  "Admin" : [
     "@mail",
-    "admin",
-    ".*wiki.*"
+    ".*wiki.*",
+    "@admin",
+    "admin"
   ],
   "Testing" : [
     ".*test.*",

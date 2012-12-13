@@ -111,6 +111,11 @@
 "wmctrl -r :ACTIVE: -e 0,2880,540,960,525"
   Shift+Mod2+Mod4 + KP_Next
 
+"xdotool type --window `xdotool getactivewindow` --delay 25 --clearmodifiers VectaStar"
+   Alt+Mod2 + s 
+
+
+
 #
 # MANUAL MANAGMENT (not needed on ubuntu)
 #
