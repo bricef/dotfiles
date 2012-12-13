@@ -54,61 +54,61 @@
 #
 # W + keypad puts window in appropriate corner/side.
 #
-"wmctrl -r :ACTIVE: -e 0,0,15,960,525"
+"wmctrl -r :ACTIVE: -e 0,0,15,840,510"
   Mod4 + KP_Home
 
-"wmctrl -r :ACTIVE: -e 0,0,15,1920,525"
+"wmctrl -r :ACTIVE: -e 0,0,15,1680,510"
   Mod4 + KP_Up
 
-"wmctrl -r :ACTIVE: -e 0,960,15,960,525"
+"wmctrl -r :ACTIVE: -e 0,840,15,840,510"
   Mod4 + KP_Prior
 
-"wmctrl -r :ACTIVE: -e 0,0,15,960,1050"
+"wmctrl -r :ACTIVE: -e 0,0,15,840,1020"
   Mod4 + KP_Left
 
-"wmctrl -r :ACTIVE: -e 0,0,15,1920,1050"
+"wmctrl -r :ACTIVE: -e 0,0,15,1680,1020"
   Mod4 + KP_Begin
 
-"wmctrl -r :ACTIVE: -e 0,960,15,960,1050"
+"wmctrl -r :ACTIVE: -e 0,840,15,840,1020"
   Mod4 + KP_Right
 
-"wmctrl -r :ACTIVE: -e 0,0,540,960,525"
+"wmctrl -r :ACTIVE: -e 0,0,525,840,510"
   Mod4 + KP_End
 
-"wmctrl -r :ACTIVE: -e 0,0,540,1920,525"
+"wmctrl -r :ACTIVE: -e 0,0,525,1680,510"
   Mod4 + KP_Down
 
-"wmctrl -r :ACTIVE: -e 0,960,540,960,525"
+"wmctrl -r :ACTIVE: -e 0,840,525,840,510"
   Mod4 + KP_Next
 
 #
 # Second monitor
 #
-"wmctrl -r :ACTIVE: -e 0,1923,15,960,525"
+"wmctrl -r :ACTIVE: -e 0,1680,15,840,510"
   Shift+Mod2+Mod4 + KP_Home
 
-"wmctrl -r :ACTIVE: -e 0,1923,15,1920,525"
+"wmctrl -r :ACTIVE: -e 0,1680,15,1680,510"
   Shift+Mod2+Mod4 + KP_Up
 
-"wmctrl -r :ACTIVE: -e 0,2880,15,960,525"
+"wmctrl -r :ACTIVE: -e 0,2520,15,840,510"
   Shift+Mod2+Mod4 + KP_Prior
 
-"wmctrl -r :ACTIVE: -e 0,1923,15,960,1050"
+"wmctrl -r :ACTIVE: -e 0,1680,15,840,1020"
   Shift+Mod2+Mod4 + KP_Left
 
-"wmctrl -r :ACTIVE: -e 0,1923,15,1920,1050"
+"wmctrl -r :ACTIVE: -e 0,1680,15,1680,1020"
   Shift+Mod2+Mod4 + KP_Begin
 
-"wmctrl -r :ACTIVE: -e 0,2880,15,960,1050"
+"wmctrl -r :ACTIVE: -e 0,2520,15,840,1020"
   Shift+Mod2+Mod4 + KP_Right
 
-"wmctrl -r :ACTIVE: -e 0,1923,540,960,525"
+"wmctrl -r :ACTIVE: -e 0,1680,525,840,510"
   Shift+Mod2+Mod4 + KP_End
 
-"wmctrl -r :ACTIVE: -e 0,1923,540,1920,525"
+"wmctrl -r :ACTIVE: -e 0,1680,525,1680,510"
   Shift+Mod2+Mod4 + KP_Down
 
-"wmctrl -r :ACTIVE: -e 0,2880,540,960,525"
+"wmctrl -r :ACTIVE: -e 0,2520,525,840,510"
   Shift+Mod2+Mod4 + KP_Next
 
 #
@@ -116,13 +116,13 @@
 #
 #
 #### Volume managment ###
-#"/home/brice/scripts/volch.sh -r"
-#    m:0x8 + c:98
-#    Alt + Up
+"/home/brice/scripts/volch.sh -r"
+    m:0x8 + c:111
+    Alt + Up
 #
-#"/home/brice/scripts/volch.sh -l"
-#    m:0x8 + c:104
-#    Alt + Down
+"/home/brice/scripts/volch.sh -l"
+    m:0x8 + c:116
+    Alt + Down
 #
 #### MPC control ###
 #"mpc next"

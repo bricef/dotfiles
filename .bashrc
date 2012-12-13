@@ -194,3 +194,5 @@ export LANGUAGE=en_GB.UTF-8
 function bprint {
   <$1 fold -w 72 | pr -F -o3 -h $1 | tee >( lpr )
 }
+
+alias jumpoff="ssh -i ~/sparrow_id_rsa.priv bfer@jumpoff.cambridgebroadband.com"
