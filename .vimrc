@@ -3,11 +3,19 @@ set number
 set mouse=a
 set undofile
 
+filetype off
+"set rtp+=~/.vim/bundle/vundle
+"call vundle#rc()
+"Bundle 'gmarik/vundle'
+"Bundle 'vim-scripts/slimv.vim'
+
+filetype plugin indent on
+
 set t_Co=256
 syntax on
 
 "Show 80th column
-set cc=80
+"set cc=80
 
 "Enable pathogen bundle manager
 call pathogen#infect()
@@ -49,7 +57,7 @@ set smartcase
 set hlsearch
 setlocal wrap linebreak nolist
 setlocal display+=lastline
-set nowrap
+set wrap
 
 " Turn backup off 
 set nobackup
