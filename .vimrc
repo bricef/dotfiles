@@ -6,8 +6,8 @@ set undofile
 set t_Co=256
 syntax on
 
-"Show 80th column
-set cc=80
+"Don't show Show 80th column (text edit mode)
+" set cc=80 
 
 "Enable pathogen bundle manager
 call pathogen#infect()
@@ -49,7 +49,7 @@ set smartcase
 set hlsearch
 setlocal wrap linebreak nolist
 setlocal display+=lastline
-set nowrap
+set wrap " set wrap for test editing mode
 
 " Turn backup off 
 set nobackup

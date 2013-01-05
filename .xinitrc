@@ -2,7 +2,7 @@
 setxkbmap -option terminate:ctrl_alt_bksp &
 setxkbmap gb &
 
-xsetroot -solid "#3030cc" &
+# :xsetroot -solid "#f2f2f2" &
 
 . /home/brice/.screenlayout/raven-side-by-side.sh &
 
@@ -15,7 +15,8 @@ xbindkeys &
 #. /home/brice/scripts/top-left.sh &
 
 feh --bg-scale --no-xinerama /home/brice/Dropbox/Photos/wallpapers/Untitled_Wallpaper.jpg
-
+sudo ln -s /dev/sr0 /dev/dvd
+setxkbmap gb &
 exec openbox
 
 
