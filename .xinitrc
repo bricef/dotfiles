@@ -6,7 +6,7 @@ setxkbmap gb &
 
 xsetroot -solid "#aaaaaa"
 
-feh --bg-scale Downloads/milky_way_arch-wallpaper-3360x1050.jpg &
+feh --bg-scale /home/bfer/Downloads/media/milky_way_arch-wallpaper-3360x1050.jpg &
 
 xbindkeys &
 . /home/bfer/scripts/status.sh --dzen &
