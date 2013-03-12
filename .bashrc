@@ -123,7 +123,7 @@ case $1 in
   "git-only")
     EDITOR=nano
     PS1="\u@$F_GREEN\h$END{$F_RED"
-    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
+    PS1+='`git symbolic-ref HEAD 2>/dev/null | cut -b 12-`'
     PS1+="$END}:\w$ "
     ;;
   *)
