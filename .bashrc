@@ -195,4 +195,11 @@ function bprint {
   <$1 fold -w 72 | pr -F -o3 -h $1 | tee >( lpr )
 }
 
+function pprint {
+  a2ps -R --columns=1 --borders=off --header="" --left-footer="" --right-footer="" -o out.ps $1
+  echo "File in out.ps"
+}
+
+
+
 alias jumpoff="ssh -i ~/sparrow_id_rsa.priv bfer@jumpoff.cambridgebroadband.com"
