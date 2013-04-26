@@ -17,6 +17,7 @@ xbindkeys &
 feh --bg-scale --no-xinerama /home/brice/Dropbox/Photos/wallpapers/Untitled_Wallpaper.jpg
 sudo ln -s /dev/sr0 /dev/dvd
 setxkbmap gb &
+xscreensaver &
 exec openbox
 
 

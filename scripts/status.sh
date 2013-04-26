@@ -8,8 +8,8 @@
 ##
 
 netstatus(){
-    if [[ `ifconfig | grep $1` ]]; then
-        IP=`ifconfig | grep "$1.*$" -A1 | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | head -1`;
+    if [[ `ip link show dev $1 | grep UP` ]]; then
+        IP=$(ip addr show dev $1 |grep "\<inet\>" | awk '{print $2}')
         if [[ ! $IP ]]; then
             IP="unassociated";
         fi;
@@ -24,12 +24,11 @@ netstatus(){
 
 status() {
     IP_eth0=`netstatus eth0 2>/dev/null`
-    IP_wlan0=`netstatus wlan0 2>/dev/null`
+    IP_wlan0=`netstatus wlp0s10f1u9 2>/dev/null`
 
     echo '|' $(dropbox status) \
     '| vol:' $(~/scripts/volch.sh -q) \
-    '|' $(sensors | grep temp1 | awk '{print $2}' | tr -d "\n" | tr "+" " ") \
-    '| eth0:' $IP_eth0 \
+    '|' $(sensors | grep "CPU Temperature" | awk '{print $3}' | tr -d "\n" | tr "+" " ") \
     '| wlan0:' $IP_wlan0 \
     '| up:' $(uptime | tr -d ','|awk '{print $3" "$4" "$5}') \
     '|' $(date +"%a %d %b, %H:%M") '|' 

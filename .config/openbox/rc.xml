@@ -42,7 +42,7 @@
                   'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>Onyx-black</name>
+    <name>Onyx</name>
     <titleLayout>NSLIMDC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
