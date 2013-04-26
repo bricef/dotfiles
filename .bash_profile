@@ -11,3 +11,5 @@ PATH=$PATH:$HOME/bin
 
 export PATH
 unset USERNAME
+
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx

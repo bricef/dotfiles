@@ -9,6 +9,11 @@ syntax on
 "Show 80th column
 set cc=80
 
+"The following turns off "Background Color Erase", which stops scolling leading
+" to black lines.
+set t_ut=
+
+
 "Enable pathogen bundle manager
 call pathogen#infect()
 
