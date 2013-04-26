@@ -29,7 +29,8 @@ status() {
     echo '| eth0:' $IP_eth0 \
     '| eth1:' $IP_eth1 \
     '| up:' $(uptime | tr -d ','|awk '{print $3" "$4" "$5}') \
-    '|' $(date +"%a %d %b, %H:%M") '|' 
+    '| OZ: ' $(TZ=Australia/Sydney date +"%a %d %b, %H:%M" ) \
+    '| UK: ' $(date +"%a %d %b, %H:%M") '|' 
 }
 
 
