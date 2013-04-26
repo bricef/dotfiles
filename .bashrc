@@ -123,7 +123,7 @@ case $1 in
   "git-only")
     EDITOR=nano
     PS1="\u@$F_GREEN\h$END{$F_RED"
-    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
+    PS1+='`git symbolic-ref HEAD 2>/dev/null | cut -b 12-`'
     PS1+="$END}:\w$ "
     ;;
   *)
@@ -195,5 +195,12 @@ export LANGUAGE=en_GB.UTF-8
 function bprint {
   <$1 fold -w 72 | pr -F -o3 -h $1 | tee >( lpr )
 }
+
+function pprint {
+  a2ps -R --columns=1 --borders=off --header="" --left-footer="" --right-footer="" -o out.ps $1
+  echo "File in out.ps"
+}
+
+
 
 alias jumpoff="ssh -i ~/sparrow_id_rsa.priv bfer@jumpoff.cambridgebroadband.com"
