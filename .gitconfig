@@ -8,7 +8,9 @@
 	default = tracking
 [alias]
   s = status
+  suno = status -uno
   cm = commit -m 
+  co = checkout
 	tree = log --oneline --graph --decorate
 	qt = !git --no-pager log --oneline --graph --decorate -10
   tst = log --oneline --stat --decorate --graph
