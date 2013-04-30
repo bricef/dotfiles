@@ -196,7 +196,7 @@ function bprint {
 }
 
 function pprint {
-  a2ps -R --columns=1 --borders=off --header="" --left-footer="" --right-footer="" -o out.ps $1
+  a2ps -R -T4 --columns=1 --borders=off --header="" --left-footer="" --right-footer="" --line-numbers=1 -f 10 --pro=color -o out.ps $1
   echo "File in out.ps"
 }
 
