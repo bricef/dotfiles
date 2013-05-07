@@ -77,7 +77,7 @@ BOLD="\[\e[1m\]"
 END="\[\e[0m\]"
 
 
-# special characters: ⚡ ↑↓↕ ☠☢➤ 
+# special characters: ⚡ ↑↓↕ ☠☢➤✔✘
 # see also http://www.utf8-chartable.de/unicode-utf8-table.pl
 
 # uname@host:/working/dir$ _ 
