@@ -27,6 +27,16 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+
+#
+# Source git helpers if they're there.
+#
+test -f ~/scripts/git-completion.bash && source ~/scripts/git-completion.bash 
+test -f ~/scripts/git-prompt.sh && source ~/scripts/git-prompt.sh 
+# Show dirty state of branch
+GIT_PS1_SHOWDIRTYSTATE=true
+
+
 alias sudo="sudo "
 alias grep="grep --color=auto"
 
@@ -77,7 +87,7 @@ BOLD="\[\e[1m\]"
 END="\[\e[0m\]"
 
 
-# special characters: ⚡ ↑↓↕ ☠☢➤ 
+# special characters: ⚡ ↑↓↕ ☠☢➤✔✘
 # see also http://www.utf8-chartable.de/unicode-utf8-table.pl
 
 # uname@host:/working/dir$ _ 
@@ -106,7 +116,7 @@ case $1 in
     PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
     PS1+='`test "$(git branch 2> /dev/null | grep ^*)" && echo "{ "`'
     PS1+="$BOLD$F_RED"
-    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
+    PS1+='$(__git_ps1 "%s" )'
     PS1+="$BOLD$F_BLACK"
     PS1+='`test "$(git branch 2>/dev/null| grep ^*)" && echo " }"`'
     PS1+="\n$END"
@@ -197,7 +207,7 @@ function bprint {
 }
 
 function pprint {
-  a2ps -R --columns=1 --borders=off --header="" --left-footer="" --right-footer="" -o out.ps $1
+  a2ps -R -T4 --columns=1 --borders=off --header="" --left-footer="" --right-footer="" --line-numbers=1 -f 10 --pro=color -o out.ps $1
   echo "File in out.ps"
 }
 
