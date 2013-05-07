@@ -8,6 +8,8 @@
 	default = tracking
 [alias]
   s = status
+  suno = status -uno
+  so = status -uno
   cm = commit -m 
   co = checkout
 	tree = log --oneline --graph --decorate
