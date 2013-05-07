@@ -191,7 +191,7 @@ PATH=$PATH:/opt/VirtualBox/
 PATH=$PATH:/opt/arduino-0022/
 PATH=$PATH:/opt/processing-1.5.1/
 PATH=$PATH:/var/lib/gems/1.8/bin
-#PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
+PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
 export PATH
 
 alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
