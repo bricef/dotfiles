@@ -73,6 +73,8 @@ def notify_show(data, bufferp, uber_empty, tagsn, isdisplayed,
     return weechat.WEECHAT_RC_OK
 
 def show_notification(chan,message):
+    with open("./message-log.txt", "a") as f:
+        f.write("\n"+message+"\n")
     pynotify.init("wee-notifier")
     wn = pynotify.Notification(chan, message, weechat.config_get_plugin('icon'))
     wn.set_urgency(urgencies[weechat.config_get_plugin('urgency')] or
