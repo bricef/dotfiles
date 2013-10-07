@@ -210,6 +210,6 @@ function pprint {
   echo "File in out.ps"
 }
 
-
+alias clj-repl="java -cp /usr/share/java/jline.jar:/usr/share/java/clojure.jar jline.ConsoleRunner clojure.main"
 
 alias jumpoff="ssh -i ~/sparrow_id_rsa.priv bfer@jumpoff.cambridgebroadband.com"
