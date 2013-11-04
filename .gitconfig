@@ -1,15 +1,35 @@
 [user]
-	mail = bfer@cbnl.com
+	mail = brice@fractallambda.com
 	name = Brice Fernandes
-	email = brice.fernandes@gmail.com
+	email = brice@fractallambda.com
 [color]
 	ui = auto
 [push]
 	default = tracking
 [alias]
+  s = status
+  suno = status -uno
+  so = status -uno
+  cm = commit -m 
+  co = checkout
 	tree = log --oneline --graph --decorate
 	qt = !git --no-pager log --oneline --graph --decorate -10
+  tst = log --oneline --stat --decorate --graph
+  authors = shortlog -sn
+  tdiff = diff --color-words
+  this = !git init && git add . && git commit -m \"initial commit\"
+  alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
+  stu = status -uno  
+  ql = log --date=short --pretty='%Cgreen%h %Cblue[%ad %an]%Creset%Cred%d%Creset %s'
+  spull = git svn rebase
+  spush = git svn dcommit
+  fix = commit --amend -C HEAD
+
 [branch]
 	autosetuprebase = always
 [merge]
 	tool = meld
+[pack]
+	windowMemory = 100m
+	SizeLimit = 100m
+	threads = 1

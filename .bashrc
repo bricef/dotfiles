@@ -28,23 +28,37 @@ if [ -f /etc/bashrc ]; then
 fi
 
 
+#
+# Source git helpers if they're there.
+#
+test -f ~/scripts/git-completion.bash && source ~/scripts/git-completion.bash 
+test -f ~/scripts/git-prompt.sh && source ~/scripts/git-prompt.sh 
+# Show dirty state of branch
+GIT_PS1_SHOWDIRTYSTATE=true
+
+
+alias sudo="sudo "
 alias grep="grep --color=auto"
 
 alias ..="cd .."
+alias tmux="tmux -2"
 alias cd..="cd .."
-alias ls="ls --color=auto"
+alias ls="ls --color=auto -X"
 alias ll="ls -l"
 alias la="ls -a"
 alias lla="ls -la"
 alias l="ls"
-alias :e="vim"
 alias +x="chmod +x"
+alias bp="bpython"
 # When you feel desperate
 alias lsa="ls -iablhQ"
 alias lsc="ls *.c -1"
 alias lsh="ls -1 *.h"
 alias psg="ps aux | grep "
 
+# because my fingers have been trained
+alias :e="vim"
+alias :q="exit"
 export LS_COLORS="di=35"
 
 
@@ -73,7 +87,7 @@ BOLD="\[\e[1m\]"
 END="\[\e[0m\]"
 
 
-# special characters: ⚡ ↑↓↕ ☠☢ 
+# special characters: ⚡ ↑↓↕ ☠☢➤✔✘
 # see also http://www.utf8-chartable.de/unicode-utf8-table.pl
 
 # uname@host:/working/dir$ _ 
@@ -89,35 +103,40 @@ END="\[\e[0m\]"
 # [ uname@host ]( /working/dir )>
 # $ _
 
-case `hostname` in
-  "bob")
+
+function pstyle {
+case $1 in
+  "simple")
     PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
     ;;
-  "element-sim"|"sparrow"|"lappy"|"engbot"|"BHAC"|"aboyne"|"vsbldhost")
-    # [16:02][BHAC ~ ]{ master }>
-    # $ 
+  "fancy")
+    # [16:02][BHAC ~ ]{ master }
+    # ➤ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
     PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
-    PS1+='`test "$(git branch 2> /dev/null | grep ^*)" && echo "{ "`'
+    PS1+='{'
     PS1+="$BOLD$F_RED"
-    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
+    PS1+='$(__git_ps1 "%s" )'
     PS1+="$BOLD$F_BLACK"
-    PS1+='`test "$(git branch 2>/dev/null| grep ^*)" && echo " }"`'
-    PS1+=">\n$END"
-    PS1+="$BOLD$F_BLACK$ $END"
+    PS1+='}'
+    PS1+="\n$END"
+    PS1+="$BOLD$F_BLACK➤ $END"
     ;;
-  "prometheus")
+  "blue")
     # [16:02][BHAC ~ ]==>
     # $ 
     PS1="$F_BLUE[$BOLD\A$END$F_BLUE][$END$BOLD$F_MAGENTA\h$END$F_BLUE "
     PS1+="\w ]"
-    PS1+="==>\n$END"
+    PS1+="{ $BOLD$F_RED"
+    PS1+='$(__git_ps1 "%s" )'
+    PS1+="$END$F_BLUE }"
+    PS1+="\n$END"
     PS1+="$F_BLUE$ $END"
     ;;
-  "LOMOND")
+  "git-only")
     EDITOR=nano
     PS1="\u@$F_GREEN\h$END{$F_RED"
-    PS1+='`git branch --color=never 2>/dev/null | grep --color=never ^* | sed "s/^* \(.*\)/\1/"`'
+    PS1+='`git symbolic-ref HEAD 2>/dev/null | cut -b 12-`'
     PS1+="$END}:\w$ "
     ;;
   *)
@@ -125,6 +144,21 @@ case `hostname` in
     ;;
 esac
 export PS1
+}
+
+
+case `hostname` in 
+  "prometheus"|"barracuda")
+    pstyle blue
+    ;;
+  "vsbldhost")
+    pstyle simple
+    ;;
+  *)
+    pstyle fancy
+    ;;
+esac
+
 
 
 function ds {
@@ -135,7 +169,9 @@ function ds {
 function ems-env {
   PREFIX=$(pwd)
   export LD_LIBRARY_PATH=$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/lib
-  export PATH=$PREFIX/nms-manager-apps/scripts:$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/bin:$PATH
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/Linux_Desktop/INSTALLROOT/usr/local/vectastar/lib
+  export PATH=$PREFIX/nms-manager-apps/scripts:$PREFIX/Linux_Desktop/INSTALLROOT/usr/local/vectastar/bin:$PATH
+  export PATH=$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/bin:$PATH
   export EMS_BINARY_ROOT=$PREFIX/nms-manager-apps/scripts
   export EMS_SYSTEM_ROOT=$PREFIX/INSTALLROOT/
   
@@ -145,7 +181,20 @@ function ems-env {
   export EMS_DATA_ROOT=$EMS_ROOT/data
 }
 
-export PATH=$PATH:/home/$(whoami)/scripts:/var/lib/gems/1.8/bin:/home/$(whoami)/.cabal/bin:/opt/VirtualBox/:/opt/arduino-0022/:/opt/processing-1.5.1/
+function pgen {
+  </dev/urandom tr -dc A-Za-z0-9 | head -c $1 | cat - <(echo "")
+}
+
+
+PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
+PATH=$PATH:/home/$(whoami)/scripts:
+PATH=$PATH:/home/$(whoami)/.cabal/bin
+PATH=$PATH:/opt/VirtualBox/
+PATH=$PATH:/opt/arduino-0022/
+PATH=$PATH:/opt/processing-1.5.1/
+PATH="/usr/local/heroku/bin":$PATH
+PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
+export PATH
 
 alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
 alias vssetup="sudo /usr/local/vectastar/bin/vssetup"
@@ -153,3 +202,17 @@ export LC_ALL=en_GB.UTF-8
 export LC_CTYPE=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB.UTF-8
+
+
+function bprint {
+  <$1 fold -w 72 | pr -F -o3 -h $1 | tee >( lpr )
+}
+
+function pprint {
+  a2ps -R -T4 --columns=1 --borders=off --header="" --left-footer="" --right-footer="" --line-numbers=1 -f 10 --pro=color -o out.ps $1
+  echo "File in out.ps"
+}
+
+
+
+alias jumpoff="ssh -i ~/sparrow_id_rsa.priv -Y bfer@jumpoff.cambridgebroadband.com"

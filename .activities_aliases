@@ -1,0 +1,36 @@
+
+{ "Bugfixing" : [
+    "#[0-9]{1,4}.*",
+    "#BUG",
+    ".*debug.*"
+  ],
+  "Cost of Business" : [
+    "@break",
+    "@start",
+    "@bbreak",
+    "@food",
+    "@admin",
+    "@mail",
+    "admin",
+    ".*wiki.*"
+  ],
+  "Testing" : [
+    ".*test.*",
+    "@test.*"
+  ],
+  "Windows" : [
+    ".*windows.*",
+    ".*winems.*"
+  ],
+  "Meeting": [
+    "@meeting.*",
+    "@standup.*"
+  ],
+  "Dead": [
+    "@perso",
+    "@slack"
+  ]
+
+}
+
+

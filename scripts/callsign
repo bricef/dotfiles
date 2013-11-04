@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+import sys
+import string
+import random
+
+phonetic = {
+  "A":"Alfa",
+  "B":"Bravo",
+  "C":"Charlie",
+  "D":"Delta",
+  "E":"Echo",
+  "F":"Foxtrot",
+  "G":"Golf",
+  "H":"Hotel",
+  "I":"India",
+  "J":"Juliet",
+  "K":"Kilo",
+  "L":"Lima",
+  "M":"Mike",
+  "N":"November",
+  "O":"Oscar",
+  "P":"Papa",
+  "Q":"Quebec",
+  "R":"Romeo",
+  "S":"Sierra",
+  "T":"Tango",
+  "U":"Uniform",
+  "V":"Victor",
+  "W":"Whiskey",
+  "X":"Xray",
+  "Y":"Yankee",
+  "Z":"Zulu"
+}
+
+perms = []
+
+def gen_perms(n, state=[], alphabet=string.uppercase):
+  perms=[]
+  if state:
+    for perm in state:
+      for c in alphabet:
+        perms.append("".join([perm,c]))
+  else:
+    perms=list(alphabet)
+  if n<2:
+    return perms
+  else:
+    return gen_perms(n-1, state=perms, alphabet=alphabet)
+
+        
+def trans(st):
+  bu=[]
+  ct=0
+  for c in st:
+    if bu and c==bu[-1]:
+      ct +=1 
+    else:
+      if ct>0:
+        bu.append(str(ct+1))
+      bu.append(c)
+      ct=0
+  if ct>0:
+    bu.append(str(ct+1))
+  return "".join(bu)
+
+def gen_random(n, alphabet=string.uppercase):
+  buf = []
+  for i in range(n):
+    buf.append(random.choice(alphabet))
+  return "".join(buf)
+
+def natofy(st):
+  return " ".join(map(lambda x:phonetic[x] if x in phonetic else x, st))
+
+callsign = gen_random(
+  int(sys.argv[1]) if len(sys.argv)>1 else 3,
+  alphabet = sys.argv[2].upper() if len(sys.argv)>2 else string.uppercase
+)
+
+print( "[%s]: %s"%(callsign, natofy(callsign)))
+

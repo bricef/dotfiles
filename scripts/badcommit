@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+
+import urllib2
+import BeautifulSoup
+import sys
+
+try:
+  n=int(sys.argv[1])
+except:
+  n=1
+
+if n == 1:
+  print(BeautifulSoup.BeautifulSoup(urllib2.urlopen("http://whatthecommit.com").read()).find(id="content").find("p").text)
+else:
+  for i in range(0,n):
+    soup = BeautifulSoup.BeautifulSoup(urllib2.urlopen("http://whatthecommit.com").read())
+    print("%4d: %s"%(i+1, soup.find(id="content").find("p").text))

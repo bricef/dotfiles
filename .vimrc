@@ -1,9 +1,16 @@
 set nocp
 set number
 set mouse=a
+set undofile
 
 set t_Co=256
 syntax on
+
+"Show 80th column
+set cc=80
+
+"Enable pathogen bundle manager
+call pathogen#infect()
 
 if has('gui_running')
   colorscheme BusyBee  
@@ -17,6 +24,16 @@ set smartindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set showcmd
+
+"Relative numbers vim 7.3+
+set rnu
+autocmd BufEnter * set relativenumber "Becasue the above doesn't seem to work
+
+au BufNewFile,BufRead *.md  setf markdown
+
+"global search&replace by default
+set gdefault
 
 autocmd FileType python set nocindent
 autocmd FileType python set nosmartindent 
@@ -26,7 +43,10 @@ autocmd FileType python set nosmartindent
 set showmode
 set showmatch
 set ignorecase
+set is        " incsearch
 set smartcase
+"search highlighting
+set hlsearch
 setlocal wrap linebreak nolist
 setlocal display+=lastline
 set nowrap
@@ -48,18 +68,17 @@ set autowrite " writes buffer on next/previous
 nnoremap <C-Left> :bprevious<CR>
 nnoremap <C-Right> :bnext<CR>
 
+"Plugin shortcuts
+nnoremap <F5> :GundoToggle<CR>
+nnoremap <F8> :BufExplorer<CR>
+inoremap <F8> :BufExplorer<CR>
 
 
-"search highlighting
-set hlsearch
 "Ctrl-l removes highlighting
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 inoremap <silent> <C-l> <Esc>:nohl<CR>i
 
-set ic        " ignorecase
-set is        " incsearch
-set scs       " smartcase: override the 'ic' when searching
-              " if search pattern contains uppercase char
+
 
 " Settings for VimClojure
 let vimclojure#HighlightBuiltins=1      " Highlight Clojure's builtins
@@ -73,6 +92,15 @@ autocmd FileType make setlocal noexpandtab
 
 "play well with ctags
 set tags=./tags,./../tags,./../../tags,./../../../tags,tags
+
+"Be smart about where to look for other C files
+set path+=/usr/include/**
+set path+=../../include
+set path+=../../include/**
+set path+=../include
+set path+=../include/**
+set path+=./include
+set path+=./include/**
 
 "make the home key behave well
 imap <Home> <Esc>^i
@@ -101,6 +129,10 @@ nnoremap <C-Down> :silent! let &guifont = substitute(&guifont, '\zs\d\+', '\=eva
 
 "Command to see the difference with the original file.
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+
+nnoremap <leader>1 yypVr=
+nnoremap <leader>2 yypVr-
+
 
 "folding settings
 set foldmethod=syntax   "fold based on
@@ -150,6 +182,3 @@ if version >= 700
 endif
 hi StatusLine ctermfg=white ctermbg=0 cterm=bold
 
-"80 character linewidth
-"highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
-"match OverLength '\%>80v.\+'
