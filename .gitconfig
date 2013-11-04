@@ -20,7 +20,7 @@
   this = !git init && git add . && git commit -m \"initial commit\"
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
   stu = status -uno  
-  ql = log --pretty='%Cgreen%h %Cblue[%an]%Creset%Cred%d%Creset %s'
+  ql = log --date=short --pretty='%Cgreen%h %Cblue[%ad %an]%Creset%Cred%d%Creset %s'
   spull = git svn rebase
   spush = git svn dcommit
   fix = commit --amend -C HEAD
