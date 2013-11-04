@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 #
 # Suggestions for improvement:
@@ -173,7 +173,7 @@ if __name__ == "__main__":
       elif os.path.isdir(sys.argv[1]):
         print(add(sys.argv[1]))
 
-  except RuntimeError as (strerr):
+  except RuntimeError as strerr:
     sys.stderr.write("[error]: %s\n"%strerr)
     
 
