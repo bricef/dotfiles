@@ -34,7 +34,7 @@
 #    Control+Shift + t
 
 ### SHORTCUTS ###
-"gnome-terminal --working-directory=/home/bfer/"
+"gnome-terminal --working-directory=/home/bfer/ --hide-menubar"
   Alt + Return
 
 "~/scripts/brice-menu.sh"
