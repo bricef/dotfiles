@@ -114,11 +114,11 @@ case $1 in
     # ➤ 
     PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
     PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
-    PS1+='`test "$(git branch 2> /dev/null | grep ^*)" && echo "{ "`'
+    PS1+='{'
     PS1+="$BOLD$F_RED"
     PS1+='$(__git_ps1 "%s" )'
     PS1+="$BOLD$F_BLACK"
-    PS1+='`test "$(git branch 2>/dev/null| grep ^*)" && echo " }"`'
+    PS1+='}'
     PS1+="\n$END"
     PS1+="$BOLD$F_BLACK➤ $END"
     ;;
@@ -127,7 +127,10 @@ case $1 in
     # $ 
     PS1="$F_BLUE[$BOLD\A$END$F_BLUE][$END$BOLD$F_MAGENTA\h$END$F_BLUE "
     PS1+="\w ]"
-    PS1+="==>\n$END"
+    PS1+="{ $BOLD$F_RED"
+    PS1+='$(__git_ps1 "%s" )'
+    PS1+="$END$F_BLUE }"
+    PS1+="\n$END"
     PS1+="$F_BLUE$ $END"
     ;;
   "git-only")
@@ -145,7 +148,7 @@ export PS1
 
 
 case `hostname` in 
-  "prometheus")
+  "prometheus"|"barracuda")
     pstyle blue
     ;;
   "vsbldhost")
