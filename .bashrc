@@ -3,6 +3,7 @@
 # propagate error status along pipes
 # useful for the "foo | bar | buzz && hello" construct
 set -o pipefail 
+set -o vi
 
 EDITOR=vim
 
@@ -187,6 +188,7 @@ function pgen {
 
 
 PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
+PATH=$PATH:/home/$(whoami)/TOOLS/google_appengine/
 PATH=$PATH:/home/$(whoami)/scripts:
 PATH=$PATH:/home/$(whoami)/.cabal/bin
 PATH=$PATH:/opt/VirtualBox/

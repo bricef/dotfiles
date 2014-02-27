@@ -18,6 +18,7 @@ feh --bg-scale --no-xinerama /home/brice/Dropbox/Photos/wallpapers/Untitled_Wall
 sudo ln -s /dev/sr0 /dev/dvd
 setxkbmap gb &
 xscreensaver &
+dropbox start
 exec openbox
 
 
