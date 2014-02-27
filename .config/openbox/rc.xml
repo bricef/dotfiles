@@ -144,7 +144,7 @@
      Many programs reserve space automatically, but you can use this in other
      cases. -->
   <margins>
-    <top>15</top>
+    <top>0</top>
     <bottom>15</bottom>
     <left>0</left>
     <right>0</right>
@@ -182,6 +182,7 @@
         <wrap>no</wrap>
       </action>
     </keybind>
+    <!--
     <keybind key="C-A-Up">
       <action name="DesktopUp">
         <dialog>no</dialog>
@@ -193,7 +194,7 @@
         <dialog>no</dialog>
         <wrap>no</wrap>
       </action>
-    </keybind>
+    </keybind>-->
     <keybind key="S-A-Left">
       <action name="SendToDesktopLeft">
         <dialog>no</dialog>
