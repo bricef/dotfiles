@@ -62,8 +62,6 @@ alias :q="exit"
 export LS_COLORS="di=35"
 
 
-export CVSROOT=:pserver:bfer@cvshost:/newcvs
-
 B_BLACK="\[\e[40m\]"
 B_RED="\[\e[41m\]"
 B_GREEN="\[\e[42m\]"
@@ -163,20 +161,6 @@ function ds {
   test $dir && echo "cd $dir" && cd $dir
 }
 
-function ems-env {
-  PREFIX=$(pwd)
-  export LD_LIBRARY_PATH=$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/lib
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PREFIX/Linux_Desktop/INSTALLROOT/usr/local/vectastar/lib
-  export PATH=$PREFIX/nms-manager-apps/scripts:$PREFIX/Linux_Desktop/INSTALLROOT/usr/local/vectastar/bin:$PATH
-  export PATH=$PREFIX/Linux_Desktop_x86_64/INSTALLROOT/usr/local/vectastar/bin:$PATH
-  export EMS_BINARY_ROOT=$PREFIX/nms-manager-apps/scripts
-  export EMS_SYSTEM_ROOT=$PREFIX/INSTALLROOT/
-  
-  export EMS_ROOT=/home/bfer/files/vnms_data
-  export EMS_CONFIG_ROOT=$EMS_ROOT/conf
-  export EMS_ALARM_ROOT=$EMS_ROOT/alarms
-  export EMS_DATA_ROOT=$EMS_ROOT/data
-}
 
 function pgen {
   </dev/urandom tr -dc A-Za-z0-9 | head -c $1 | cat - <(echo "")
@@ -193,8 +177,6 @@ PATH="/usr/local/heroku/bin":$PATH
 PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
 export PATH
 
-alias vsbackup="sudo /usr/local/vectastar/bin/vsbackup.py"
-alias vssetup="sudo /usr/local/vectastar/bin/vssetup"
 export LC_ALL=en_GB.UTF-8
 export LC_CTYPE=en_GB.UTF-8
 export LANG=en_GB.UTF-8
@@ -210,6 +192,3 @@ function pprint {
   echo "File in out.ps"
 }
 
-
-
-alias jumpoff="ssh -i ~/sparrow_id_rsa.priv -Y bfer@jumpoff.cambridgebroadband.com"
