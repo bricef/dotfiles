@@ -145,7 +145,7 @@ export PS1
 
 
 case `hostname` in 
-  "prometheus")
+  "prometheus"|"barracuda")
     pstyle blue
     ;;
   "vsbldhost")
