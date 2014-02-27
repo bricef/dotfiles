@@ -24,6 +24,7 @@
   spull = git svn rebase
   spush = git svn dcommit
   fix = commit --amend -C HEAD
+  tall =  log --oneline --graph --decorate --all
 
 [branch]
 	autosetuprebase = always
