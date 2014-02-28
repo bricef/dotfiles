@@ -171,21 +171,14 @@ PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
 PATH=$PATH:/home/$(whoami)/scripts:
 PATH=$PATH:/home/$(whoami)/.cabal/bin
 PATH=$PATH:/opt/VirtualBox/
+PATH=$PATH:/opt/node/node-v0.10.2-linux-arm-pi/bin/
 PATH=$PATH:/opt/arduino-0022/
 PATH=$PATH:/opt/processing-1.5.1/
-PATH="/usr/local/heroku/bin":$PATH
 PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
+PATH=$PATH:/var/lib/gems/1.8/bin
+PATH=$PATH:/usr/local/heroku/bin
 export PATH
 
-export LC_ALL=en_GB.UTF-8
-export LC_CTYPE=en_GB.UTF-8
-export LANG=en_GB.UTF-8
-export LANGUAGE=en_GB.UTF-8
-
-
-function bprint {
-  <$1 fold -w 72 | pr -F -o3 -h $1 | tee >( lpr )
-}
 
 function pprint {
   a2ps -R -T4 --columns=1 --borders=off --header="" --left-footer="" --right-footer="" --line-numbers=1 -f 10 --pro=color -o out.ps $1
