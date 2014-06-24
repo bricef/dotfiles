@@ -3,7 +3,7 @@
 # propagate error status along pipes
 # useful for the "foo | bar | buzz && hello" construct
 set -o pipefail 
-set -o vi
+#set -o vi
 
 EDITOR=vim
 
@@ -156,6 +156,12 @@ case `hostname` in
 esac
 
 
+function scruball {
+  find -maxdepth 1 -type f | while read file; do 
+    echo "Overwriting $file";
+    dd if=/dev/urandom of=$file count=$(stat -c %b $file) bs=$(stat -c %B $file) ;
+  done
+}
 
 function ds {
   dir=$(~/scripts/dirstack.py "$@")
@@ -177,6 +183,7 @@ PATH=$PATH:/opt/arduino-0022/
 PATH=$PATH:/opt/processing-1.5.1/
 PATH="/usr/local/heroku/bin":$PATH
 PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
+PATH=$PATH:/opt/sublime
 export PATH
 
 export LC_ALL=en_GB.UTF-8

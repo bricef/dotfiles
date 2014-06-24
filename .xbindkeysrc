@@ -66,7 +66,7 @@
 "wmctrl -r :ACTIVE: -e 0,0,0,840,1035"
   Mod4 + KP_Left
 
-"wmctrl -r :ACTIVE: -e 0,0,0,1680,1035"
+"wmctrl -r :ACTIVE: -e 0,0,0,1679,1035"
   Mod4 + KP_Begin
 
 "wmctrl -r :ACTIVE: -e 0,840,0,840,1035"
