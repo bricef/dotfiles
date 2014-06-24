@@ -1,0 +1,176 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{  verbose,
+            tmargin=0.10\paperheight,
+            bmargin=0.10\paperheight,
+            lmargin=0.15\paperwidth,
+            rmargin=0.15\paperwidth}
+
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.8}
+\hypersetup{bookmarks=true,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            bookmarksopenlevel=3,
+            colorlinks,
+            breaklinks,
+            linkcolor=darkblue,
+            urlcolor=darkblue,
+            anchorcolor=darkblue,
+            citecolor=darkblue}
+
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{babel}
+
+\usepackage{fancyhdr,lastpage}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{framed}
+\usepackage{mdframed}
+
+\pagestyle{fancy}
+
+
+%%%%%%%%%%%%%% CALLBOX %%%%%%%%%%%%%%%%%%%%%%
+%
+\definecolor{lred}{RGB}{255,195,195}
+\definecolor{lgreen}{RGB}{195,255,195}
+\definecolor{lblue}{RGB}{195,195,255}
+\definecolor{lblack}{RGB}{195,195,195}
+\newmdenv[%
+  linecolor=red,%
+  backgroundcolor=lred,%
+  topline=false,%
+  bottomline=false,%
+  rightline=false,%
+  linewidth=3pt]{redbox}
+\newcommand{\startred}{\begin{redbox}}
+\newmdenv[%
+  linecolor=green,%
+  backgroundcolor=lgreen,%
+  topline=false,%
+  bottomline=false,%
+  rightline=false,%
+  linewidth=3pt]{greenbox}
+\newcommand{\startgreen}{\begin{greenbox}}
+\newmdenv[%
+  linecolor=blue,%
+  backgroundcolor=lblue,%
+  topline=false,%
+  bottomline=false,%
+  rightline=false,%
+  linewidth=3pt]{bluebox}
+\newcommand{\startblue}{\begin{bluebox}}
+\newmdenv[%
+  linecolor=black,%
+  backgroundcolor=lblack,%
+  topline=false,%
+  bottomline=false,%
+  rightline=false,%
+  linewidth=3pt]{blackbox}
+\newcommand{\startblack}{\begin{blackbox}}
+
+
+
+
+%%%%%%%%%%%%%% NICEPIC %%%%%%%%%%%%%%%%%%%%%
+%
+% \nicepic{/path/to/pic}{label}{caption}
+%
+\newcommand{\nicepic}[3]{%
+\begin{figure}[h]
+\hfill{}\includegraphics[width=0.8\columnwidth]{%
+#1}\hfill{}
+\caption{\label{#2}#3}
+\end{figure}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%% NICEWRAP %%%%%%%%%%%%%%%%%%%%%%%
+%
+% \nicewrap{pos}{path}{label}{caption}
+%
+\newcommand{\wrapright}[4]{%
+\begin{wrapfigure}{#1}{0.5\textwidth}
+\vspace{-1em}
+\begin{center}
+\includegraphics[width=0.48\textwidth]{#2}
+\end{center}
+\vspace{-1em}
+\caption{\label{#3}#4}
+\vspace{-0.75em}
+\end{wrapfigure}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%% META %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*\mytitle{$title$}
+\title{\mytitle}
+\newcommand*\myauthor{$for(author)$$author$$sep$ \and $endfor$}
+\author{\myauthor}
+$if(date)$
+\date{$date$}
+$else$
+\date{\today}
+$endif$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%% HEADER/FOOTER STUFF %%%%%%%%%%%%%%
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\lhead{\bfseries \mytitle}
+\rhead{\nouppercase{\leftmark}}
+\fancyfoot[CO, CE] {\thepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% We supress section numbers
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+
+%\begin{titlepage}
+%\pagenumbering{gobble}% Remove page numbers (and reset to 1)
+%\thispagestyle{empty}
+%\maketitle
+%
+% No Abstract for most reports...
+%
+%\begin{abstract}
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas egestas tristique eros sodales ultrices. Cras ultrices tempor arcu et lacinia. Morbi porttitor, purus sit amet tincidunt interdum, felis nibh suscipit sem, ac pharetra nulla justo iaculis turpis. Cras a lacus diam, non adipiscing turpis. Nulla consequat sapien euismod nisl euismod sit amet accumsan arcu elementum. Maecenas vitae porttitor velit. Ut blandit bibendum quam, in vehicula tortor adipiscing eget. Donec nisl tellus, bibendum non condimentum in, sodales tincidunt nisl. Donec ac ligula in dolor venenatis dignissim. Morbi risus est, egestas quis rutrum at, adipiscing quis leo.
+%\end{abstract}
+%\clearpage
+%\end{titlepage}
+
+\pagenumbering{arabic}
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+\tableofcontents
+$endif$
+
+\newpage
+
+$body$
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
+
