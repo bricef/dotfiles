@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DIR="/logging"
+
+
+function snap {
+  DATE=$(date +"%Y-%m-%d-%H%M")
+  echo "fswebcam -r 640x480 --jpeg 85 -D 0 ${DIR}/${DATE}_webcam.jpg"
+  echo "scrot ${DIR}/${DATE}_screen.png"
+}
+
+while true; do 
+  sleep 60 
+  snap
+done
