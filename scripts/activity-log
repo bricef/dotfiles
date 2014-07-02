@@ -1,15 +1,36 @@
 #!/bin/bash
 
 DIR="/logging"
+LOG="/logging/.activity"
 
-
-function snap {
-  DATE=$(date +"%Y-%m-%d-%H%M")
-  echo "fswebcam -r 640x480 --jpeg 85 -D 0 ${DIR}/${DATE}_webcam.jpg"
-  echo "scrot ${DIR}/${DATE}_screen.png"
+function runlog {
+  local CMD=$1 
+  echo "[DO]: " $CMD | tee -a $LOG
+  $CMD 2>&1 | tee -a $LOG
 }
 
-while true; do 
-  sleep 60 
-  snap
-done
+function snap {
+  DATE=$(date +"%s000") # milliseconds since epoch (to match timestamp on keylogger)
+  runlog "fswebcam -r 640x480 --jpeg 85 -D 0 ${DIR}/${DATE}_webcam.jpg"
+  runlog "scrot ${DIR}/${DATE}_screen.png"
+}
+
+function loop(){
+  while true; do 
+    sleep 60 
+    snap
+  done
+}
+
+case "$1" in
+  "--loop") 
+    loop
+    ;;
+  "--snap")
+    snap
+    ;;
+  *)
+    echo "invoke with --loop or --snap"
+    ;;
+esac
+

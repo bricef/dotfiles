@@ -18,7 +18,10 @@ feh --bg-scale --no-xinerama /home/brice/Dropbox/Photos/wallpapers/Untitled_Wall
 sudo ln -s /dev/sr0 /dev/dvd
 setxkbmap gb &
 
-nohup /home/brice/scripts/activity-log --loop 0<&- &>/dev/null &
+# Activity monitoring
+/home/brice/scripts/activity-log --loop &>/dev/null &
+sudo /home/brice/scripts/klog /dev/input/by-path/platform-i8042-serio-0-event-kbd /logging/$(date +"%F").keys &>/dev/null &
+
 xscreensaver &
 dropbox start
 exec openbox
