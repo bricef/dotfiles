@@ -14,7 +14,7 @@ xbindkeys &
 #. /home/brice/scripts/workingon.sh &
 #. /home/brice/scripts/top-left.sh &
 
-feh --bg-scale --no-xinerama /home/brice/Dropbox/Photos/wallpapers/Untitled_Wallpaper.jpg
+#feh --bg-scale --no-xinerama /home/brice/Dropbox/Photos/wallpapers/Untitled_Wallpaper.jpg
 sudo ln -s /dev/sr0 /dev/dvd
 setxkbmap gb &
 
