@@ -60,6 +60,7 @@ alias psg="ps aux | grep "
 # because my fingers have been trained
 alias :e="vim"
 alias :q="exit"
+alias t="todo.sh"
 export LS_COLORS="di=35"
 
 
