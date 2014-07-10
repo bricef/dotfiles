@@ -22,7 +22,7 @@ setxkbmap gb &
 /home/brice/scripts/activity-log --loop &>/dev/null &
 sudo /home/brice/scripts/klog /dev/input/by-path/platform-i8042-serio-0-event-kbd /logging/$(date +"%F").keys &>/dev/null &
 
-xscreensaver &
+xscreensaver -no-splash &
 dropbox start
 exec openbox
 
