@@ -1,5 +1,8 @@
 *.un~
 *.netrwhist
+.CFUserTextEncoding
+.DS_Store
+.Trash/
 .ccache
 .cache
 .gconf

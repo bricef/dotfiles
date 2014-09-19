@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+alias ls="ls -G"
+alias ll="ls -l"
+alias la="ls -A"
+alias lla="ls -lA"
+alias l="ls"
+
+alias lsa="ls -iablh"
+alias psg="ps aux | grep "
+
+
+PATH=$PATH:/Users/$(whoami)/scripts
+PATH=$PATH:/Users/$(whoami)/.cabal/bin
+export PATH
