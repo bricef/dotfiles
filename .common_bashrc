@@ -35,7 +35,7 @@ alias cd..="cd .."
 alias l="ls"
 alias +x="chmod +x"
 alias bp="bpython"
-
+alias rebash="source ~/.bashrc"
 # because my fingers have been trained
 alias :e="vim"
 alias :q="exit"
@@ -141,7 +141,7 @@ esac
 
 function ds {
   dir=$(~/scripts/dirstack.py "$@")
-  test $dir && echo "cd $dir" && cd $dir
+  test "$dir" && echo "cd $dir" && cd "$dir"
 }
 
 
@@ -149,7 +149,13 @@ function pgen {
   </dev/urandom tr -dc A-Za-z0-9 | head -c $1 | cat - <(echo "")
 }
 
+PATHFILE="$HOME/.PATH_$(uname -s)"
 
+if [ -f "$PATHFILE" ]; then
+  while read _path; do
+    PATH="${PATH}:${_path}"
+  done <"$PATHFILE"
+fi
 
 PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
 

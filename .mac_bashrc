@@ -13,4 +13,8 @@ alias psg="ps aux | grep "
 
 PATH=$PATH:/Users/$(whoami)/scripts
 PATH=$PATH:/Users/$(whoami)/.cabal/bin
+PATH=$PATH:/Applications/Inkscape.app/Contents/MacOS
 export PATH
+
+export CLICOLOR=1
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
