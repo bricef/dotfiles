@@ -1,3 +1,4 @@
 /Applications/Racket v6.1/bin
 /Applications/waxeye.git/bin
 /usr/local/opt/coreutils/libexec/gnubin:$PATH
+/Library/Frameworks/Python.framework/Versions/3.4/bin
