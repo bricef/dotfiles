@@ -153,7 +153,7 @@ PATHFILE="$HOME/.PATH_$(uname -s)"
 
 if [ -f "$PATHFILE" ]; then
   while read _path; do
-    PATH="${PATH}:${_path}"
+    PATH="${_path}:${PATH}"
   done <"$PATHFILE"
 fi
 

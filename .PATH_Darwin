@@ -1,1 +1,3 @@
 /Applications/Racket v6.1/bin
+/Applications/waxeye.git/bin
+/usr/local/opt/coreutils/libexec/gnubin:$PATH
