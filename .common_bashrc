@@ -164,7 +164,13 @@ export LC_CTYPE=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB.UTF-8
 
-
+if ls --color -d . >/dev/null 2>&1; then
+    GNU_LS=1
+elif ls -G -d . >/dev/null 2>&1; then
+    BSD_LS=1
+else
+    SOLARIS_LS=1
+fi
 
 
 
