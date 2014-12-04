@@ -172,7 +172,7 @@ else
     SOLARIS_LS=1
 fi
 
-
+export ANSIBLE_HOSTS=~/.ansible_hosts
 
 
 
