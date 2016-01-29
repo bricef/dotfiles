@@ -129,4 +129,4 @@ if [ ! -n "$pre" ]; then
   pre=${F_RED}
 fi
 
-cat - | sed "s/$regex/$pre$bold&$post/g"
+cat - | sed -u "s/$regex/$pre$bold&$post/g"

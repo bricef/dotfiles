@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 #
 # Suggestions for improvement:
@@ -9,7 +9,7 @@
 
 
 
-import os,sys,shutil,fileinput
+import os,sys,shutil,fileinput,subprocess
 
 STACK_FILE=os.path.expanduser("~/.config/bs-stack")
 
@@ -112,12 +112,13 @@ def usage():
   sys.stderr.write("""%s [option] <directory|num>
 Where option is one of:
     a  <dir>        Add a directory to the top of the stack
-    r  <num>        Remove the directory at index <num> from the stack
+    r|d  <num>      Remove the directory at index <num> from the stack
     g  <num>        Get the directory at index <num>
     rg <num>        Remove Get the directory at index <num> and prints it to stdout
     p  <dir>        Push the directory <dir> to the top of the stack and print it to stdout
     t               Remove and get the top directory from the stack and print it to stdout (Top)
     s               Show the stack (default operation with no arguments
+    edit            Edit the stack with your default editor
     sort            Sort the stack
     clean           Sort the stack and remove duplicate entries
     h|-h|--help     Show this message
@@ -152,7 +153,7 @@ if __name__ == "__main__":
         add(sys.argv[2])
       elif sys.argv[1] in ["rg", "gr"]:
         print(delete(int(sys.argv[2])).strip())
-      elif sys.argv[1] == "r":
+      elif sys.argv[1] in ["r", "d"]:
         delete(int(sys.argv[2])).strip()
       elif sys.argv[1] == "g":
         print(get(int(sys.argv[2])).strip())
@@ -164,6 +165,8 @@ if __name__ == "__main__":
           print(dir.strip())
       elif sys.argv[1] == "s":
         show()
+      elif sys.argv[1] == "edit":
+        subprocess.call([os.getenv("EDITOR"), STACK_FILE])
       elif sys.argv[1] == "clean":
         clean_stack()
       elif sys.argv[1] == "sort":
@@ -173,7 +176,7 @@ if __name__ == "__main__":
       elif os.path.isdir(sys.argv[1]):
         print(add(sys.argv[1]))
 
-  except RuntimeError as (strerr):
+  except RuntimeError as strerr:
     sys.stderr.write("[error]: %s\n"%strerr)
     
 

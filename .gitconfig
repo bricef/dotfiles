@@ -1,7 +1,7 @@
 [user]
-	mail = brice.fernandes@gmail.com
+	mail = brice@sigmaforge.com
 	name = Brice Fernandes
-	email = brice.fernandes@gmail.com
+	email = brice@sigmaforge.com
 [color]
 	ui = auto
 [push]
@@ -25,6 +25,7 @@
   spush = git svn dcommit
   fix = commit --amend -C HEAD
   tall =  log --oneline --graph --decorate --all
+  nuke = !git reset --hard HEAD && git clean -f
 
 [branch]
 	autosetuprebase = always
@@ -34,3 +35,11 @@
 	windowMemory = 100m
 	SizeLimit = 100m
 	threads = 1
+[core]
+	excludesfile = /Users/brice/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # autotracker-bottomup - the quite a few times more ultimate audio experience
 # by Ben "GreaseMonkey" Russell, 2011. Public domain.
 #

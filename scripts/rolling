@@ -1,0 +1,132 @@
+#!/bin/sh
+# This script creates scrolling text video clip like the 
+# rolling credits of a movie. It makes it out of a PDF or PS 
+# (PostScript) document. That is when you want to produce your 
+# rolling credits, you simply typing them into a word 
+# processing program like OpenOffice Writer or AbiWord, etc. 
+# and then save a copy of (save a copy or export) as a pdf 
+# (almost any modern word processor will do this). You should 
+# This sets the page size to A4 paper size. Top and bottom margin 
+# should be an inch with is equal to 2.54 cm
+# The spread of your document equals to the screen 
+# stretched so the distance you have between the text and the 
+# edges of the document corresponds to what you're going to see 
+# on the screen.  I have usede a Font Size of 20 points which 
+# I think is a good starting point but it is up to you. You 
+# can format text just like you would in your word processing 
+# system. Use black for the text and white for the 
+# background. Although the text is spread out over several 
+# pages in the word processing program try to imagine that it's 
+# just one long continuous text when you set it up. The 
+# resulting video clip is white text on black background. This 
+# concept can obviously be expanded so that the text will run 
+# over the "living pictures" in your video, but it leads too 
+# far now. The script is also currently limited to producing a 
+# video output in VGA format 640 x 480 pixels.
+# 
+# For this script to work you must have the following programs 
+# on your computer
+# 1. The scripted is a bash shell script so you must have a 
+# bash shell environment that you have on most Unix 
+# platforms. OS X, Linux (Ubuntu, Red Hat, puppy etc), 
+# Solaris, etc.
+# 
+# 2. The basic program package imageMagick for image manipulations
+# 
+# 3. Ghostscript (GS), the classic Gnu / open-source tool for 
+# PDF and PostScript handeling.
+# 
+# 4. Ffmpeg a really nice strong basic command line based 
+# film/video editing and conversion tool.
+# 
+# To run the script you must have opened a terminal window. 
+# Xterm Aterm.. whatever. Then, in your working directory you 
+# should have your PostScript file and the script.
+# 
+# You give PDF or PostScript file as an argument to the script 
+# like this:
+# 
+# ./rolling yourfile.pdf
+# 
+# and now it will take a while to produces a video clicp script 
+# with "rolling credits" out of your document.
+set -x
+
+WIDTH=1280
+HEIGHT=720
+
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+# First, we convert your pdf or ps document into a 
+# series of images with gs
+gs -sDEVICE=png16 -dNOPAUSE -r300 -sOutputFile=page%d.png $1 -c quit;
+
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+# Remove the prefix which is in this case .pdf or .ps from the name so 
+# you just have basename
+basename="frames"
+# make a directory for the many image files we will produce but do it 
+# only if it does not already exist
+mkdir -p "$basename"
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+# creates an image that will be used for top and bottom 
+# of a long image:
+convert -size ${WIDTH}x${HEIGHT} xc:#ffffff white.png
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+# a loop where we cut each picture slightly
+i=1
+while [ -f "page$i.png" ]; do
+	convert -scale ${WIDTH} -crop +0+120 -crop +0-130 page$i.png cropped$i.png;
+	i=`expr "$i" + 1`
+done
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+# So we put the individual pages / images together into one long image with 
+# a blank screen on each end. We run a contrast enhancement on the 
+# image and invert so that black is white "cas" in the file name stands for 
+# cut and scale. "casac" in the filename stands for cut and scale and cat 
+convert -append white.png `ls -v cropped*.png` white.png -negate full.png
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+# we make some variables ready
+pus=1
+top=1
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+# Find the height of the finished long pictures in pixels.
+heighta=`identify -format "%h" full.png` 
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+# Loop that produces the many individual frames to the finished 
+# video by constantly cutting out a frame of the big picture and 
+# each time move 2 pixels down.
+top=0
+bottom=`expr "$heighta" - "$HEIGHT"`
+while [ "$bottom" -gt "0" ]; do
+echo "produces image: = $pus"
+convert -crop +0+${top} -crop +0-${bottom} full.png $basename/frame${pus}.png
+top=`expr "$top" + 2`
+bottom=`expr "$bottom" - 2`
+pus=`expr "$pus" + 1`
+done
+
+
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+# The many-numbered frames is then assembled into a video-clip that shows 
+# "rolling credits".
+ffmpeg -f image2 -r 30 -i $basename/frame%d.png $basename/$basename.mp4;
+#************************************
+#\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/
+echo "This script leaves a lot of pictures that really are not needed now that the film is assembled. Would you like to delete all the temporary files, Or would you keep them for further experiments?"
+select var in "Delete" "Keep" ; do
+break
+done
+order="$var"
+if [ "$order" == "Delete" ]; then
+	rm page*.png full.png cropped*.png white.png
+fi
+echo "The resulting video clip with the rolling text is named $basename.mp4 and is located in the sub folder $basename" 

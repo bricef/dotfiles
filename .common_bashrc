@@ -140,7 +140,7 @@ esac
 
 
 function ds {
-  dir=$(~/scripts/dirstack.py "$@")
+  dir=$(python3 ~/scripts/dirstack.py "$@")
   test "$dir" && echo "cd $dir" && cd "$dir"
 }
 
