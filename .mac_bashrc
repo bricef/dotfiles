@@ -13,6 +13,7 @@ alias psg="ps aux | grep "
 
 PATH=$PATH:/Users/$(whoami)/scripts
 PATH=$PATH:/Applications/Inkscape.app/Contents/MacOS
+PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
 # Add GHC 7.8.4 to the PATH, via http://ghcformacosx.github.io/
 export GHC_DOT_APP="/Applications/ghc-7.8.4.app"
@@ -25,4 +26,6 @@ export PATH
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
+# Use `brew install bash-completion` for this to make sense.
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
