@@ -12,8 +12,8 @@
   so = status -uno
   cm = commit -m 
   co = checkout
-	tree = log --oneline --graph --decorate
-	qt = !git --no-pager log --oneline --graph --decorate -10
+	tree = log --oneline --graph --decorate --all
+	qt = !git --no-pager log --oneline --graph --all --decorate -10
   tst = log --oneline --stat --decorate --graph
   authors = shortlog -sn
   tdiff = diff --color-words
