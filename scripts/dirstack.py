@@ -131,9 +131,11 @@ For this utility to work as intended, you may want to add the following function
 to your .bashrc or equivalent:
 
     function ds {
-      dir=$(%s "$@")
+      dir=$(%s "$@" < `tty` > `tty`)
       test $dir && echo "cd $dir" && cd $dir
     }
+
+Note how we redirect the subprocess to point to our console using `tty`.
 
 Feel free to contact brice.fernandes@gmail.com with suggestions for improvement!
 """%(os.path.basename(sys.argv[0]), os.path.basename(sys.argv[0])) )
