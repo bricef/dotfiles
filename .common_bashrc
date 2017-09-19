@@ -137,13 +137,10 @@ case `hostname` in
     ;;
 esac
 
-
-
 function ds {
-  dir=$(python3 ~/scripts/dirstack.py "$@")
-  test "$dir" && echo "cd $dir" && cd "$dir"
+  dir=$(dirstack.py "$@" < `tty` > `tty`)
+  test $dir && echo "cd $dir" && cd $dir
 }
-
 
 function pgen {
   </dev/urandom tr -dc A-Za-z0-9 | head -c $1 | cat - <(echo "")
