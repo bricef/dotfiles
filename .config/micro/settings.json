@@ -8,6 +8,8 @@
     "eofnewline": false,
     "fileformat": "unix",
     "ftoptions": true,
+    "gofmt": true,
+    "goimports": false,
     "ignorecase": false,
     "indentchar": " ",
     "infobar": true,
@@ -24,7 +26,7 @@
     "saveundo": false,
     "scrollmargin": 3,
     "scrollspeed": 2,
-    "softwrap": false,
+    "softwrap": true,
     "splitBottom": true,
     "splitRight": true,
     "statusline": true,
@@ -33,5 +35,6 @@
     "tabsize": 4,
     "tabstospaces": false,
     "termtitle": false,
+    "trimdiff": false,
     "useprimary": true
 }
