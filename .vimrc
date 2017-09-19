@@ -10,7 +10,8 @@ syntax on
 set cc=80
 
 "Enable pathogen bundle manager
-call pathogen#infect()
+execute pathogen#infect()
+filetype plugin indent on
 
 if has('gui_running')
   colorscheme BusyBee  
