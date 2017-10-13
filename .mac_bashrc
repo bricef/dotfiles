@@ -14,6 +14,13 @@ alias psg="ps aux | grep "
 PATH=$PATH:/Users/$(whoami)/scripts
 PATH=$PATH:/Applications/Inkscape.app/Contents/MacOS
 PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+PATH=$PATH:/Users/$(whoami)/bin/apache-maven-3.3.9/bin
+PATH=$PATH:/usr/local/texlive/2016/bin/x86_64-darwin
+
+# Go installation
+export GOPATH=$(go env GOPATH)
+PATH=$PATH:/usr/local/opt/go/libexec/bin
+
 
 # Add GHC 7.8.4 to the PATH, via http://ghcformacosx.github.io/
 export GHC_DOT_APP="/Applications/ghc-7.8.4.app"

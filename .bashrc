@@ -9,3 +9,4 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
     source ~/.linux_bashrc
 fi
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

@@ -13,7 +13,8 @@
   cm = commit -m 
   co = checkout
 	tree = log --oneline --graph --decorate --all
-	qt = !git --no-pager log --oneline --graph --all --decorate -10
+	t = log --oneline --graph --decorate --all
+	qt = !git --no-pager log --oneline --graph --decorate --all -15
   tst = log --oneline --stat --decorate --graph
   authors = shortlog -sn
   tdiff = diff --color-words
@@ -26,11 +27,15 @@
   fix = commit --amend -C HEAD
   tall =  log --oneline --graph --decorate --all
   nuke = !git reset --hard HEAD && git clean -f
+	tree = log --oneline --graph --decorate --all
+	f = fetch --all
+	rom = rebase origin/master
+	graph = log --graph --oneline --decorate --all --date=relative
 
 [branch]
 	autosetuprebase = always
 [merge]
-	tool = meld
+	tool = p4merge
 [pack]
 	windowMemory = 100m
 	SizeLimit = 100m
@@ -43,3 +48,6 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[mergetool]
+	keepTemporaries = false
+	prompt = false

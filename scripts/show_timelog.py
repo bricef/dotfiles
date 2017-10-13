@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+ #!/usr/bin/env python3
 
 # Email links:
 # http://code.activestate.com/recipes/473810-send-an-html-email-with-embedded-image-and-plain-t/
@@ -20,7 +20,7 @@ if len(sys.argv) > 1 and sys.argv[1] == "--save":
 import matplotlib.pyplot as plt
 
 
-VERBOSE=False
+VERBOSE=True
 
 
 class UTC(datetime.tzinfo):
@@ -97,7 +97,7 @@ def show_timeline_graph(raw,activities):
   
   #aggregate anything that's less than 1%
   misc_total=0.0
-  for k,v in times.items():
+  for k,v in list(times.items()):
     if (v/total_time) < 0.01:
       del times[k]
       misc_total += v
