@@ -138,7 +138,7 @@ case `hostname` in
 esac
 
 function ds {
-  dir=$(dirstack.py "$@" < `tty` > `tty`)
+  dir=$(dirstack.py "$@")
   test $dir && echo "cd $dir" && cd $dir
 }
 

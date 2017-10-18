@@ -11,16 +11,16 @@ alias lsa="ls -iablh"
 alias psg="ps aux | grep "
 
 
-PATH=$PATH:/Users/$(whoami)/scripts
-PATH=$PATH:/Applications/Inkscape.app/Contents/MacOS
-PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 PATH=$PATH:/Users/$(whoami)/bin/apache-maven-3.3.9/bin
+PATH=$PATH:/Users/$(whoami)/Library/Python/2.7/bin/
+PATH=$PATH:/Users/$(whoami)/scripts
+PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+PATH=$PATH:/Applications/Inkscape.app/Contents/MacOS
 PATH=$PATH:/usr/local/texlive/2016/bin/x86_64-darwin
+PATH=$PATH:/usr/local/opt/go/libexec/bin
 
 # Go installation
 export GOPATH=$(go env GOPATH)
-PATH=$PATH:/usr/local/opt/go/libexec/bin
-
 
 # Add GHC 7.8.4 to the PATH, via http://ghcformacosx.github.io/
 export GHC_DOT_APP="/Applications/ghc-7.8.4.app"
@@ -36,3 +36,6 @@ export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 # Use `brew install bash-completion` for this to make sense.
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
+# Iterm has some nice shell integration. see https://www.iterm2.com/documentation-shell-integration.html
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
