@@ -131,7 +131,7 @@ For this utility to work as intended, you may want to add the following function
 to your .bashrc or equivalent:
 
     function ds {
-      dir=$(%s "$@" < `tty` > `tty`)
+      dir=$(%s "$@")
       test $dir && echo "cd $dir" && cd $dir
     }
 
