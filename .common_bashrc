@@ -11,7 +11,7 @@ shopt -s histappend
 export HISTCONTROL=erasedups
 export HISTSIZE=3000
 export HISTFILESIZE=3000
-export HISTIGNORE="ls:ll:l:la:lla:pwd:..:cd..:cd ..:"
+export HISTIGNORE="ls:ll:l:la:lla:pwd:..:cd..:cd ..:git s"
 export EDITOR="vim"
 
 # Append commands to the history every time a prompt is shown,
@@ -36,6 +36,7 @@ alias l="ls"
 alias +x="chmod +x"
 alias bp="bpython"
 alias rebash="source ~/.bashrc"
+
 # because my fingers have been trained
 alias :e="vim"
 alias :q="exit"
@@ -69,14 +70,11 @@ END="\[\e[0m\]"
 # see also http://www.utf8-chartable.de/unicode-utf8-table.pl
 
 # uname@host:/working/dir$ _ 
-#export PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] "
 
 # [uname@host:/working/dir]>_
-#export PS1="\[\e[1;32m\][\[\e[0;32m\]\u@\[\e[0;31m\]\h\[\e[0;32m\]:\w\[\e[1;32m\]]>\[\e[0m\]"
 
 # ==[uname@host /working/dir ]==> 
 # _
-#export PS1="\[\e[1;32m\]==[\[\e[0m\]\u@\h \w \[\e[1;32m\]]==>\[\e[0m\] \n"
 
 # [ uname@host ]( /working/dir )>
 # $ _
@@ -185,8 +183,24 @@ fi
 
 export ANSIBLE_HOSTS=~/.ansible_hosts
 
-transfer() { if [ $# -eq 0 ]; then echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi 
-tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; } 
+transfer() {
+  if [ $# -eq 0 ]; then 
+    echo "No arguments specified."
+    echo "Usage:"
+    echo "echo transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; 
+    return 1; 
+  fi 
+  tmpfile=$( mktemp -t transferXXX ); 
+  
+  if tty -s; then 
+    basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); 
+    curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; 
+  else 
+    curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; 
+  fi; 
+  cat $tmpfile; 
+  rm -f $tmpfile; 
+} 
 
 
 
