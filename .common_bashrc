@@ -93,16 +93,37 @@ function __prompt_command {
       # ➤ 
       PS1="$BOLD$F_BLACK[$F_WHITE\A$F_BLACK][$END$BOLD$F_GREEN\h$BOLD$F_BLACK "
       PS1+="$END$F_GREEN\w$BOLD$F_BLACK ]"
+      
+      # Show the exit status of the previoud command if not 0
       if [ "$EXIT" != 0 ]; then
         PS1+="$BOLD$F_RED($EXIT)$BOLD$F_BLACK"
       fi
-      PS1+='`test "$(git branch 2> /dev/null | grep ^*)" && echo "{ "`'
-      PS1+="$BOLD$F_RED"
-      PS1+='$(__git_ps1 "%s" )'
-      PS1+="$BOLD$F_BLACK"
-      PS1+='`test "$(git branch 2>/dev/null| grep ^*)" && echo " }"`'
+
+      # Show the number of type of background jobs
+      local BKGJBS=$(jobs -r | wc -l | tr -d ' ')
+      local STPJBS=$(jobs -s | wc -l | tr -d ' ')
+      if [ "${BKGJBS}" -gt 0 ] || [ "${STPJBS}" -gt 0 ]; then
+        PS1+="${BOLD}${F_WHITE}("
+        if [ "${BKGJBS}" -gt 0 ]; then 
+          PS1+="bg:${BKGJBS}" 
+        fi
+        if [ "${BKGJBS}" -gt 0 ] && [ "${STPJBS}" -gt 0 ]; then 
+          PS1+=", " 
+        fi
+        if [ "${STPJBS}" -gt 0 ]; then 
+          PS1+="st:${STPJBS}" 
+        fi
+        PS1+=")${BOLD}${F_BLACK}"
+      fi
+
+      # Show the status of the git repo if this is a repo
+      if [ -n "$(git branch 2> /dev/null | grep ^*)" ]; then
+        PS1+="{${BOLD}${F_RED} $(__git_ps1 '%s' ) $BOLD$F_BLACK}"
+      fi
+
       PS1+="\n$END"
       PS1+="$BOLD${F_BLACK}➤ $END"
+
       ;;
     "blue")
       # [16:02][BHAC ~ ]==>
