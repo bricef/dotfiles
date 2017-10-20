@@ -132,7 +132,7 @@ to your .bashrc or equivalent:
 
     function ds {
       dir=$(%s "$@")
-      test $dir && echo "cd $dir" && cd $dir
+      test $dir && (echo "cd $dir" && cd $dir) || return 0
     }
 
 Note how we redirect the subprocess to point to our console using `tty`.

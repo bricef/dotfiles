@@ -170,7 +170,7 @@ esac
 
 function ds {
   dir=$(dirstack.py "$@")
-  test $dir && echo "cd $dir" && cd $dir
+  test $dir && (echo "cd $dir" && cd $dir) || return 0
 }
 
 function pgen {
