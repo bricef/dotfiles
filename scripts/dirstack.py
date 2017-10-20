@@ -131,8 +131,13 @@ For this utility to work as intended, you may want to add the following function
 to your .bashrc or equivalent:
 
     function ds {
-      dir=$(%s "$@")
-      test $dir && (echo "cd $dir" && cd $dir) || return 0
+      dir=$(dirstack.py "$@")
+      if [ -n "$dir" ]; then
+        echo "cd $dir"
+        cd $dir
+      else
+        return 0
+      fi
     }
 
 Note how we redirect the subprocess to point to our console using `tty`.
