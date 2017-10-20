@@ -14,10 +14,6 @@ alias psg="ps aux | grep "
 PATH=$PATH:/Users/$(whoami)/bin/apache-maven-3.3.9/bin
 PATH=$PATH:/Users/$(whoami)/Library/Python/2.7/bin/
 PATH=$PATH:/Users/$(whoami)/scripts
-PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
-PATH=$PATH:/Applications/Inkscape.app/Contents/MacOS
-PATH=$PATH:/usr/local/texlive/2016/bin/x86_64-darwin
-PATH=$PATH:/usr/local/opt/go/libexec/bin
 
 # Go installation
 export GOPATH=$(go env GOPATH)
