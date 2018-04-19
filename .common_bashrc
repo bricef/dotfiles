@@ -32,6 +32,7 @@ alias l="ls"
 alias +x="chmod +x"
 alias bp="bpython"
 alias rebash="source ~/.bashrc"
+alias t="todo.sh"
 
 # because my fingers have been trained
 alias :e="vim"
