@@ -769,30 +769,6 @@ fi
 
 ACTION=${1:-$TODOTXT_DEFAULT_ACTION}
 
-[ -z "$ACTION" ]    && usage
-[ -d "$TODO_DIR" ]  || mkdir -p "$TODO_DIR" 2> /dev/null || dieWithHelp "$1" "Fatal Error: $TODO_DIR is not a directory"
-( cd "$TODO_DIR" )  || dieWithHelp "$1" "Fatal Error: Unable to cd to $TODO_DIR"
-[ -z "$TODOTXT_PRIORITY_ON_ADD" ] \
-    || echo "$TODOTXT_PRIORITY_ON_ADD" | grep -q "^[A-Z]$" \
-    || die "TODOTXT_PRIORITY_ON_ADD should be a capital letter from A to Z (it is now \"$TODOTXT_PRIORITY_ON_ADD\")."
-
-[ -f "$TODO_FILE" ] || [ -c "$TODO_FILE" ] || > "$TODO_FILE"
-[ -f "$DONE_FILE" ] || [ -c "$DONE_FILE" ] || > "$DONE_FILE"
-[ -f "$REPORT_FILE" ] || [ -c "$REPORT_FILE" ] || > "$REPORT_FILE"
-
-if [ $TODOTXT_PLAIN = 1 ]; then
-    for clr in ${!PRI_@}; do
-        export "$clr"=$NONE
-    done
-    PRI_X=$NONE
-    DEFAULT=$NONE
-    COLOR_DONE=$NONE
-    COLOR_PROJECT=$NONE
-    COLOR_CONTEXT=$NONE
-fi
-
-[[ "$HIDE_PROJECTS_SUBSTITUTION" ]] && COLOR_PROJECT="$NONE"
-[[ "$HIDE_CONTEXTS_SUBSTITUTION" ]] && COLOR_CONTEXT="$NONE"
 
 _addto() {
     file="$1"
@@ -1007,6 +983,38 @@ listWordsWithSigil()
     [ "$TODOTXT_SOURCEVAR" ] && eval "FILE=$TODOTXT_SOURCEVAR"
     eval "$(filtercommand 'cat "${FILE[@]}"' '' "$@")" | grep -o "[^ ]*${sigil}[^ ]\\+" | grep "^$sigil" | sort -u
 }
+
+if [ -z "$ACTION" ]; then
+    shift  ## Was ls; new $1 is first search term
+    _list "$TODO_FILE" "$@"
+    exit 0
+fi
+    
+[ -d "$TODO_DIR" ]  || mkdir -p "$TODO_DIR" 2> /dev/null || dieWithHelp "$1" "Fatal Error: $TODO_DIR is not a directory"
+( cd "$TODO_DIR" )  || dieWithHelp "$1" "Fatal Error: Unable to cd to $TODO_DIR"
+[ -z "$TODOTXT_PRIORITY_ON_ADD" ] \
+    || echo "$TODOTXT_PRIORITY_ON_ADD" | grep -q "^[A-Z]$" \
+    || die "TODOTXT_PRIORITY_ON_ADD should be a capital letter from A to Z (it is now \"$TODOTXT_PRIORITY_ON_ADD\")."
+
+[ -f "$TODO_FILE" ] || [ -c "$TODO_FILE" ] || > "$TODO_FILE"
+[ -f "$DONE_FILE" ] || [ -c "$DONE_FILE" ] || > "$DONE_FILE"
+[ -f "$REPORT_FILE" ] || [ -c "$REPORT_FILE" ] || > "$REPORT_FILE"
+
+if [ $TODOTXT_PLAIN = 1 ]; then
+    for clr in ${!PRI_@}; do
+        export "$clr"=$NONE
+    done
+    PRI_X=$NONE
+    DEFAULT=$NONE
+    COLOR_DONE=$NONE
+    COLOR_PROJECT=$NONE
+    COLOR_CONTEXT=$NONE
+fi
+
+[[ "$HIDE_PROJECTS_SUBSTITUTION" ]] && COLOR_PROJECT="$NONE"
+[[ "$HIDE_CONTEXTS_SUBSTITUTION" ]] && COLOR_CONTEXT="$NONE"
+
+
 
 export -f cleaninput getPrefix getTodo getNewtodo shellquote filtercommand _list listWordsWithSigil getPadding _format die
 
