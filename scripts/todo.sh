@@ -1482,6 +1482,9 @@ note: PRIORITY must be anywhere from A to Z."
         done
     fi
     ;;
+"ui" | "gui" )
+  todotxt-machine $TODO_FILE $DONE_FILE
+  ;;
 
 * )
     usage;;

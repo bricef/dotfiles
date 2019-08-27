@@ -1,1 +1,1 @@
-/Users/brice/repos/timelogger.git/logtime.sh
+/Users/brice/repos/timelogger.git/client/logtime.sh

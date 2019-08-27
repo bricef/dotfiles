@@ -55,7 +55,7 @@ hs.hotkey.bind({"cmd"}, "\\", function()
     return exitCode 
   end 
   tk = hs.task.new(
-		"/Users/brice/repos/timelogger.git/logtime.sh", 
+		"/Users/brice/repos/timelogger.git/client/logtime.sh", 
 		cb 
 	)
   print("Task Started")

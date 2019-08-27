@@ -1,2 +1,1 @@
-#!/bin/bash
-/Users/brice/repos/timelogger.git/logtime.sh working-on
+/Users/brice/repos/timelogger.git/client/integrations/bitbar/workingon.1s.sh
