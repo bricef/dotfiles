@@ -174,16 +174,6 @@ case `hostname` in
     ;;
 esac
 
-function ds {
-  dir=$(dirstack.py "$@")
-  if [ -n "$dir" ]; then
-    echo "cd $dir"
-    cd $dir
-  else
-    return 0
-  fi
-}
-
 function pgen {
   </dev/urandom tr -dc A-Za-z0-9 | head -c $1 | cat - <(echo "")
 }
@@ -196,7 +186,7 @@ if [ -f "$PATHFILE" ]; then
   done <"$PATHFILE"
 fi
 
-PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
+PATH=$PATH:$(ruby -r rubygems -e "puts Gem.user_dir")/bin
 PATH=$PATH:$(go env GOPATH)/bin
 
 export GOPATH=$(go env GOPATH)
@@ -235,7 +225,37 @@ transfer() {
   rm -f $tmpfile; 
 } 
 
+function ds {
+  dir=$(dirstack.py  "$@")
+  if [ -n "$dir" ]; then
+    echo "cd $dir"
+    cd $dir
+  else
+    return 0
+  fi
+}
 
+function f {
+  dir=$(dirstack.py frequent "$@")
+  if [ -n "$dir" ]; then
+    echo "cd $dir"
+    cd $dir
+  else
+    return 0
+  fi
+}
 
+export DIRSTACK_LASTDIR="/"
 
+function dirstack_prompt_command {
+  # Record new directory on change.
+  dirstack_newdir=`pwd`
+  if [ ! "$DIRSTACK_LASTDIR" = "$dirstack_newdir" ]; then
+    dirstack.py l
+  fi
 
+  export DIRSTACK_LASTDIR="$dirstack_newdir"
+}
+
+# Cleanly add the new prompt command
+export PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'dirstack_prompt_command'
