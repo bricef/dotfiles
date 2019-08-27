@@ -10,10 +10,22 @@
 
 
 import os,sys,shutil,fileinput,subprocess
+import sqlite3
+import datetime
 
-STACK_FILE=os.path.expanduser("~/.config/bs-stack")
+STACK_FILE = os.path.expanduser("~/.config/bs-stack")
+DIR_FILE = os.path.expanduser("~/.config/ds-dirlog.db")
+conn = sqlite3.connect(DIR_FILE)
+
+c = conn.cursor()
+c.execute('''CREATE TABLE IF NOT EXISTS dircounts (
+        path VARCHAR(255) PRIMARY KEY NOT NULL, 
+        count INT NOT NULL DEFAULT 0,
+        time TEXT NOT NULL
+)''')
 
 modified=False
+
 
 def cleanpath(path):
   return os.path.abspath(os.path.expanduser(path))
@@ -51,7 +63,6 @@ def pop():
     return lines[-1]
   else:
     return None
-
 
 def get(index):
   for line in fileinput.input(STACK_FILE):
@@ -108,20 +119,91 @@ def clean_stack():
           prev = line
     fh.close()
 
+def log_dir(): 
+    try:
+      cwd = os.getcwd()
+    except OSError:
+      sys.stderr.write("**************************************************************\n")
+      sys.stderr.write("  The current working directory doesn't seem to exist. Wild!  \n")
+      sys.stderr.write("**************************************************************\n")
+      sys.exit(1)
+    now = datetime.datetime.utcnow().isoformat()
+    c = conn.cursor()
+    c.execute('''INSERT INTO dircounts(path,count,time) 
+            VALUES (?,1,?) 
+            ON CONFLICT(PATH) DO UPDATE SET count = count + 1''', [cwd, now] )
+    conn.commit()
+
+def show_frequent():
+    c = conn.cursor()
+    # [(count,path)*]
+    rows = c.execute('''SELECT count,path FROM dircounts ORDER BY count DESC LIMIT 10''')
+    for row in enumerate(rows):
+        human_index = row[0] + 1
+        path = row[1][1]
+        sys.stderr.write("{:>2}: {}\n".format(human_index, path))
+
+def jump_frequent(human_index):
+    index = human_index - 1
+    rows = c.execute('''SELECT count,path FROM dircounts ORDER BY count DESC LIMIT 10''')
+    for row in enumerate(rows):
+        if index == row[0]: # Bingo, we're looking for this
+            print(row[1][1])
+
+
+def cmd_template(alias, args):
+    return """function {alias} {{
+  dir=$(dirstack.py {args} "$@")
+  if [ -n "$dir" ]; then
+    echo "cd $dir"
+    cd $dir
+  else
+    return 0
+  fi
+}}""".format(alias=alias, args=" ".join(args))
+
+cmd_ds = cmd_template("ds", [])
+cmd_f = cmd_template("f", ["frequent"])
+enable_prompt="""export DIRSTACK_LASTDIR="/"
+
+function dirstack_prompt_command {
+  # Record new directory on change.
+  dirstack_newdir=`pwd`
+  if [ ! "$DIRSTACK_LASTDIR" = "$dirstack_newdir" ]; then
+    dirstack.py l
+  fi
+
+  export DIRSTACK_LASTDIR="$dirstack_newdir"
+}
+
+# Cleanly add the new prompt command
+export PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'dirstack_prompt_command'"""
+
+def init_shell():
+  print("\n\n".join([cmd_ds, cmd_f, enable_prompt]))
+
 def usage():
-  sys.stderr.write("""%s [option] <directory|num>
+  sys.stderr.write("""{name} [option] <directory|num>
 Where option is one of:
     a  <dir>        Add a directory to the top of the stack
     r|d  <num>      Remove the directory at index <num> from the stack
     g  <num>        Get the directory at index <num>
-    rg <num>        Remove Get the directory at index <num> and prints it to stdout
-    p  <dir>        Push the directory <dir> to the top of the stack and print it to stdout
-    t               Remove and get the top directory from the stack and print it to stdout (Top)
+    rg <num>        Remove Get the directory at index <num> and prints it to 
+                    stdout
+    p  <dir>        Push the directory <dir> to the top of the stack and print 
+                    it to stdout
+    t               Remove and get the top directory from the stack and print 
+                    it to stdout (Top)
     s               Show the stack (default operation with no arguments
     edit            Edit the stack with your default editor
     sort            Sort the stack
     clean           Sort the stack and remove duplicate entries
     h|-h|--help     Show this message
+    l|log           Log the current directory for frequency analysis 
+                    (use as part of PROMPT_COMMAND)
+    frequent        Show most frequent directories
+    init_shell      Outputs the required initisalisation shell functions
+    
 
 If the first argument is a number <num>, it will try to get the directory at 
 the index <num> if it is a directory <dir> which does not have the same name as
@@ -130,20 +212,18 @@ any of the options, it will push <dir> to the top of the stack and return it.
 For this utility to work as intended, you may want to add the following function
 to your .bashrc or equivalent:
 
-    function ds {
-      dir=$(dirstack.py "$@")
-      if [ -n "$dir" ]; then
-        echo "cd $dir"
-        cd $dir
-      else
-        return 0
-      fi
-    }
+{cmd_ds}
 
-Note how we redirect the subprocess to point to our console using `tty`.
+Similarly, to use this for frequency jumping, add the following to your .bashrc:
+
+{cmd_f}{enable_prompt}
 
 Feel free to contact brice.fernandes@gmail.com with suggestions for improvement!
-"""%(os.path.basename(sys.argv[0]), os.path.basename(sys.argv[0])) )
+""".format(
+    name=os.path.basename(sys.argv[0]),
+    cmd_ds = cmd_ds,
+    cmd_f = cmd_f))
+
 
 if __name__ == "__main__":
   try:
@@ -180,6 +260,15 @@ if __name__ == "__main__":
         sort_stack()
       elif sys.argv[1] in ["h", "-h", "--help"]:
         usage()
+      elif sys.argv[1] in ["l", "log"]:
+        log_dir()
+      elif sys.argv[1] in ["frequent"]:
+        if len(sys.argv) > 2:
+            jump_frequent(int(sys.argv[2]))
+        else:
+            show_frequent()
+      elif sys.argv[1] in ["init_shell"]:
+          init_shell()
       elif os.path.isdir(sys.argv[1]):
         print(add(sys.argv[1]))
 
