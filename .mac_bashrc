@@ -13,7 +13,6 @@ alias psg="ps aux | grep "
 
 # PATH=$PATH:/Users/$(whoami)/bin/apache-maven-3.3.9/bin
 # PATH=$PATH:/Users/$(whoami)/Library/Python/2.7/bin/
-PATH=$PATH:/Users/$(whoami)/scripts
 PATH=$PATH:/Users/$(whoami)/repos/doctools/bin/
 PATH=$PATH:/Users/$(whoami)/Library/Python/3.7/bin
 
