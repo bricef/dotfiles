@@ -32,7 +32,8 @@ alias l="ls"
 alias +x="chmod +x"
 alias bp="bpython"
 alias rebash="source ~/.bashrc"
-alias t="todo.sh"
+alias t="htt"
+alias qt="git qt"
 
 # because my fingers have been trained
 alias :e="vim"
@@ -86,6 +87,10 @@ function __prompt_command {
   history -a
 
   case $PSTYLE in
+    "demo")
+      # /working/dir ➤ 
+      PS1="$BOLD$F_GREEN\W ➤ $END"
+      ;;
     "simple")
       # [user@host]:/working/dir$ 
       PS1="\[\e[1;32m\]\u@\[\e[1;31m\]\h\[\e[1;32m\]:\w$\[\e[0m\] " 

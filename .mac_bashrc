@@ -11,9 +11,11 @@ alias lsa="ls -iablh"
 alias psg="ps aux | grep "
 
 
-PATH=$PATH:/Users/$(whoami)/bin/apache-maven-3.3.9/bin
-PATH=$PATH:/Users/$(whoami)/Library/Python/2.7/bin/
+# PATH=$PATH:/Users/$(whoami)/bin/apache-maven-3.3.9/bin
+# PATH=$PATH:/Users/$(whoami)/Library/Python/2.7/bin/
 PATH=$PATH:/Users/$(whoami)/scripts
+PATH=$PATH:/Users/$(whoami)/repos/doctools/bin/
+PATH=$PATH:/Users/$(whoami)/Library/Python/3.7/bin
 
 # Go installation
 export GOPATH=$(go env GOPATH)
@@ -23,6 +25,7 @@ export GHC_DOT_APP="/Applications/ghc-7.8.4.app"
 if [ -d "$GHC_DOT_APP" ]; then
   export PATH="${HOME}/.cabal/bin:${GHC_DOT_APP}/Contents/bin:${PATH}"
 fi
+
 
 export PATH
 
@@ -35,3 +38,13 @@ export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
 # Iterm has some nice shell integration. see https://www.iterm2.com/documentation-shell-integration.html
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+# Weaveworks aliases
+alias devkc="kubectl --kubeconfig /Users/brice/go/src/github.com/weaveworks/service-conf/ansible/dev/kubeconfig"
+alias prodkc="kubectl --kubeconfig /Users/brice/go/src/github.com/weaveworks/service-conf/ansible/prod/kubeconfig"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/brice/google-cloud-sdk/path.bash.inc' ]; then source '/Users/brice/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/brice/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/brice/google-cloud-sdk/completion.bash.inc'; fi
