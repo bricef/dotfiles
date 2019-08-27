@@ -141,7 +141,8 @@ def show_frequent():
     for row in enumerate(rows):
         human_index = row[0] + 1
         path = row[1][1]
-        sys.stderr.write("{:>2}: {}\n".format(human_index, path))
+        count = row[1][0]
+        sys.stderr.write("{:>2}: {:>5} {}\n".format(human_index, "({})".format(count), path))
 
 def jump_frequent(human_index):
     index = human_index - 1
