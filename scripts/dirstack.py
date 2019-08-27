@@ -7,6 +7,8 @@
 #  * allow tagging of stack items: `ds g projectA`
 #
 
+# See http://matt.might.net/articles/console-hacks-exploiting-frequency/
+# for insights into improving the experience
 
 
 import os,sys,shutil,fileinput,subprocess
