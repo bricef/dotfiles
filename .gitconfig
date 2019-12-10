@@ -25,7 +25,8 @@
   spull = git svn rebase
   spush = git svn dcommit
   fix = commit --amend -C HEAD
-  tall =  log --oneline --graph --decorate --all
+  tall = log --oneline --graph --decorate --all
+  fap = fetch --all --prune
   nuke = !git reset --hard HEAD && git clean -f
 	tree = log --oneline --graph --decorate --all
 	f = fetch --all
