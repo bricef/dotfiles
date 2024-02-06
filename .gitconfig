@@ -1,34 +1,31 @@
 [user]
-	mail = brice@sigmaforge.com
+	mail = brice@fractallambda.com
 	name = Brice Fernandes
-	email = brice@sigmaforge.com
+	email = brice@fractallambda.com
 [color]
 	ui = auto
 [push]
 	default = tracking
 [alias]
-  s = status
-  suno = status -uno
-  so = status -uno
-  cm = commit -m 
-  co = checkout
+  	s = status
+  	suno = status -uno
+  	so = status -uno
+  	cm = commit -m 
+  	co = checkout
 	tree = log --oneline --graph --decorate --all
 	t = log --oneline --graph --decorate --all
 	qt = !git --no-pager log --oneline --graph --decorate --all -15
-  tst = log --oneline --stat --decorate --graph
-  authors = shortlog -sn
-  tdiff = diff --color-words
-  this = !git init && git add . && git commit -m \"initial commit\"
-  alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
-  stu = status -uno  
-  ql = log --date=short --pretty='%Cgreen%h %Cblue[%ad %an]%Creset%Cred%d%Creset %s'
-  spull = git svn rebase
-  spush = git svn dcommit
-  fix = commit --amend -C HEAD
-  tall = log --oneline --graph --decorate --all
-  fap = fetch --all --prune
-  nuke = !git reset --hard HEAD && git clean -f
-	tree = log --oneline --graph --decorate --all
+	tst = log --oneline --stat --decorate --graph
+	authors = shortlog -sn
+	tdiff = diff --color-words
+	this = !git init && git add . && git commit -m \"initial commit\"
+	alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
+	stu = status -uno  
+	ql = log --date=short --pretty='%Cgreen%h %Cblue[%ad %an]%Creset%Cred%d%Creset %s'
+	fix = commit --amend -C HEAD
+	tall = log --oneline --graph --decorate --all
+	fap = fetch --all --prune
+	nuke = !git reset --hard HEAD && git clean -f
 	f = fetch --all
 	rom = rebase origin/master
 	graph = log --graph --oneline --decorate --all --date=relative
@@ -43,14 +40,8 @@
 	threads = 1
 [core]
 	excludesfile = /Users/brice/.gitignore_global
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [mergetool]
 	keepTemporaries = false
 	prompt = false
 [diff]
-	algorithm = patience
+	algorithm = histogram
