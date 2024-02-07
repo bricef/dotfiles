@@ -5,6 +5,6 @@
 [[ $- != *i* ]] && return
 
 
-SMART_PROFILE="${HOME}/.config/shell/profile-common"
+SMART_PROFILE="${HOME}/.config/shell/init"
 test -r $SMART_PROFILE && source $SMART_PROFILE
 

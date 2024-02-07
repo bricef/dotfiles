@@ -4,34 +4,35 @@
 # Set shell options
 #
 
-local CONFIGROOT="~/.config/shell"
+local CONFIGROOT="${HOME}/.config/shell"
 
 # propagate error status along pipes
 # useful for the "foo | bar | buzz && hello" construct
 set -o pipefail 
-shopt -s checkwinsize
-shopt -s histappend
-shopt -s autocd
-shopt -s expand_aliases
+type shopt > /dev/null && shopt -s checkwinsize
+type shopt > /dev/null && shopt -s histappend
+type shopt > /dev/null && shopt -s autocd
+type shopt > /dev/null && shopt -s expand_aliases
 
 function source_exists {
-  test -r "$1" && source "$1"
+  test -e "$1" && source "$1"
 }
 
 #
 # Source common variables, functions and aliases
 #
 source_exists "${CONFIGROOT}/variables.sh"
-source_exists "${CONFIGROOT}/function.sh"
+source_exists "${CONFIGROOT}/functions.sh"
 source_exists "${CONFIGROOT}/aliases.sh"
 
 source_exists "${CONFIGROOT}/PATH/common"
 source_exists "${CONFIGROOT}/PATH/$(uname -s)"
-
-source_exists /usr/share/bash-completion/bash_completion
-source_exists /usr/local/etc/bash_completion
+if [[ "$(echo $0)" = "bash" ]]; then
+  source_exists /usr/share/bash-completion/bash_completion
+  source_exists /usr/local/etc/bash_completion
+  source_exists ~/scripts/git-completion.bash 
+fi
 source_exists ~/scripts/git-prompt.sh 
-source_exists ~/scripts/git-completion.bash 
 source_exists ~/.nvm/nvm.sh 
 source_exists ~/.nvm/bash_completion
 source_exists ~/.cargo/env
@@ -40,26 +41,9 @@ source_exists ~/.opam/opam-init/init.sh
 
 
 # Tool-specific setups
-type dirstack.py && source /dev/stdin <<< "$(dirstack.py init_shell)" # dirstack helper functions and shell setup
-type go && export GOPATH=$(go env GOPATH)
-type rbenv && eval "$(rbenv init -)"
-
-#
-# Set up prompts
-#
-export PROMPT_COMMAND=__prompt_command
-case `hostname` in 
-  "prometheus"|"barracuda")
-    pstyle blue
-    ;;
-  "vsbldhost")
-    pstyle simple
-    ;;
-  *)
-    pstyle fancy
-    ;;
-esac
-
+type dirstack.py > /dev/null && source /dev/stdin <<< "$(dirstack.py init_shell)" # dirstack helper functions and shell setup
+type go > /dev/null && export GOPATH=$(go env GOPATH)
+type rbenv > /dev/null && eval "$(rbenv init -)"
 
 #
 # Platorm-specific profiles

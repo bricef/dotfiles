@@ -10,8 +10,8 @@ export HISTFILESIZE=3000
 export HISTIGNORE="ls:ll:l:la:lla:pwd:..:cd..:cd ..:git s"
 export EDITOR="vim"
 export CLICOLOR=1
-export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
-export LS_COLORS="di=35"
+# export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+# export LS_COLORS="di=35"
 export GIT_PS1_SHOWDIRTYSTATE=true
 export LC_ALL=en_GB.UTF-8
 export LC_CTYPE=en_GB.UTF-8
