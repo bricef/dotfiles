@@ -1,0 +1,9 @@
+
+PATH=$PATH:${HOME}/.cabal/bin
+PATH=$PATH:${HOME}/bin/apache-maven-3.3.9/bin
+PATH=$PATH:${HOME}/repos/doctools/bin/
+PATH=$PATH:${HOME}/scripts
+PATH=$PATH:${HOME}/bin
+PATH=$PATH:${HOME}/.rvm/bin
+
+export PATH

@@ -1,0 +1,79 @@
+#!/bin/bash
+
+#
+# Set shell options
+#
+
+local CONFIGROOT="~/.config/shell"
+
+# propagate error status along pipes
+# useful for the "foo | bar | buzz && hello" construct
+set -o pipefail 
+shopt -s checkwinsize
+shopt -s histappend
+shopt -s autocd
+shopt -s expand_aliases
+
+function source_exists {
+  test -r "$1" && source "$1"
+}
+
+#
+# Source common variables, functions and aliases
+#
+source_exists "${CONFIGROOT}/variables.sh"
+source_exists "${CONFIGROOT}/function.sh"
+source_exists "${CONFIGROOT}/aliases.sh"
+
+source_exists "${CONFIGROOT}/PATH/common"
+source_exists "${CONFIGROOT}/PATH/$(uname -s)"
+
+source_exists /usr/share/bash-completion/bash_completion
+source_exists /usr/local/etc/bash_completion
+source_exists ~/scripts/git-prompt.sh 
+source_exists ~/scripts/git-completion.bash 
+source_exists ~/.nvm/nvm.sh 
+source_exists ~/.nvm/bash_completion
+source_exists ~/.cargo/env
+source_exists ~/.rvm/scripts/rvm
+source_exists ~/.opam/opam-init/init.sh
+
+
+# Tool-specific setups
+type dirstack.py && source /dev/stdin <<< "$(dirstack.py init_shell)" # dirstack helper functions and shell setup
+type go && export GOPATH=$(go env GOPATH)
+type rbenv && eval "$(rbenv init -)"
+
+#
+# Set up prompts
+#
+export PROMPT_COMMAND=__prompt_command
+case `hostname` in 
+  "prometheus"|"barracuda")
+    pstyle blue
+    ;;
+  "vsbldhost")
+    pstyle simple
+    ;;
+  *)
+    pstyle fancy
+    ;;
+esac
+
+
+#
+# Platorm-specific profiles
+#
+case 'uname -s' in
+  "Linux")
+    source_exists "${CONFIGROOT}/profile-linux"
+    ;;
+  "Darwin")
+    source_exists "${CONFIGROOT}/profile-mac"
+    ;;
+  "MINGW32_NT")
+    source_exists "${CONFIGROOT}/profile-linux"
+    ;;
+esac
+
+

@@ -1,0 +1,12 @@
+PATH=$PATH:"/Applications/Racket v6.1.1/bin"
+PATH=$PATH:/Applications/Inkscape.app/Contents/MacOS
+PATH=$PATH:/Applications/waxeye.git/bin
+PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin
+PATH=$PATH:/usr/local/texlive/2016/bin/x86_64-darwin
+PATH=$PATH:/usr/local/opt/go/libexec/bin
+PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin/
+PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.4/bin
+PATH=$PATH:${HOME}/Library/Python/2.7/bin/
+PATH=$PATH:${HOME}/Library/Python/3.7/bin
+
+export PATH
