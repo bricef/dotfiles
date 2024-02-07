@@ -3,14 +3,6 @@
 #
 # Mac specific shell setups
 #
-
-# Go installation
-export GOPATH=$(go env GOPATH)
-
-export PATH
-
-# Use `brew install bash-completion` for this to make sense.
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
 
 # Iterm has some nice shell integration. see https://www.iterm2.com/documentation-shell-integration.html
