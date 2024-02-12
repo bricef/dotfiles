@@ -94,3 +94,4 @@ mingw32
 .viminfo.tmp
 .wpa.log
 .wpa_cli_history
+*.lock
