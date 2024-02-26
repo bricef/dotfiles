@@ -1,0 +1,5 @@
+
+
+
+cat ~/.projects | grep -v '(hold)' | shuf -n 1
+

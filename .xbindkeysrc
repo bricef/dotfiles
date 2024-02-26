@@ -29,137 +29,27 @@
 "xbindkeys_show" 
   control+shift + q
 
-#"xmessage -center \"xbindkeys working\""
-#    m:0x5 + c:28
-#    Control+Shift + t
-
 ### SHORTCUTS ###
-"gnome-terminal --working-directory=/home/bfer/ --hide-menubar"
+"xfce4-terminal"
   Alt + Return
 
-"~/scripts/brice-menu.sh"
-  Alt + r
+"wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz"
+  Mod4 + m
 
-"~/scripts/winselect.sh"
-  Alt + w
+"~/bin/mvwindow.sh p1"
+  Mod4 + 1
 
-"~/scripts/chwintitle.sh"
-  Alt + t
+"~/bin/mvwindow.sh p2"
+  Mod4 + 2
 
-"~/scripts/logtime.sh"
-  Alt + l
+"~/bin/mvwindow.sh p3"
+  Mod4 + 3
 
+"~/bin/mvwindow.sh p4"
+  Mod4 + 4
 
+"xfce4-popup-whiskermenu"
+  Mod4 + space
 
-#
-# W + keypad puts window in appropriate corner/side.
-#
-"wmctrl -r :ACTIVE: -e 0,0,15,840,510"
-  Mod4 + KP_Home
-
-"wmctrl -r :ACTIVE: -e 0,0,15,1680,510"
-  Mod4 + KP_Up
-
-"wmctrl -r :ACTIVE: -e 0,840,15,840,510"
-  Mod4 + KP_Prior
-
-"wmctrl -r :ACTIVE: -e 0,0,15,840,1020"
-  Mod4 + KP_Left
-
-"wmctrl -r :ACTIVE: -e 0,0,15,1680,1020"
-  Mod4 + KP_Begin
-
-"wmctrl -r :ACTIVE: -e 0,840,15,840,1020"
-  Mod4 + KP_Right
-
-"wmctrl -r :ACTIVE: -e 0,0,525,840,510"
-  Mod4 + KP_End
-
-"wmctrl -r :ACTIVE: -e 0,0,525,1680,510"
-  Mod4 + KP_Down
-
-"wmctrl -r :ACTIVE: -e 0,840,525,840,510"
-  Mod4 + KP_Next
-
-#
-# Second monitor
-#
-"wmctrl -r :ACTIVE: -e 0,1680,15,840,510"
-  Shift+Mod2+Mod4 + KP_Home
-
-"wmctrl -r :ACTIVE: -e 0,1680,15,1680,510"
-  Shift+Mod2+Mod4 + KP_Up
-
-"wmctrl -r :ACTIVE: -e 0,2520,15,840,510"
-  Shift+Mod2+Mod4 + KP_Prior
-
-"wmctrl -r :ACTIVE: -e 0,1680,15,840,1020"
-  Shift+Mod2+Mod4 + KP_Left
-
-"wmctrl -r :ACTIVE: -e 0,1680,15,1680,1020"
-  Shift+Mod2+Mod4 + KP_Begin
-
-"wmctrl -r :ACTIVE: -e 0,2520,15,840,1020"
-  Shift+Mod2+Mod4 + KP_Right
-
-"wmctrl -r :ACTIVE: -e 0,1680,525,840,510"
-  Shift+Mod2+Mod4 + KP_End
-
-"wmctrl -r :ACTIVE: -e 0,1680,525,1680,510"
-  Shift+Mod2+Mod4 + KP_Down
-
-"wmctrl -r :ACTIVE: -e 0,2520,525,840,510"
-  Shift+Mod2+Mod4 + KP_Next
-
-#
-# MANUAL MANAGMENT (not needed on ubuntu)
-#
-#
-#### Volume managment ###
-"/home/brice/scripts/volch.sh -r"
-    m:0x8 + c:111
-    Alt + Up
-#
-"/home/brice/scripts/volch.sh -l"
-    m:0x8 + c:116
-    Alt + Down
-#
-#### MPC control ###
-#"mpc next"
-#    m:0x8 + c:102
-#    Alt + Right
-#"mpc prev"
-#    m:0x8 + c:100
-#    Alt + Left
-#"mpc toggle"
-#    m:0x8 + c:33
-#    Alt + p
-#
-#
-#### Media buttons ###
-#"/home/brice/scripts/volch.sh -m"
-#    m:0x0 + c:160
-#    XF86AudioMute
-#"/home/brice/scripts/volch.sh -l"
-#    m:0x0 + c:174
-#    XF86AudioLowerVolume
-#"/home/brice/scripts/volch.sh -r"
-#    m:0x0 + c:176
-#    XF86AudioRaiseVolume
-#"mpc toggle"
-#    m:0x0 + c:162
-#    XF86AudioPlay
-#"mpc prev"
-#    m:0x0 + c:144
-#    XF86AudioPrev
-#"mpc next"
-#    m:0x0 + c:153
-#    XF86AudioNext
-#"mpc stop"
-#    m:0x0 + c:164
-#    XF86AudioStop
-#"chromium &"
-#    m:0x0 + c:237
-#    XF86AudioMedia
-
-
+"xfce4-terminal"
+  Mod4 + Return
