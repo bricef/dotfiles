@@ -4,7 +4,7 @@
 # Set shell options
 #
 
-local CONFIGROOT="${HOME}/.config/shell"
+CONFIGROOT="${HOME}/.config/shell"
 
 # propagate error status along pipes
 # useful for the "foo | bar | buzz && hello" construct
@@ -41,9 +41,9 @@ source_exists ~/.opam/opam-init/init.sh
 
 
 # Tool-specific setups
-type dirstack.py > /dev/null && source /dev/stdin <<< "$(dirstack.py init_shell)" # dirstack helper functions and shell setup
-type go > /dev/null && export GOPATH=$(go env GOPATH)
-type rbenv > /dev/null && eval "$(rbenv init -)"
+type dirstack.py &> /dev/null && source /dev/stdin <<< "$(dirstack.py init_shell)" # dirstack helper functions and shell setup
+type go &> /dev/null && export GOPATH=$(go env GOPATH)
+type rbenv &> /dev/null && eval "$(rbenv init -)"
 
 #
 # Platorm-specific profiles
