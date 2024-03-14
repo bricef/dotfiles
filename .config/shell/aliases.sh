@@ -23,3 +23,5 @@ alias :e="vim"
 alias :q="exit"
 alias cd..="cd .."
 alias ..="cd .."
+alias icat="kitten icat"
+
