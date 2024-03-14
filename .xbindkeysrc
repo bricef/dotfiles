@@ -29,10 +29,6 @@
 "xbindkeys_show" 
   control+shift + q
 
-### SHORTCUTS ###
-"xfce4-terminal"
-  Alt + Return
-
 "wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz"
   Mod4 + m
 
@@ -48,8 +44,12 @@
 "~/bin/mvwindow.sh p4"
   Mod4 + 4
 
-"xfce4-popup-whiskermenu"
-  Mod4 + space
+"~/bin/move-current-window.sh right"
+    m:0x4c + c:114
+    Control+Alt+Mod4 + Right
 
-"xfce4-terminal"
-  Mod4 + Return
+"~/bin/move-current-window.sh left"
+    m:0x4c + c:113
+    Control+Alt+Mod4 + Left
+
+
