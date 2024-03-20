@@ -102,3 +102,4 @@ source $ZSH/oh-my-zsh.sh
 
 
 source ~/.config/shell/init
+

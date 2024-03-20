@@ -44,6 +44,7 @@ source_exists ~/.opam/opam-init/init.sh
 type dirstack.py &> /dev/null && source /dev/stdin <<< "$(dirstack.py init_shell)" # dirstack helper functions and shell setup
 type go &> /dev/null && export GOPATH=$(go env GOPATH)
 type rbenv &> /dev/null && eval "$(rbenv init -)"
+type zoxide &> /dev/null && eval "$(zoxide init zsh)"
 
 #
 # Platorm-specific profiles
