@@ -4,6 +4,8 @@
 # Set shell options
 #
 
+echo "Loading shell configuration"
+
 CONFIGROOT="${HOME}/.config/shell"
 
 # propagate error status along pipes
@@ -49,6 +51,7 @@ type zoxide &> /dev/null && eval "$(zoxide init zsh)"
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
 
 #
 # Platorm-specific profiles
