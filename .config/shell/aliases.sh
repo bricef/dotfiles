@@ -1,10 +1,26 @@
 
-alias ll="ls -lh"
-alias la="ls -A"
-alias lla="ls -lA"
-alias l="ls"
-alias lh="ls -lhA"
-alias lsa="ls -iablh"
+# alias ll="ls -lh"
+# alias la="ls -A"
+# alias lla="ls -lA"
+# alias l="ls"
+# alias lh="ls -lhA"
+# alias lsa="ls -iablh"
+
+eza_params=(
+  '--git' '--icons' '--group' '--group-directories-first'
+  '--time-style=long-iso' '--color-scale=all'
+)
+
+alias ls='eza $eza_params'
+alias l='eza --git-ignore $eza_params'
+alias ll='eza --all --header --long $eza_params'
+alias llm='eza --all --header --long --sort=modified $eza_params'
+alias la='eza -lbhHigUmuSa'
+alias lx='eza -lbhHigUmuSa@'
+alias lt='eza --tree $eza_params'
+alias tree='eza --tree $eza_params'
+
+
 alias psg="ps aux | grep "
 alias sudo="sudo "
 alias grep="grep --color=auto"
