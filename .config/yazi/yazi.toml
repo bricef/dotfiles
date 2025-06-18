@@ -1,5 +1,7 @@
 [preview]
 wrap = "yes"
+max_width = 4000
+max_height = 4000
 
 [manager]
 show_hidden = true
