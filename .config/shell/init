@@ -27,8 +27,20 @@ source_exists "${CONFIGROOT}/variables.sh"
 source_exists "${CONFIGROOT}/functions.sh"
 source_exists "${CONFIGROOT}/aliases.sh"
 
+
+#
+# Set up PATH variable based on platform
+#
 source_exists "${CONFIGROOT}/PATH/common"
 source_exists "${CONFIGROOT}/PATH/$(uname -s)"
+
+PATH="${PATH}:${HOME}/bin"
+export PATH="${PATH}:${HOME}/.local/bin"
+
+
+
+
+
 if [[ "$(echo $0)" = "bash" ]]; then
   source_exists /usr/share/bash-completion/bash_completion
   source_exists /usr/local/etc/bash_completion
@@ -43,7 +55,6 @@ source_exists ~/.opam/opam-init/init.sh
 source_exists $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh
 source_exists $HOME/.cargo/env
 
-export PATH="${PATH}:${HOME}/bin"
 
 
 # Tool-specific setups
@@ -56,8 +67,6 @@ type fzf &> /dev/null && source <(fzf --zsh)
 type pyenv &> /dev/null && export PYENV_ROOT="${HOME}/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="${PYENV_ROOT}/bin:${PATH}"
 type pyenv &> /dev/null && eval "$(pyenv init -)"
-
-export PATH="$PATH:${HOME}/.local/bin"
 
 #
 # Platorm-specific profiles

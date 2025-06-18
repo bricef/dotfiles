@@ -7,5 +7,7 @@ PATH=$PATH:${HOME}/bin
 PATH=$PATH:${HOME}/.rvm/bin
 PATH=$PATH:${HOME}/go/bin/
 PATH=$PATH:${HOME}/.cargo/bin
+PATH=$PATH:${HOME}/.lmstudio/bin
+PATH=$PATH:${HOME}/.codeium/windsurf/bin
 
 export PATH
