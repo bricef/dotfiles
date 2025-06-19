@@ -63,10 +63,13 @@ type go &> /dev/null && export GOPATH=$(go env GOPATH) && export PATH="${PATH}:$
 type rbenv &> /dev/null && eval "$(rbenv init -)"
 type zoxide &> /dev/null && eval "$(zoxide init zsh)"
 type fzf &> /dev/null && source <(fzf --zsh)
+type direnv &> /dev/null && eval "$(direnv hook zsh)"
 # Pyenv
 type pyenv &> /dev/null && export PYENV_ROOT="${HOME}/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="${PYENV_ROOT}/bin:${PATH}"
 type pyenv &> /dev/null && eval "$(pyenv init -)"
+
+
 
 #
 # Platorm-specific profiles
