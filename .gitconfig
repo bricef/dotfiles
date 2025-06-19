@@ -4,7 +4,7 @@
 	email = brice@fractallambda.com
 
 [core]
-  excludesfile = /Users/brice/.gitignore_global
+  excludesFile = ~/.config/git/ignore    
   pager = delta
 
 [interactive]
@@ -55,28 +55,14 @@
 [branch]
   autosetuprebase = always
 
-[merge]
-  conflictstyle = diff3
-
 [pack]
   windowMemory = 100m
   SizeLimit = 100m
   threads = 1
 
-[core]
-  excludesfile = /Users/brice/.gitignore_global
-  pager = delta
-
-[delta]
-  navigate = true
-
 [mergetool]
   keepTemporaries = false
   prompt = false
-
-[diff]
-  algorithm = histogram
-  colorMoved = default
 
 [init]
   defaultBranch = main
