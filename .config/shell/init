@@ -56,6 +56,9 @@ source_exists $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh
 source_exists $HOME/.cargo/env
 
 
+# Google Cloud SDK.
+source_exists /home/brice/google-cloud-sdk/path.zsh.inc
+source_exists /home/brice/google-cloud-sdk/completion.zsh.inc
 
 # Tool-specific setups
 type dirstack.py &> /dev/null && source /dev/stdin <<< "$(dirstack.py init_shell)" # dirstack helper functions and shell setup

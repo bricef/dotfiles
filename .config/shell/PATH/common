@@ -9,5 +9,8 @@ PATH=$PATH:${HOME}/go/bin/
 PATH=$PATH:${HOME}/.cargo/bin
 PATH=$PATH:${HOME}/.lmstudio/bin
 PATH=$PATH:${HOME}/.codeium/windsurf/bin
+PATH=$PATH:${HOME}/.night.zig/latest
+PATH=$PATH:${HOME}/.night.zig/nz
+PATH=$PATH:${HOME}/.npm-global/bin
 
 export PATH
