@@ -75,6 +75,7 @@ type pyenv &> /dev/null && eval "$(pyenv init -)"
 # asdf https://github.com/asdf-vm/asdf
 type asdf &> /dev/null && source <(asdf completion zsh)
 type asdf &> /dev/null && export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+type starship &> /dev/null && source <(starship init zsh)
 
 
 #

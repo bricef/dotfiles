@@ -23,6 +23,7 @@ TOOLS=(
   "fzf"
   "jq"
   "dust"
+  "starship"
 )
 
 OK=()
