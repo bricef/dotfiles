@@ -32,13 +32,15 @@ for tool in ${TOOLS[@]}; do
   IFS=";" read -a names <<< "$tool"
   FOUND=false
   for name in ${names[@]}; do
-    if [ test $(type $tool &> /dev/null)]; then
+    if command -v "$name" >/dev/null 2>&1
+    then
       FOUND=true
       OK+=( "$name" )
       break
     fi
+
   done
-  test $FOUND || FAIL+=( "${names[0]}" )
+  test "$FOUND" = true || FAIL+=( "${names[0]}" )
 done
 
 
