@@ -20,6 +20,9 @@ TOOLS=(
   "yazi"
   "go"
   "asdf"
+  "fzf"
+  "jq"
+  "dust"
 )
 
 OK=()
