@@ -3,7 +3,7 @@ wrap = "yes"
 max_width = 4000
 max_height = 4000
 
-[manager]
+[mgr]
 show_hidden = true
 show_simlink = true
 ratio = [1,3,4]
