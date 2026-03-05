@@ -1,5 +1,9 @@
 # Global Agent Instructions
 
+This file contains global rules that apply to all projects. It lives at `~/.config/opencode/AGENTS.md` and is managed via the dotfiles repo.
+
+When you discover a guideline or pattern that is not project-specific — something that would be useful across all codebases — ask the user whether they'd like to add it to this global AGENTS.md file.
+
 ## Workflow Constraints
 
 - **Do not commit without explicit approval.** After completing a unit of work, present the changes for code review. Only commit after the user has reviewed and given the go-ahead.
