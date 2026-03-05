@@ -95,3 +95,4 @@ mingw32
 .wpa.log
 .wpa_cli_history
 *.lock
+bin/Cursor-*
