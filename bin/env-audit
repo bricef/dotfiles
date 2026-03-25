@@ -25,6 +25,9 @@ TOOLS=(
   "dust"
   "starship"
   "rg"
+  "yq"
+  "gh"
+  "zoxide"
 )
 
 OK=()
