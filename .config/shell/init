@@ -72,6 +72,7 @@ type zoxide &> /dev/null && eval "$(zoxide init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # type fzf &> /dev/null && source <(fzf --zsh)
 type direnv &> /dev/null && eval "$(direnv hook zsh)"
+type wt &> /dev/null && eval "$(wt config shell init zsh)"
 
 # Pyenv
 type pyenv &> /dev/null && export PYENV_ROOT="${HOME}/.pyenv"

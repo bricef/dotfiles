@@ -26,10 +26,11 @@ TOOLS=(
   "starship"
   "rg"
   "yq"
-  "gh"
+  "gh" # Github Command line
   "zoxide"
   "tv"
   "wtfutil;wtf"
+  "wt" # Worktrunk - Git Worktree CLI
 )
 
 OK=()
