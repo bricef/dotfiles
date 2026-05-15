@@ -28,6 +28,7 @@ TOOLS=(
   "yq"
   "gh"
   "zoxide"
+  "tv"
 )
 
 OK=()
