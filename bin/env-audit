@@ -29,6 +29,7 @@ TOOLS=(
   "gh"
   "zoxide"
   "tv"
+  "wtfutil;wtf"
 )
 
 OK=()
