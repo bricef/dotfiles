@@ -1,0 +1,63 @@
+wtf:
+  colors:
+    border:
+      focusable: darkslateblue
+      focused: orange
+      normal: gray
+  grid:
+    columns: [55, 65]
+    rows: [9, 14]
+  refreshInterval: 1
+  term: xterm-256color
+  mods:
+    system:
+      type: cmdrunner
+      enabled: true
+      cmd: bash
+      args: ["-c", "$HOME/.config/wtf/scripts/sys.sh"]
+      refreshInterval: 2
+      title: " System "
+      position:
+        top: 0
+        left: 0
+        height: 1
+        width: 1
+
+    claude-agents:
+      type: cmdrunner
+      enabled: true
+      cmd: bash
+      args: ["-c", "$HOME/.config/wtf/scripts/claude-agents.sh"]
+      refreshInterval: 3
+      title: " Claude Agents "
+      position:
+        top: 0
+        left: 1
+        height: 1
+        width: 1
+
+    ports:
+      type: cmdrunner
+      enabled: true
+      cmd: bash
+      args: ["-c", "$HOME/.config/wtf/scripts/ports.sh"]
+      refreshInterval: 10
+      title: " Listening Ports "
+      position:
+        top: 1
+        left: 0
+        height: 1
+        width: 1
+
+    docker:
+      type: cmdrunner
+      enabled: true
+      cmd: bash
+      args: ["-c", "$HOME/.config/wtf/scripts/docker.sh"]
+      refreshInterval: 5
+      title: " Docker "
+      position:
+        top: 1
+        left: 1
+        height: 1
+        width: 1
