@@ -96,3 +96,7 @@ mingw32
 .wpa_cli_history
 *.lock
 bin/Cursor-*
+# Credentials that programs write next to their config — never in the repo.
+.config/gh/hosts.yml
+.config/obsidian-headless/auth_token
+.config/factor-q/connections.toml
