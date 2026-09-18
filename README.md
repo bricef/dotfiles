@@ -5,7 +5,7 @@
 From a bare Debian/Ubuntu account with sudo:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/bricef/dotfiles/main/setup/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/bricef/dotfiles/master/setup/bootstrap.sh | bash
 ```
 
 That installs git and ansible, clones this repository to

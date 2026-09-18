@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # setup/bootstrap.sh — from a bare Debian/Ubuntu account to the baseline.
 #
-#   curl -fsSL https://raw.githubusercontent.com/bricef/dotfiles/main/setup/bootstrap.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/bricef/dotfiles/master/setup/bootstrap.sh | bash
 #
 # or, from a checkout, `setup/bootstrap.sh`. Either way it: installs git
 # and ansible with apt (the only thing done outside the playbook, because
