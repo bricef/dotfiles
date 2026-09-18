@@ -1,0 +1,336 @@
+---
+# setup/baseline.yml — Brice's dev-machine baseline, as an idempotent play.
+#
+#   setup/bootstrap.sh                 first time (installs ansible, clones, runs this)
+#   ansible-playbook setup/baseline.yml [-K]   any time after
+#
+# What "baseline" means: zsh (with oh-my-zsh) as the login shell, starship,
+# every tool bin/env-audit checks for, gh, claude, and this repository
+# stowed into $HOME. Each tool is installed the way it is on the reference
+# machine — apt where the distribution is current enough, the vendor's
+# apt repository for gh and helix, rustup + cargo-binstall for the Rust
+# tools (prebuilt binaries, seconds not minutes), the official tarball for
+# Go, `go install` for asdf and wtf, the upstream installers for starship,
+# mise, uv and claude. Versions that are pinned are pinned at the top.
+#
+# Debian/Ubuntu only for now; the play refuses anything else rather than
+# half-applying. System steps use become; everything else runs as you.
+#
+# Run it twice and the second run changes nothing — that is the test.
+- name: Bring this machine up to Brice's baseline
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  vars:
+    home: "{{ ansible_env.HOME }}"
+    me: "{{ ansible_user_id }}"
+    dotfiles_dir: "{{ home }}/Code/github.com/bricef/dotfiles"
+    dotfiles_ssh_remote: git@github.com:bricef/dotfiles.git
+    go_version: "1.26.3"
+    asdf_version: "v0.19.0"
+    wtf_version: "v0.49.1"
+    apt_packages:
+      - zsh
+      - git
+      - curl
+      - jq
+      - stow
+      - unzip
+      - ca-certificates
+      - gnupg
+      - build-essential
+      - pkg-config
+      - libssl-dev
+    # crate → the binary it puts in ~/.cargo/bin (what makes the step idempotent)
+    cargo_tools:
+      eza: eza
+      zellij: zellij
+      bat: bat
+      git-delta: delta
+      yazi-fm: yazi
+      yazi-cli: ya
+      du-dust: dust
+      ripgrep: rg
+      zoxide: zoxide
+      television: tv
+      uv: uv
+
+  environment:
+    PATH: "{{ home }}/.cargo/bin:{{ home }}/.local/bin:{{ home }}/go/bin:/usr/local/go/bin:/usr/local/bin:{{ ansible_env.PATH }}"
+
+  pre_tasks:
+    - name: This play knows Debian and Ubuntu
+      ansible.builtin.assert:
+        that: ansible_os_family == "Debian"
+        fail_msg: "baseline.yml is written for Debian/Ubuntu (apt); {{ ansible_distribution }} needs its own package steps"
+
+  tasks:
+    # ------------------------------------------------------------ system ---
+    - name: Distribution packages
+      become: true
+      ansible.builtin.apt:
+        name: "{{ apt_packages }}"
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+        NEEDRESTART_MODE: a
+
+    - name: GitHub CLI apt keyring
+      become: true
+      ansible.builtin.get_url:
+        url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+        dest: /etc/apt/keyrings/githubcli-archive-keyring.gpg
+        mode: "0644"
+
+    - name: GitHub CLI apt source
+      become: true
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/github-cli.list
+        mode: "0644"
+        content: "deb [arch={{ 'amd64' if ansible_architecture == 'x86_64' else 'arm64' }} signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\n"
+      register: gh_source
+
+    # The helix PPA, as the deb822 source add-apt-repository would write,
+    # with the PPA's signing key inline — no keyserver round trip, no
+    # software-properties-common. Ubuntu only: a PPA is built per Ubuntu
+    # release, so Debian gets helix from its own archive instead.
+    - name: Helix editor PPA (Ubuntu)
+      become: true
+      when: ansible_distribution == "Ubuntu"
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/maveonair-ubuntu-helix-editor.sources
+        mode: "0644"
+        content: |
+          Types: deb
+          URIs: https://ppa.launchpadcontent.net/maveonair/helix-editor/ubuntu/
+          Suites: {{ ansible_distribution_release }}
+          Components: main
+          Signed-By:
+           -----BEGIN PGP PUBLIC KEY BLOCK-----
+           .
+           mQINBGO12s8BEACXL6xcHDOpwPgztfaK7ewwCqCf/mUrl0H/qAK5//YozVQPuvpM
+           sdQRuvVfjPvp5rqxasQ+/BIyljjC1S4ZlfM6HzWJI4hBd19lO106PUrNX6Wt8Pm1
+           2M/XGpIvtzjiy7zutgeB2h2jnjgNTs8z2bA/zUBZ8G7y106HAegCt8dbS27xJNJz
+           lR8BVEUNSmZtuCNwC0LDTuLV12zFRrvXrf4rxLIu4cdtpYsnFRLQLRlAq/VNK3RI
+           C62dDkDC9DRRgtYSeGTl7UBlg2AtuUIYxWO9US8XZHaz7qzUckLuViF7R1bGsInG
+           2ldb3LCw4lho8vpEujY/1ZjAB5L1poGQK4yv1YkHMoyzs4asAiEIT94EDRcv2wka
+           scmjXIjqiHcu6VnYrTw0ZPmOTHjeKW+yYi2Mzk032BKCm5gIyejSSEQ08OYvd7or
+           FG3GTN2LcWTMSF1afSKw4UeYuHvAIPmOgU0+QkZmf+2g0fzcBdE7nbGK2PELL01f
+           ugutJpxMn7a0jyPO5goibhh4PQsHAATgYgRL5n3MAtiULN5fnNqtonSSUHrRqBjd
+           CWat4atyxxNtd+TVgOCTaXVmWl3O9kVmsBxu6dwTwKVtjdgBknWmass5DaBjoO4C
+           BNVbAOj8I1wYBRz8LHUbM3d2Pooj20rm9SF4MU0Uar25EfD2EglpNIdrZQARAQAB
+           tCBMYXVuY2hwYWQgUFBBIGZvciBGYWJpYW4gTWV0dGxlcokCTgQTAQoAOBYhBCdk
+           K5/X8aFh/CUk4zVaT6UV18hVBQJjtdrPAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4B
+           AheAAAoJEDVaT6UV18hVwwYP/3yFJeNpve2qqYi3NhdSS8Fr5i8yujMCoKJRZzBT
+           RkeS/Zl2uSkM8nOFuWD9eCsNYcPqkmWm6x3uGl/v/gHC3fZ8O3MOdXskMa/4mTtJ
+           XwgqKiwGZw/5/FbxSaGpdszgSwYreioMAgAB9c9kPsGPpkDgM9dhocqxFg2AK9Cy
+           vQcJcXQcbkl/0XLKc3oJA5g2DZmLNwtCF4QtkKMTpy+g2XdKCTbiHRjfO+TAeW0l
+           IW+e3W9fUnzRHwJGvK2MicxHZYLxER0nBuwbnwR22numDNJaJiFZQErLNPWDeTJO
+           SLrB2GmBkxDmARnSaPGUpnrqYhfW5msLFeIQjFbP+KLrNMXY48uF5TGcpuzjMHCk
+           ULWa9cM2kUNcD3XP2AHRkauqfXIf0ptRwLo90ehHjeT/RTTekTLOeTsIGOReQMOV
+           JJ+gy1LnRjutyWXhKalPfNPX+YcnlT87TiELKM0XTrGnUoheK15zlMNVtgr/Wq2Y
+           cDfSa7UGqwoCOzoCMJ3zej5LmWKEZoRvb/KmeoM8Tap2L5KADBocU/j0qqZ526wY
+           rg7qi10jvJiZn3PYkcQlTjIt99+fEHgt/hUwAZA+xpjU6drfCtVh2ANqqqvLZFp9
+           UTtwm/jx+drxHcTA8Q2R4KTuvfkt+sQbwAj6ndBOb6ESAvX5IqwhoHAQ8qEiXtnM
+           DUJ7
+           =c3E3
+           -----END PGP PUBLIC KEY BLOCK-----
+      register: helix_source
+
+    - name: gh and helix from their repositories
+      become: true
+      ansible.builtin.apt:
+        name: [gh, helix]
+        state: present
+        update_cache: "{{ gh_source.changed or helix_source.changed | default(false) }}"
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+        NEEDRESTART_MODE: a
+
+    - name: Which Go is installed
+      ansible.builtin.slurp:
+        src: /usr/local/go/VERSION
+      register: go_installed
+      failed_when: false
+
+    - name: Go {{ go_version }} from the official tarball
+      become: true
+      when: go_installed.content is not defined or ("go" ~ go_version) not in (go_installed.content | b64decode)
+      block:
+        - name: Fetch the Go tarball
+          ansible.builtin.get_url:
+            url: "https://go.dev/dl/go{{ go_version }}.linux-{{ 'amd64' if ansible_architecture == 'x86_64' else 'arm64' }}.tar.gz"
+            dest: "/tmp/go{{ go_version }}.tar.gz"
+            mode: "0644"
+        - name: Replace /usr/local/go
+          ansible.builtin.file:
+            path: /usr/local/go
+            state: absent
+        - name: Unpack Go
+          ansible.builtin.unarchive:
+            src: "/tmp/go{{ go_version }}.tar.gz"
+            dest: /usr/local
+            remote_src: true
+
+    - name: starship (upstream installer, into /usr/local/bin)
+      become: true
+      ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- --yes
+      args:
+        creates: /usr/local/bin/starship
+
+    - name: zsh is the login shell
+      become: true
+      ansible.builtin.user:
+        name: "{{ me }}"
+        shell: /usr/bin/zsh
+
+    # -------------------------------------------------------------- user ---
+    - name: rustup (no rc edits — the dotfiles source ~/.cargo/env)
+      ansible.builtin.shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+      args:
+        creates: "{{ home }}/.cargo/bin/cargo"
+
+    - name: cargo-binstall
+      ansible.builtin.shell: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+      args:
+        creates: "{{ home }}/.cargo/bin/cargo-binstall"
+
+    - name: Rust tools, prebuilt where a release exists
+      ansible.builtin.command: cargo binstall --no-confirm --disable-telemetry {{ item.key }}
+      args:
+        creates: "{{ home }}/.cargo/bin/{{ item.value }}"
+      loop: "{{ cargo_tools | dict2items }}"
+      loop_control:
+        label: "{{ item.key }} → {{ item.value }}"
+
+    - name: yq (kislyuk's jq wrapper — what the reference machine has)
+      ansible.builtin.command: uv tool install yq
+      args:
+        creates: "{{ home }}/.local/bin/yq"
+
+    - name: fzf source tree
+      ansible.builtin.git:
+        repo: https://github.com/junegunn/fzf.git
+        dest: "{{ home }}/.fzf"
+        depth: 1
+        update: false
+
+    - name: fzf binary, key bindings and completion (never touches rc files)
+      ansible.builtin.command: "{{ home }}/.fzf/install --key-bindings --completion --no-update-rc --no-bash --no-fish"
+      args:
+        creates: "{{ home }}/.fzf.zsh"
+
+    - name: asdf {{ asdf_version }} (go install)
+      ansible.builtin.command: go install github.com/asdf-vm/asdf/cmd/asdf@{{ asdf_version }}
+      args:
+        creates: "{{ home }}/go/bin/asdf"
+
+    - name: wtfutil {{ wtf_version }} (go install)
+      ansible.builtin.command: go install github.com/wtfutil/wtf@{{ wtf_version }}
+      args:
+        creates: "{{ home }}/go/bin/wtf"
+
+    - name: mise (upstream installer, into ~/.local/bin)
+      ansible.builtin.shell: curl -fsSL https://mise.run | sh
+      args:
+        creates: "{{ home }}/.local/bin/mise"
+
+    - name: Tools ~/.tool-versions asks for, if there is one
+      ansible.builtin.command: mise install --yes
+      args:
+        chdir: "{{ home }}"
+      when: (home ~ '/.tool-versions') is file
+      register: mise_install
+      changed_when: "'installed' in mise_install.stderr or 'installed' in mise_install.stdout"
+
+    - name: oh-my-zsh (a clone, not its installer — the installer edits .zshrc)
+      ansible.builtin.git:
+        repo: https://github.com/ohmyzsh/ohmyzsh.git
+        dest: "{{ home }}/.oh-my-zsh"
+        depth: 1
+        update: false
+
+    - name: claude (native installer, into ~/.local/bin)
+      ansible.builtin.shell: curl -fsSL https://claude.ai/install.sh | bash
+      args:
+        creates: "{{ home }}/.local/bin/claude"
+
+    # ---------------------------------------------------------- dotfiles ---
+    - name: The dotfiles checkout at its canonical path
+      ansible.builtin.git:
+        repo: https://github.com/bricef/dotfiles.git
+        dest: "{{ dotfiles_dir }}"
+        update: false
+
+    - name: Its origin is the ssh remote (pushes work once a key is on GitHub)
+      ansible.builtin.command: git -C {{ dotfiles_dir }} remote get-url origin
+      register: origin_url
+      changed_when: false
+
+    - name: Point origin at the ssh remote
+      ansible.builtin.command: git -C {{ dotfiles_dir }} remote set-url origin {{ dotfiles_ssh_remote }}
+      when: origin_url.stdout != dotfiles_ssh_remote
+
+    # Directories that other programs will write into must exist as real
+    # directories BEFORE stow runs, or stow "folds" them into one symlink to
+    # the repository — and then Claude Code's session state, or every
+    # ~/.config entry, lands inside the dotfiles checkout.
+    - name: Real directories where stow must link files, not fold
+      ansible.builtin.file:
+        path: "{{ home }}/{{ item }}"
+        state: directory
+        mode: "0755"
+      loop: [.config, .claude, .todo]
+
+    - name: What stow would refuse to link over
+      ansible.builtin.command: stow --no --verbose=2 --target {{ home }} .
+      args:
+        chdir: "{{ dotfiles_dir }}"
+      register: stow_plan
+      changed_when: false
+      failed_when: false
+
+    - name: Files in the way of stow (a fresh account's .bashrc, .profile …)
+      ansible.builtin.set_fact:
+        stow_conflicts: "{{ stow_plan.stderr_lines | select('search', 'existing target is') | map('regex_replace', '^.*: (.*)$', '\\1') | list }}"
+
+    - name: Move them aside, keeping them
+      ansible.builtin.command: >-
+        bash -c 'set -e; b="{{ home }}/.dotfiles-backup-$(date +%F)"; mkdir -p "$b/$(dirname "{{ item }}")";
+        mv "{{ home }}/{{ item }}" "$b/{{ item }}"'
+      loop: "{{ stow_conflicts }}"
+      when: stow_conflicts | length > 0
+
+    - name: Stow the dotfiles into $HOME
+      ansible.builtin.command: stow --target {{ home }} .
+      args:
+        chdir: "{{ dotfiles_dir }}"
+      register: stow_run
+      changed_when: "'LINK' in stow_run.stderr or 'LINK' in stow_run.stdout or stow_conflicts | length > 0"
+
+    # ------------------------------------------------------------ verify ---
+    - name: env-audit — the baseline's own definition of done
+      ansible.builtin.command: "{{ dotfiles_dir }}/bin/env-audit"
+      register: audit
+      changed_when: false
+
+    - name: Everything env-audit looks for is on PATH
+      ansible.builtin.assert:
+        that: "'NOT FOUND' not in audit.stdout"
+        fail_msg: "env-audit still wants:\n{{ audit.stdout_lines | select('search', 'NOT FOUND') | join('\n') }}"
+        success_msg: "{{ audit.stdout_lines | select('search', '^OK') | length }} tools present"
+
+    - name: A login zsh starts clean
+      ansible.builtin.command: zsh -ilc 'echo shell-ok'
+      register: zsh_start
+      changed_when: false
+      failed_when: "'shell-ok' not in zsh_start.stdout or 'command not found' in zsh_start.stderr or 'No such file' in zsh_start.stderr"
+
+    - name: Done
+      ansible.builtin.debug:
+        msg:
+          - "Baseline in place for {{ me }}. Log out and back in for zsh."
+          - "Still yours: gh auth login · claude (OAuth) · an ssh key on GitHub for pushes"

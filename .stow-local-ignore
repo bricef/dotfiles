@@ -1,0 +1,11 @@
+# What `stow --target ~ .` must NOT link into the home directory.
+#
+# This file REPLACES stow's built-in ignore list when present, so the
+# defaults that matter are repeated here rather than assumed.
+^/\.git$
+^/\.gitignore$
+^/\.stow-local-ignore$
+^/README.*
+^/LICENSE.*
+# The baseline installer lives in the repo, not in $HOME.
+^/setup$
