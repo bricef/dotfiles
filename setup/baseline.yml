@@ -175,6 +175,16 @@
             dest: /usr/local
             remote_src: true
 
+    # /usr/local/go/bin is not on a fresh shell's PATH; /usr/local/bin is.
+    # Go resolves GOROOT through the link, so this is enough.
+    - name: go and gofmt on the default PATH
+      become: true
+      ansible.builtin.file:
+        src: "/usr/local/go/bin/{{ item }}"
+        dest: "/usr/local/bin/{{ item }}"
+        state: link
+      loop: [go, gofmt]
+
     - name: starship (upstream installer, into /usr/local/bin)
       become: true
       ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- --yes
@@ -222,6 +232,14 @@
       ansible.builtin.command: "{{ home }}/.fzf/install --key-bindings --completion --no-update-rc --no-bash --no-fish"
       args:
         creates: "{{ home }}/.fzf.zsh"
+
+    # ~/.fzf/bin reaches PATH only if the shell sources ~/.fzf.zsh; ~/.local/bin
+    # is on it regardless.
+    - name: fzf on the default PATH
+      ansible.builtin.file:
+        src: "{{ home }}/.fzf/bin/fzf"
+        dest: "{{ home }}/.local/bin/fzf"
+        state: link
 
     - name: asdf {{ asdf_version }} (go install)
       ansible.builtin.command: go install github.com/asdf-vm/asdf/cmd/asdf@{{ asdf_version }}
@@ -293,14 +311,18 @@
       changed_when: false
       failed_when: false
 
+    # stow names each conflict twice at this verbosity (once as it finds it,
+    # once in the summary), hence `unique`.
     - name: Files in the way of stow (a fresh account's .bashrc, .profile …)
       ansible.builtin.set_fact:
-        stow_conflicts: "{{ stow_plan.stderr_lines | select('search', 'existing target is') | map('regex_replace', '^.*: (.*)$', '\\1') | list }}"
+        stow_conflicts: "{{ stow_plan.stderr_lines | select('search', 'existing target is') | map('regex_replace', '^.*: (.*)$', '\\1') | unique | list }}"
 
     - name: Move them aside, keeping them
       ansible.builtin.command: >-
         bash -c 'set -e; b="{{ home }}/.dotfiles-backup-$(date +%F)"; mkdir -p "$b/$(dirname "{{ item }}")";
         mv "{{ home }}/{{ item }}" "$b/{{ item }}"'
+      args:
+        removes: "{{ home }}/{{ item }}"
       loop: "{{ stow_conflicts }}"
       when: stow_conflicts | length > 0
 
@@ -312,8 +334,11 @@
       changed_when: "'LINK' in stow_run.stderr or 'LINK' in stow_run.stdout or stow_conflicts | length > 0"
 
     # ------------------------------------------------------------ verify ---
+    # Through a login zsh, so PATH is the one the shell builds (fzf lives in
+    # ~/.fzf/bin and reaches PATH only via ~/.fzf.zsh) — the audit judges
+    # the shell you will use, not this play's environment.
     - name: env-audit — the baseline's own definition of done
-      ansible.builtin.command: "{{ dotfiles_dir }}/bin/env-audit"
+      ansible.builtin.command: zsh -ilc '{{ dotfiles_dir }}/bin/env-audit'
       register: audit
       changed_when: false
 
