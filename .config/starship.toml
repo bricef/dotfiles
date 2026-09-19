@@ -1,3 +1,16 @@
 
 # Inserts a blank line between shell prompts
 add_newline = false
+
+# Who and where, always. Starship's defaults show the username only when
+# root or over SSH, and the hostname only over SSH — so a local shell, or a
+# multiplexer that drops the SSH_* variables, reads as "~" with no clue which
+# machine it is. With several machines that all look alike (laptop, devbox,
+# guests on nest), the host is the one thing the prompt must always say.
+# Over SSH the 🌐 marker still appears in front of the host, so a remote
+# shell stays distinguishable from a local one.
+[username]
+show_always = true
+
+[hostname]
+ssh_only = false
