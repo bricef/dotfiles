@@ -40,7 +40,6 @@ Thumbs.db
 
 .envrc
 
-**/.claude/settings.local.json
 
 # Claude Code sandbox null-mounts these names at the cwd of every
 # sandboxed session as a defence against prompt-injection vectors
@@ -64,3 +63,5 @@ Thumbs.db
 .claude/agents
 
 **/.claude/.cc-writes/
+
+**/.claude/settings.local.json

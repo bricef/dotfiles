@@ -31,6 +31,9 @@ TOOLS=(
   "tv"
   "wtfutil;wtf"
   "wt" # Worktrunk - Git Worktree CLI
+  "dotenvx"
+  "just"
+  "direnv"
 )
 
 OK=()
