@@ -11,7 +11,9 @@
 # apt repository for gh and helix, rustup + cargo-binstall for the Rust
 # tools (prebuilt binaries, seconds not minutes), the official tarball for
 # Go, `go install` for asdf and wtf, the upstream installers for starship,
-# mise, uv and claude. Versions that are pinned are pinned at the top.
+# mise, uv, dotenvx and claude. Versions that are pinned are pinned at the
+# top. When bin/env-audit gains a tool, this play gains its install step,
+# or the play fails its own final check on a fresh machine.
 #
 # Debian/Ubuntu only for now; the play refuses anything else rather than
 # half-applying. System steps use become; everything else runs as you.
@@ -43,6 +45,7 @@
       - build-essential
       - pkg-config
       - libssl-dev
+      - direnv
     # crate → the binary it puts in ~/.cargo/bin (what makes the step idempotent)
     cargo_tools:
       eza: eza
@@ -56,6 +59,8 @@
       zoxide: zoxide
       television: tv
       uv: uv
+      just: just
+      worktrunk: wt
 
   environment:
     PATH: "{{ home }}/.cargo/bin:{{ home }}/.local/bin:{{ home }}/go/bin:/usr/local/go/bin:/usr/local/bin:{{ ansible_env.PATH }}"
@@ -200,6 +205,12 @@
       ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- --yes
       args:
         creates: /usr/local/bin/starship
+
+    - name: dotenvx (upstream installer, into /usr/local/bin)
+      become: true
+      ansible.builtin.shell: curl -sfS https://dotenvx.sh | sh
+      args:
+        creates: /usr/local/bin/dotenvx
 
     - name: zsh is the login shell
       become: true
