@@ -31,6 +31,7 @@
     asdf_version: "v0.19.0"
     wtf_version: "v0.49.1"
     apt_packages:
+      - locales
       - zsh
       - git
       - curl
@@ -77,6 +78,15 @@
       environment:
         DEBIAN_FRONTEND: noninteractive
         NEEDRESTART_MODE: a
+
+    # .config/shell/variables.sh exports LC_ALL=en_GB.UTF-8; on a machine that
+    # has not generated it, every shell starts with "setlocale: LC_ALL:
+    # cannot change locale" and programs fall back to C.
+    - name: The en_GB.UTF-8 locale exists
+      become: true
+      community.general.locale_gen:
+        name: en_GB.UTF-8
+        state: present
 
     - name: GitHub CLI apt keyring
       become: true
