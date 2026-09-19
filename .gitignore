@@ -100,3 +100,6 @@ bin/Cursor-*
 .config/gh/hosts.yml
 .config/obsidian-headless/auth_token
 .config/factor-q/connections.toml
+.config/sops/
+.config/gh/
+.config/starship.toml.bak-*
