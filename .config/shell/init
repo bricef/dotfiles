@@ -62,10 +62,15 @@ source_exists /home/brice/google-cloud-sdk/completion.zsh.inc
 
 # Tool-specific setups
 type dirstack.py &> /dev/null && source /dev/stdin <<< "$(dirstack.py init_shell)" # dirstack helper functions and shell setup
+
+
+export PATH=$PATH:/usr/local/go/bin
 type go &> /dev/null && export GOPATH=$(go env GOPATH) && export PATH="${PATH}:${GOPATH}/bin"
 type rbenv &> /dev/null && eval "$(rbenv init -)"
 type zoxide &> /dev/null && eval "$(zoxide init zsh)"
-type fzf &> /dev/null && source <(fzf --zsh)
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# type fzf &> /dev/null && source <(fzf --zsh)
 type direnv &> /dev/null && eval "$(direnv hook zsh)"
 
 # Pyenv

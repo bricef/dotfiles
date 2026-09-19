@@ -104,3 +104,13 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 source ~/.config/shell/init
 
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+eval "$(~/.local/bin/mise activate zsh)"
+
+# bun completions
+[ -s "/home/brice/.bun/_bun" ] && source "/home/brice/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

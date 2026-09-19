@@ -39,3 +39,28 @@ Thumbs.db
 
 
 .envrc
+
+**/.claude/settings.local.json
+
+# Claude Code sandbox null-mounts these names at the cwd of every
+# sandboxed session as a defence against prompt-injection vectors
+# (auto-sourced shell rc files, MCP servers, custom commands).
+# They appear as `crw-rw-rw- nobody 1, 3` char devices in the
+# working tree of any project, which would otherwise pollute
+# `git status`. Suppressing them here is harmless because real
+# project files of these names are extremely unusual.
+.gitconfig
+.gitmodules
+.bashrc
+.bash_profile
+.zshrc
+.zprofile
+.profile
+.ripgreprc
+.mcp.json
+.vscode
+.idea
+.claude/commands
+.claude/agents
+
+**/.claude/.cc-writes/

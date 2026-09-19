@@ -1,6 +1,118 @@
 {
-  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Grep",
+      "Glob",
+      "MultiEdit",
+      "NotebookRead",
+      "NotebookEdit",
+      "TodoRead",
+      "TodoWrite",
+      "WebFetch",
+      "Bash",
+      "Skill"
+    ],
+    "deny": [
+      "Read(/home/brice/.ssh/**)",
+      "Read(/home/brice/.aws/**)",
+      "Read(/home/brice/.gnupg/**)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "model": "claude-fable-5-1[1m]",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/memory/.hooks/autocommit.sh\"",
+            "timeout": 60,
+            "statusMessage": "Committing memory change",
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
   "worktree": {
     "bgIsolation": "none"
-  }
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "network": {
+      "allowedDomains": [
+        "index.crates.io",
+        "static.crates.io",
+        "crates.io",
+        "github.com",
+        "api.github.com",
+        "localhost",
+        "127.0.0.1",
+        "pypi.org",
+        "files.pythonhosted.org",
+        "bun.sh",
+        "nodejs.org",
+        "astral.sh",
+        "huggingface.co",
+        "*.huggingface.co",
+        "*.hf.co",
+        "*.xethub.hf.co",
+        "ai.stanford.edu",
+        "getscheduleit.app",
+        "lambda.works",
+        "*.lambda.works",
+        "objects.githubusercontent.com",
+        "*.githubusercontent.com",
+        "codeload.github.com"
+      ],
+      "allowAllUnixSockets": true
+    },
+    "filesystem": {
+      "allowWrite": [
+        "/home/brice/Code/**",
+        "/home/brice/.cache/**",
+        "/home/brice/.local/state/**",
+        "/home/brice/.local/share/**",
+        "/home/brice/.config/**",
+        "/home/brice/.cargo/**",
+        "/home/brice/go/pkg/mod/**",
+        "/run/user/1000/**",
+        "/home/brice/.npm/**"
+      ],
+      "allowRead": [
+        "/home/brice/.gitconfig"
+      ]
+    },
+    "excludedCommands": [
+      "git *",
+      "docker *",
+      "cargo *",
+      "just *",
+      "mise exec *",
+      "~/.local/bin/mise exec *",
+      "ssh deploy@lambda.works *"
+    ]
+  },
+  "effortLevel": "xhigh",
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "high"
+    }
+  },
+  "awaySummaryEnabled": false,
+  "autoMemoryDirectory": "~/.claude/memory",
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "editorMode": "normal",
+  "switchModelsOnFlag": false,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true
 }

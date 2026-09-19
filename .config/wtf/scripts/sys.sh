@@ -61,6 +61,27 @@ mem_used_gb=$(awk  -v k="$mem_used_kb"  'BEGIN { printf "%.1f", k/1024/1024 }')
 mem_total_gb=$(awk -v k="$mem_total_kb" 'BEGIN { printf "%.0f", k/1024/1024 }')
 push_ring "$STATE/mem.ring" "$mem_pct"
 
+# --- DISK ---------------------------------------------------------------
+# Root filesystem. Cargo target directories are per git *worktree*, so a
+# few parallel agent builds eat 100G+ without anything reclaiming it —
+# and ENOSPC does not announce itself: it truncates files in working
+# trees and surfaces to whoever is building as a compile error.
+read -r disk_total_kb disk_used_kb disk_avail_kb < <(
+  df -Pk / | awk 'NR==2 { print $2, $3, $4 }'
+)
+disk_pct=$(( disk_used_kb * 100 / disk_total_kb ))
+disk_used_gb=$(awk  -v k="$disk_used_kb"  'BEGIN { printf "%.0f", k/1024/1024 }')
+disk_total_gb=$(awk -v k="$disk_total_kb" 'BEGIN { printf "%.0f", k/1024/1024 }')
+disk_avail_gb=$(awk -v k="$disk_avail_kb" 'BEGIN { printf "%.0f", k/1024/1024 }')
+push_ring "$STATE/disk.ring" "$disk_pct"
+
+# Free space is read in builds, not percent: one full workspace build is
+# roughly 20G, so 60G is three builds of headroom and 30G is one.
+disk_warn=""
+if   (( disk_avail_gb < 30 )); then disk_warn="   ⚠⚠ ${disk_avail_gb}G FREE"
+elif (( disk_avail_gb < 60 )); then disk_warn="   ⚠ ${disk_avail_gb}G free"
+fi
+
 # --- NET ----------------------------------------------------------------
 # Sum bytes across real interfaces. /proc/net/dev data lines are indented,
 # so we filter on $1 ending in ":" (header lines lack the colon).
@@ -99,5 +120,6 @@ human() {
 # --- render -------------------------------------------------------------
 printf "CPU   %3d%%  %s\n"              "$cpu_pct" "$(ring_spark "$STATE/cpu.ring")"
 printf "MEM   %3d%%  %s   %s / %s GB\n" "$mem_pct" "$(ring_spark "$STATE/mem.ring")" "$mem_used_gb" "$mem_total_gb"
+printf "DISK  %3d%%  %s   %s / %s GB%s\n" "$disk_pct" "$(ring_spark "$STATE/disk.ring")" "$disk_used_gb" "$disk_total_gb" "$disk_warn"
 printf "NET ↓ %s  %s\n"                 "$(human "$rx_rate")" "$(ring_spark "$STATE/net-rx.ring")"
 printf "NET ↑ %s  %s\n"                 "$(human "$tx_rate")" "$(ring_spark "$STATE/net-tx.ring")"

@@ -6,10 +6,10 @@ wtf:
       normal: gray
   grid:
     # Proportional sizing: 0 = equal weight, negative = relative weight,
-    # positive = fixed cells/lines. The right column gets slightly more
-    # width (weight 6 vs 5) so the Claude agents `cwd` column has room.
-    columns: [-5, -6]
-    rows: [0, 0]
+    # positive = fixed cells/lines. Single full-width column; each widget
+    # gets an equal-height row.
+    columns: [0]
+    rows: [0, 0, 0, 0]
   refreshInterval: 1
   term: xterm-256color
   mods:
@@ -34,8 +34,8 @@ wtf:
       refreshInterval: 3
       title: " Claude Agents "
       position:
-        top: 0
-        left: 1
+        top: 1
+        left: 0
         height: 1
         width: 1
 
@@ -47,7 +47,7 @@ wtf:
       refreshInterval: 10
       title: " Listening Ports "
       position:
-        top: 1
+        top: 2
         left: 0
         height: 1
         width: 1
@@ -60,7 +60,7 @@ wtf:
       refreshInterval: 5
       title: " Docker "
       position:
-        top: 1
-        left: 1
+        top: 3
+        left: 0
         height: 1
         width: 1
