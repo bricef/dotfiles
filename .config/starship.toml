@@ -8,7 +8,7 @@ add_newline = false
 # SSH_* variables, reads as "~" with no clue which machine it is. With several
 # machines that all look alike (laptop, devbox, guests on nest), the host is
 # the one thing the prompt must always say, and it should say it in a way the
-# eye catches before reading: a solid-background badge in a colour that is
+# eye catches before reading: the name in bold, in a colour that is
 # unique to the host.
 #
 # Starship has no conditional config and no includes, so the per-host switch
@@ -43,17 +43,17 @@ format = "[$ssh_symbol]($style)"
 [custom.host_devbox]
 when = 'case "${STARSHIP_HOST:-$(uname -n)}" in devbox|devbox.*) true;; *) false;; esac'
 symbol = "devbox"
-style = "bold fg:white bg:devbox"
-format = "[ $symbol ]($style) "
+style = "bold fg:devbox"
+format = "[$symbol]($style) "
 
 [custom.host_laptop]
 when = 'case "${STARSHIP_HOST:-$(uname -n)}" in pica-pica|pica-pica.*) true;; *) false;; esac'
 symbol = "pica-pica"
-style = "bold fg:white bg:laptop"
-format = "[ $symbol ]($style) "
+style = "bold fg:laptop"
+format = "[$symbol]($style) "
 
 [custom.host_other]
 when = 'case "${STARSHIP_HOST:-$(uname -n)}" in devbox|devbox.*|pica-pica|pica-pica.*) false;; *) true;; esac'
 command = 'printf %s "${STARSHIP_HOST:-$(uname -n)}" | cut -d. -f1'
-style = "bold fg:white bg:other"
-format = "[ $output ]($style) "
+style = "bold fg:other"
+format = "[$output]($style) "
