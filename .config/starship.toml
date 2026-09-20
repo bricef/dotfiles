@@ -36,7 +36,7 @@ other  = "#7d3c98"   # any host without an identity of its own (nest guests …)
 
 [username]
 show_always = true
-format = "[$user]($style)@"
+format = "[$user]($style)[@](dimmed)"
 
 [hostname]
 ssh_only = false
