@@ -18,10 +18,10 @@ add_newline = false
 #
 #     STARSHIP_HOST=pica-pica starship prompt
 #
-# The built-in `hostname` module is kept only for its 🌐 marker, so a remote
-# shell stays distinguishable from a local one; the name itself comes from the
+# The built-in `hostname` module is kept only for its 🌐 marker, leading the
+# line over SSH and absent otherwise; the name itself comes from the
 # badge so it can carry the per-host colour.
-format = "$username$hostname${custom.host_devbox}${custom.host_laptop}${custom.host_other}$all"
+format = "$hostname$username${custom.host_devbox}${custom.host_laptop}${custom.host_other}$all"
 
 # One colour per machine. Add a host here and a `custom.host_<name>` module
 # below (and exclude it from `custom.host_other`'s `when`).
