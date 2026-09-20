@@ -1,16 +1,59 @@
-
 # Inserts a blank line between shell prompts
 add_newline = false
 
-# Who and where, always. Starship's defaults show the username only when
-# root or over SSH, and the hostname only over SSH — so a local shell, or a
-# multiplexer that drops the SSH_* variables, reads as "~" with no clue which
-# machine it is. With several machines that all look alike (laptop, devbox,
-# guests on nest), the host is the one thing the prompt must always say.
-# Over SSH the 🌐 marker still appears in front of the host, so a remote
-# shell stays distinguishable from a local one.
+# Who and where, always — and *which machine*, unmistakably.
+#
+# Starship's defaults show the username only when root or over SSH, and the
+# hostname only over SSH, so a local shell, or a multiplexer that drops the
+# SSH_* variables, reads as "~" with no clue which machine it is. With several
+# machines that all look alike (laptop, devbox, guests on nest), the host is
+# the one thing the prompt must always say, and it should say it in a way the
+# eye catches before reading: a solid-background badge in a colour that is
+# unique to the host.
+#
+# Starship has no conditional config and no includes, so the per-host switch
+# is a `custom` module per identity, gated by `when` on the hostname. That
+# costs one `sh` spawn per module per prompt (~2 ms each on the devbox). To
+# preview another host's prompt, override the name:
+#
+#     STARSHIP_HOST=pica-pica starship prompt
+#
+# The built-in `hostname` module is kept only for its 🌐 marker, so a remote
+# shell stays distinguishable from a local one; the name itself comes from the
+# badge so it can carry the per-host colour.
+format = "$username$hostname${custom.host_devbox}${custom.host_laptop}${custom.host_other}$all"
+
+# One colour per machine. Add a host here and a `custom.host_<name>` module
+# below (and exclude it from `custom.host_other`'s `when`).
+palette = "hosts"
+
+[palettes.hosts]
+devbox = "#c0392b"   # remote build box: red, so a destructive command gives pause
+laptop = "#1e8449"   # pica-pica: green, home turf
+other  = "#7d3c98"   # any host without an identity of its own (nest guests …)
+
 [username]
 show_always = true
+format = "[$user]($style)@"
 
 [hostname]
 ssh_only = false
+format = "[$ssh_symbol]($style)"
+
+[custom.host_devbox]
+when = 'case "${STARSHIP_HOST:-$(uname -n)}" in devbox|devbox.*) true;; *) false;; esac'
+symbol = "devbox"
+style = "bold fg:white bg:devbox"
+format = "[ $symbol ]($style) "
+
+[custom.host_laptop]
+when = 'case "${STARSHIP_HOST:-$(uname -n)}" in pica-pica|pica-pica.*) true;; *) false;; esac'
+symbol = "pica-pica"
+style = "bold fg:white bg:laptop"
+format = "[ $symbol ]($style) "
+
+[custom.host_other]
+when = 'case "${STARSHIP_HOST:-$(uname -n)}" in devbox|devbox.*|pica-pica|pica-pica.*) false;; *) true;; esac'
+command = 'printf %s "${STARSHIP_HOST:-$(uname -n)}" | cut -d. -f1'
+style = "bold fg:white bg:other"
+format = "[ $output ]($style) "
