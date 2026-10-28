@@ -57,8 +57,10 @@ source_exists $HOME/.cargo/env
 
 
 # Google Cloud SDK.
-source_exists /home/brice/google-cloud-sdk/path.zsh.inc
-source_exists /home/brice/google-cloud-sdk/completion.zsh.inc
+source_exists /opt/google-cloud-sdk/path.zsh.inc
+source_exists /opt/google-cloud-sdk/completion.zsh.inc
+# source_exists /home/brice/google-cloud-sdk/path.zsh.inc
+# source_exists /home/brice/google-cloud-sdk/completion.zsh.inc
 
 # Tool-specific setups
 type dirstack.py &> /dev/null && source /dev/stdin <<< "$(dirstack.py init_shell)" # dirstack helper functions and shell setup
@@ -85,6 +87,12 @@ type asdf &> /dev/null && source <(asdf completion zsh)
 type asdf &> /dev/null && export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 type starship &> /dev/null && source <(starship init zsh)
+
+
+type mise &> /dev/null && eval "$(~/.local/bin/mise activate zsh)"
+
+
+export BUN_INSTALL="$HOME/.bun"
 
 #
 # Platorm-specific profiles

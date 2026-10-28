@@ -105,11 +105,7 @@ source $ZSH/oh-my-zsh.sh
 source ~/.config/shell/init
 
 
-if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
-eval "$(~/.local/bin/mise activate zsh)"
 
-# bun completions
-[ -s "/home/brice/.bun/_bun" ] && source "/home/brice/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
