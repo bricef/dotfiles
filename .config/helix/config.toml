@@ -1,2 +1,7 @@
-[editor.soft-wrap]
-enable = true
+
+theme = "onedark"
+[editor]
+soft-wrap.enable = true
+
+[keys.normal]
+"C-/" = "toggle_comments"
