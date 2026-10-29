@@ -1,7 +1,17 @@
-
 theme = "onedark"
-[editor]
-soft-wrap.enable = true
 
 [keys.normal]
 "C-/" = "toggle_comments"
+
+[editor]
+line-number = "relative"
+soft-wrap.enable = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
