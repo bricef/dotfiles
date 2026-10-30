@@ -14,5 +14,9 @@ PATH=$PATH:${HOME}/.night.zig/nz
 PATH=$PATH:${HOME}/.npm-global/bin
 PATH=$PATH:${HOME}/.cache/.bun/bin
 PATH=$PATH:${HOME}/.bun/bin
+PATH=$PATH:${HOME}/.night.zig/latest
+PATH=$PATH:${HOME}/.night.zig/nz
+PATH=$PATH:${HOME}/.pulumi/bin
+PATH=$PATH:${HOME}/.opencode/bin
 
 export PATH
