@@ -19,9 +19,9 @@
       "Read(/home/brice/.aws/**)",
       "Read(/home/brice/.gnupg/**)"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
-  "model": "claude-fable-5-1[1m]",
+  "model": "opus",
   "hooks": {
     "PostToolUse": [
       {
@@ -36,13 +36,35 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/brice/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "worktree": {
     "bgIsolation": "none"
   },
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "typesafe@typesafe-ai": true,
+    "cc-plugin-you-should-know@builtin": true
+  },
+  "extraKnownMarketplaces": {
+    "typesafe-ai": {
+      "source": {
+        "source": "github",
+        "repo": "typesafe-ai/skills"
+      }
+    }
   },
   "sandbox": {
     "enabled": true,
@@ -105,13 +127,19 @@
   "modelSettings": {
     "claude-fable-5-1": {
       "effortLevel": "high"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "xhigh"
     }
   },
   "awaySummaryEnabled": false,
+  "tui": "fullscreen",
+  "timeFormat": "24-hour",
   "autoMemoryDirectory": "~/.claude/memory",
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "editorMode": "normal",
+  "preferredNotifChannel": "notifications_disabled",
   "switchModelsOnFlag": false,
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true
